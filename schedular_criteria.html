@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="_nK">
+  <link rel="icon" href="assets/images/schedule_icon.png">
+  <title class="app_title"></title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900" rel="stylesheet" type="text/css">
+  <!-- FontAwesome -->
+  <!--<link rel="stylesheet" type="text/css" href="bower_components/fontawesome/css/font-awesome.min.css"> -->
+  <link rel="stylesheet" type="text/css" href="bower_components/fontawesome5/css/fontawesome-all.min.css">
+  
+  <link rel="stylesheet" id="gantt_skin"   href="assets/gantt/skins/dhtmlxgantt_material.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+  <link rel="stylesheet" href="assets/css/common.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="assets/css/login.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="bower_components/bootstrap/bootstrap.min.css">
+
+  <!-- Bootstrap Datepicker -->
+
+  <link rel="stylesheet" href="bower_components/bootstrap-datepicker-master/css/bootstrap-datepicker.css">
+  <!-- Google fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+
+  <!-- Load Jquery -->
+  <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+  <style>
+  .gantt_modal_box{
+    width:auto !important;
+  }
+</style>
+</head>
+<body>
+  <div class="login_box">
+    <section id="login">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-wrap">
+              <h1 class="app_title_heading"></h1>
+              <form role="form" action="javascript:;" method="post" id="scheduling_filter" autocomplete="off">
+
+                <div class="form-group">
+                  <label for="choose" data-lang='choose_operation' >Choose Operation</label>
+                  <select type="text" name="choose" id="choose_operation" class="form-control" placeholder="Choose one operation">
+                   <option value="" data-lang='select_one_option'>Select one option</option>
+                   <option value="create_new" data-lang='new_scheduling' > New Scheduling </option>
+                   <option value="modify_existing" data-lang='modilfy_existing_schedule'> Modify Existing Scheduling </option>
+                 </select>
+
+               </div>
+
+               <div class="create_new_box scheduling_sections hide">
+
+                 <br>
+                 <h4 class="sub_title"> <i class="fa fa-plus "></i> <span data-lang="new_scheduling">New Scheduling</span> </h4>
+                 <hr>
+                 <div class="form-group">
+                  <label for="schedule_name" data-lang="schedule_name" >Schedule Name</label>
+                  <input type="text" name="schedule_name" id="schedule_name" class="form-control" placeholder="Schedule Name">
+                </div>
+
+                <div class="form-group">
+                  <div class="row">
+                    <!-- <div class="col-xs-12">
+                      <label for="from_to_date" >From Date - To Date</label>
+                    </div> -->
+
+
+                    <div class="col-xs-6" id="">
+                      <label for="start_date"  data-lang="from_date">From Date</label>
+                      <div class='input-group date' id='start_date_picker'>
+                       <input type="text" name="start_date" id="start_date" readonly  class="form-control from_date_picker"  data-lang="from_date" placeholder="From Date" >
+                       <span class="input-group-addon">
+                        <span class="fa fa-calendar-alt"></span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-6" id="">
+                   <label for="end_date"  data-lang="to_date">To Date</label>
+                   <div class='input-group date' id='end_date_picker'>
+                    <input type="text" name="end_date" id="end_date" readonly  class="form-control to_date_picker"  data-lang="to_date" placeholder="To Date" placeholder="From Date"  >
+                    <span class="input-group-addon">
+                     <span class="fa fa-calendar-alt"></span>
+                   </span>
+                 </div>
+               </div>
+
+             </div>
+           </div> 
+
+           <div class="form-group">
+            <label for="work_center" data-lang="choose_work_center">Choose Work Center</label>
+            <select type="text" name="work_center" id="work_center" class="form-control" data-lang="choose_one_work_center" placeholder="Choose one work center">
+             <option value="" data-lang="select_one_option">Select one option</option>
+           </select>
+         </div>                
+       </div>
+
+
+       <div class="clearfix"></div>
+       <div class="modify_existing_box scheduling_sections hide">
+
+         <br>
+         <h4 class="sub_title" > <i class="fa fa-pencil-alt"></i> <span data-lang="modify_existing">Modify Existing Scheduling</span></h4>
+         <hr>
+         <div class="form-group">
+          <label for="choose_schedule" data-lang="choose_schedule" >Choose Schedule</label>
+          <select type="text" name="schedule_reference_number" id="choose_schedule" class="form-control" placeholder="Choose Schedule">
+           <option value="" data-lang="choose_schedule"> Choose Schedule </option>
+         </select>
+
+       </div>
+     </div>
+     <div class="clearfix"></div>
+     <button type="submit" id="btn_start_scdule" class="btn btn-custom btn-lg btn-block scheduling_sections proceed_button hide" > <i class="fa fa-play"></i> <span data-lang="start_scheduling"> Start Scheduling </span> </button>
+   </form>
+
+   <hr>
+ </div>
+
+</div> <!-- /.col-xs-12 -->
+</div> <!-- /.row -->
+</div> <!-- /.container -->
+</section>
+
+<footer id="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <p> <span data-lang="copyright">Copyright © -</span> <span class="date_div"></span></p>
+        <p><span data-lang="powered_by">Powered by</span> <strong><a href="#" target="_blank">OptiPro Manufacturing</a></strong></p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</div>
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <form action="" id="reopen_plan_popup" class="reopen_plan_popup" class="form">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" data-lang="confrim_reopen">Confirm Re-open</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <p data-lang="reopen_plan_alert">This plan has been pushed to production, Do you wish to reopen the plan again ?</p>
+            </div>
+            <div class="col-md-6">
+              <button type="button" class="btn btn-success btn-block reopen_plan" id='reopen_plan' value='reopen_plan' data-lang="reopen">Reopen</button>
+            </div>
+            <div class="col-md-6">
+             <button type="button" class="btn btn-danger btn-block cancel_plan" id='cancel_plan' value='cancel_plan' data-dismiss='modal' data-lang="cancel">Cancel</button> 
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+</div>
+
+
+<!-- moment js  -->
+<script src="bower_components/bootstrap-datepicker-master/js/moment.min.js"></script>
+<!-- JS Cookie -->
+<script src="bower_components/js.cookie.js"></script>
+<!-- Load grantt chart  -->
+<script src="assets/gantt/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Load Bootstrap -->
+<script src="bower_components/bootstrap/bootstrap.min.js"></script>
+
+<!-- Load Bootstrap Date Picker-->
+<script src="bower_components/bootstrap-datepicker-master/js/bootstrap-datepicker.js"></script>
+<!-- Common JS  -->
+<script src="assets/js/common.js" type="text/javascript" charset="utf-8"></script>
+<!-- Page JS -->
+<script src="assets/js/schedular_criteria.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>
+<div id="container-floating">
+  <div id="floating-button" data-toggle="tooltip" data-placement="left" data-original-title="Create" onclick="signout_system();" title="Sign Out" data-lang="signout" >
+   <i class="fa fa-power-off fa-1_5x"></i>
+ </div>
+
+</div>

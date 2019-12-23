@@ -1,0 +1,16 @@
+<!-- Load Jquery -->
+<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Load grantt chart  -->
+<script src="assets/gantt/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+<!-- Data -->
+<script src="assets/js/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="bower_components/js.cookie.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+// check swb is installed or not if not installed redirect to setup
+check_installation();
+//Check if user was already working on SWB's any module
+user_redirection("index");
+});
+</script>

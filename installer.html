@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="_nK">
+  <link rel="icon" href="assets/images/schedule_icon.png">
+  <title class="app_title"></title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900" rel="stylesheet" type="text/css">
+  <!-- FontAwesome -->
+  <!--<link rel="stylesheet" type="text/css" href="bower_components/fontawesome/css/font-awesome.min.css"> -->
+  <link rel="stylesheet" type="text/css" href="bower_components/fontawesome5/css/fontawesome-all.min.css">
+
+  <link rel="stylesheet" id="gantt_skin"   href="assets/gantt/skins/dhtmlxgantt_material.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+  <link rel="stylesheet" href="assets/css/common.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="assets/css/login.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="setup/css/setup.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="bower_components/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/bootstrap-colorpicker-master/css/bootstrap-colorpicker.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  
+  <!-- Google fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+
+  <!-- Load Jquery -->
+  <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+  <style>
+  .form_contents .form-control{
+    height: 29px;
+    padding: 0px 12px;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1 form-box">
+        <form role="form" action="" method="post" class="f1 installation_form">
+          <div class="pull-right"><span id = "version_text" class="text-grey"></span></div> </br>
+          <h3 class="app_title_heading"></h3>
+          <p class="text-grey"><span data-lang="follow_simple_step">Follow a simple steps to install</span> <span class="app_name"></span> </p>
+          
+          <div class="f1-steps">
+            <div class="f1-progress">
+              <div class="f1-progress-line" data-now-value="" data-number-of-steps="5" style="width:10%;"></div>
+            </div>
+
+            <div data-step='1' id="welcome" class="f1-step active">
+              <div class="f1-step-icon"><i class="fa fa-handshake"></i></div>
+              <p data-lang="welcome">Welcome</p>
+            </div>
+            <div data-step='2' id="prerequisites" class="f1-step">
+              <div class="f1-step-icon"><i class="fa fa-list-ul"></i></div>
+              <p data-lang="prerequisites">Prerequisites</p>
+            </div>
+            <div data-step='3' id="connection" class="f1-step">
+              <div class="f1-step-icon"><i class="fa fa-wifi"></i></div>
+              <p data-lang="connection">Connection</p>
+            </div>
+            <div data-step='4' id="customizations" class="f1-step">
+              <div class="f1-step-icon"><i class="fa fa-cogs"></i></div>
+              <p data-lang="customizations">Customizations</p>
+            </div>
+            <div data-step='5' id="install_upgrade" class="f1-step">
+              <div class="f1-step-icon"><i class="fa fa-magic"></i></div>
+              <p data-lang="install_upgrade">Install & Upgrade</p>
+            </div>
+            <div data-step='6' id="start" class="f1-step">
+              <div class="f1-step-icon"><i class="fa fa-play"></i></div>
+              <p data-lang="start">Start</p>
+            </div>
+            <hr>
+          </div>
+
+          <fieldset data-block_id="welcome" class="one_step_block">
+            <br>
+            <p><b><span data-lang="welcome_to">Welcome to</span> <span class="company_name"> Optipro APS </span></b></p>
+            <p data-lang="install_info_guide_msg">Please follow a few simple steps to complete the installation of APS, the installation will require you to provide necessary information required into the following steps </p>
+            <p>
+              <ul>
+                <li data-lang="prerequisites">Prerequisites</li>
+                <li data-lang="connection">Connection</li>
+                <li data-lang="connection">Customizations</li>
+              </ul>
+            </p>
+            <p><span data-lang="once_done_msg">Once done, Please click on next button to proceed and finish up the installations, </span><br>
+             <span data-lang="query_contact"> For any query contact</span> <a href="https://www.optiproerp.com/" target='_blank'>Optipro ERP</a></p>
+
+              <hr>
+              <div class="f1-buttons">
+                <button type="button" class="btn btn-next prerequisites_next" data-next-block="prerequisites"><span data-lang="next">Next</span> <i class="fa fa-arrow-alt-circle-right"></i></button>
+              </div>
+            </fieldset>
+
+            <fieldset data-block_id="prerequisites" class="one_step_block">
+              
+                <div class="clearfix">
+                <div class="row">
+                    <div class="col-md-2 col-sm-2">
+                        <span class="text-grey"><b data-lang="installing_on">Installing on - </b></span>
+                    </div>
+                    <div class="col-md-10 col-sm-10">
+                    <input name="" class="form-control installing_desti" value="http://" disabled>
+                  </div>
+                </div>
+                <hr>
+                <div class="clearfix">
+                </div>
+                <div class="col-md-12">
+                  <p data-lang="extension_required">Enable all the extensions that are mentioned on this page, These are required and important for the application</p>
+                </div>
+              </div>
+
+              <hr>
+
+              <div class="row">
+                <div class="col-md-6">
+                 <div class="row">
+                  <div class="prerequesties_block" id="date" data-ext="date">
+                    <div class="col-md-8 col-sm-8 list_heading"> <i class="fa fa-dot-circle"></i> Date</div>
+                    <div class="col-md-4 col-sm-4 ext_status">  <div class="text-success"> <i class="fa fa-check"></i> <span data-lang="pass">Pass</span></div> </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="prerequesties_block" id="session" data-ext="session">
+                    <div class="col-md-8 col-sm-8 list_heading"> <i class="fa fa-dot-circle"></i> Session</div>
+                    <div class="col-md-4 col-sm-4 ext_status"> <div class="text-danger"><i class="fa fa-times"></i> <span data-lang="fail">Fail</span></div> </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="prerequesties_block" id="json" data-ext="json">
+                    <div class="col-md-8 col-sm-8 list_heading"> <i class="fa fa-dot-circle"></i> JSON</div>
+                    <div class="col-md-4 col-sm-4 ext_status"> <div class="text-danger"><i class="fa fa-times"></i> <span data-lang="fail">Fail</span></div> </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <div class="row">
+                  <div class="prerequesties_block" id="pdo" data-ext="PDO">
+                    <div class="col-md-8 col-sm-8 list_heading"> <i class="fa fa-dot-circle"></i> PHP Data Object (PDO)</div>
+                    <div class="col-md-4 col-sm-4 ext_status"> <div class="text-danger"><i class="fa fa-times"></i> <span data-lang="fail">Fail</span></div> </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="prerequesties_block" id="pdo_odbc" data-ext="PDO_ODBC">
+                    <div class="col-md-8 col-sm-8 list_heading"> <i class="fa fa-dot-circle"></i> Object Database Object (PDO-ODBC)</div>
+                    <div class="col-md-4 col-sm-4 ext_status"> <div class="text-danger"><i class="fa fa-times"></i> <span data-lang="fail">Fail</span></div> </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="prerequesties_block" id="ms_sql_srv" data-ext="pdo_sqlsrv">
+                    <div class="col-md-8 col-sm-8 list_heading"> <i class="fa fa-dot-circle"></i> MS-SQL Server (PDO-SQLSRV)</div>
+                    <div class="col-md-4 col-sm-4 ext_status"> <div class="text-danger"><i class="fa fa-times"></i> <span data-lang="fail">Fail</span></div> </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="form-group text-center">
+              <button type="button" class="btn btn btn-success recheck_extensions" > <i class="fa fa-sync"></i> <span data-lang="recheck">Recheck</span> </button>
+            </div>
+
+            <div class="f1-buttons">
+              <button type="button" class="btn btn btn-previous" data-previous-block="welcome"> <i class="fa fa-arrow-alt-circle-left"></i> <span data-lang="previos">Previous</span></button>
+              <button type="button" class="btn btn btn-next connection_next" disabled data-next-block="connection" > <span data-lang="next">Next</span> <i class="fa fa-arrow-alt-circle-right"></i></button>
+            </div>
+          </fieldset>
+
+          <fieldset data-block_id="connection" class="one_step_block">
+            <div class="form-group">
+              <label class="" for="choose_db" data-lang="select_server">Select Server</label>
+              <select name="choose_db"  class="choose_db form-control" id="choose_db">
+                <option value="" data-lang="choose_one_option">Choose one option</option>
+                <option value="ms_sql_srv">MS-SQL</option>
+                <option value="sap_hana">SAP-HANA</option>
+              </select>
+            </div>
+            <div class="db_sections ms_sql_srv_block hide" >
+              <div class="form-group">
+                <label class="" for="sql_server_name" data-lang="server_name">Server Name</label>
+                <input name="sql_server_name"  class="sql_server_name db_inputs form-control" id="sql_server_name" placeholder="server-name" value='' data-value="OPTI-POC1">
+                <span class="error_box text-danger"></span>
+
+              </div>
+              <div class="form-group">
+                <label class="" for="sql_server_username" data-lang="username">Username</label>
+                <input name="sql_server_username"  class="sql_server_username db_inputs form-control" id="sql_server_username" placeholder="john" value='' data-value="sa">
+                <span class="error_box text-danger"></span>
+
+              </div>
+
+              <div class="form-group">
+                <label class="" for="sql_server_password" data-lang="password">Password</label>
+                <input type="password" name="sql_server_password"  class="sql_server_password db_inputs form-control" id="sql_server_password" placeholder="john@123" value='' data-value="sql2k14@opti">
+                <span class="error_box text-danger"></span>
+
+              </div>
+              <!--<div class="form-group">
+                <label class="" for="sql_server_db">Pointing DB</label>
+                <input name="sql_server_db"  class="sql_server_db db_inputs form-control" id="sql_server_db" placeholder="Database Naame/ Company Name">
+                <span class="error_box text-danger"></span>
+              </div> -->  
+            </div>
+            <div class="db_sections sap_hana_block hide">
+              <div class="form-group">
+                <label class="" for="hana_driver" data-lang="driver_name_datasource">Driver Name (ODBC Datasource)</label>
+                <input name="hana_driver"  class="hana_driver db_inputs form-control" id="hana_driver" placeholder="HDBODBC32">
+                <span class="error_box text-danger"></span>
+              </div>
+              <div class="row">
+                <div class="col-md-7 col-sm-7">
+                  <div class="form-group">
+                    <label class="" for="hana_server_name" data-lang="server_name">Server Name</label>
+                    <input name="hana_server_name"  class="hana_server_name db_inputs form-control" id="hana_server_name" placeholder="127.0.0.1">
+                    <span class="error_box text-danger"></span>
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label class="" for="hana_server_port" data-lang="server_port">Server Port</label>
+                    <input name="hana_server_port"  class="hana_server_port db_inputs form-control" id="hana_server_port" placeholder="8080">
+                    <span class="error_box text-danger"></span>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="form-group">
+                <label class="" for="hana_username" data-lang="username">Username</label>
+                <input name="hana_username"  class="hana_username db_inputs form-control" id="hana_username" placeholder="john">
+                <span class="error_box text-danger"></span>
+              </div>
+
+              <div class="form-group">
+                <label class="" for="hana_password" data-lang="password">Password</label>
+                <input name="hana_password"  class="hana_password db_inputs form-control" id="hana_password" placeholder="john@123">
+                <span class="error_box text-danger"></span>
+              </div>
+              <!-- <div class="form-group">
+                <label class="" for="hana_db">Pointing DB</label>
+                <input name="hana_db"  class="hana_db db_inputs form-control" id="hana_db" placeholder="Schema Name">
+                <span class="error_box text-danger"></span>
+              </div> -->
+            </div>
+            <div class="form-group text-center">
+              <button type="button" class="btn btn btn-success test_connection" disabled><span data-lang="test_connection">Test Connection</span> <i class="fa fa-refresh"></i></button>
+            </div>
+            
+            <!--Table to show Data bases of these server-->
+            <div  id="database-table" class="" style='display: none'>
+              <div class="table_box" >
+                <div class="row table_section_head">
+                 <div class="col-md-12 col-sm-12">
+                  <div class="col-md-1 col-sm-1 align_middle"><div class=""><label class="checkbox-inline"><input type="checkbox" class="master_check is_checked" ></label></div></div>
+                  <div class="col-md-5 col-sm-5 align_middle"><span data-lang="database_name">Database Name</span></div>
+                  <div class="col-md-6 col-sm-6 align_middle"><span data-lang="company_name">Company Name</span></div>
+                </div>
+              </div>
+              <div class="row table_section_body container_scroller" id="db_tables"></div>
+            </div>
+          </div>
+        </br>            
+        <div class="f1-buttons">
+          <button type="button" class="btn btn btn-previous" data-previous-block="prerequisites"> <i class="fa fa-arrow-alt-circle-left"></i>  <span data-lang="previos">Previous</span></button>
+          <button type="button" class="btn btn btn-next database_test" disabled data-next-block="customizations" > <span data-lang="next">Next</span> <i class="fa fa-arrow-alt-circle-right"></i></button>
+        </div>
+
+      </fieldset>
+      <fieldset data-block_id="customizations" class="one_step_block">
+        <div class="row">
+          <div class="col-sm-12">
+            <p data-lang="recommend_settings">Customize the dashboard as per your use, We have set it to recommended settings. These are the default settings which you can even  change or update later. </p>
+          </div>
+          <div class="col-sm-7 right_side_border">
+            <div class="popup_heading">
+              <h4><span data-lang="chart_settings">Chart Settings</span></h4>
+              <hr class="small_m">
+              <div class="clearfix"></div>
+            </div> 
+            <div class="form_contents">
+
+              <div class="form-group">
+                <label class="control-label col-sm-5" for="email"><span data-lang="default_task_color_coding">Default Task Color Coding</span></label>
+                <div class="col-sm-5">
+                  <select class="form-control" id="default_task_color_code" name="default_task_color_code" placeholder="Select Work Center">
+                    <option value="priority" data-lang="by_priority"> By Priority</option>
+                    <option value="task_type" data-lang="by_task_type"> By Task Type</option>
+                  </select>
+                </div>
+                <div class="clearfix"></div>  <hr class="small_m">
+              </div>
+              <div class="form-group">
+                <div class="col-sm-12 color_scheme priority_box" style="display:none;" >
+                </div>
+                <div class="clearfix"></div> 
+              </div>
+              <div class="form-group">
+                <div class="col-sm-12 color_scheme task_type_box" style="display:none;">
+                </div>
+                <div class="clearfix"></div> 
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-5" for="unhighlight_color"><span data-lang="unhighlight_color">Un-highlighted Task Color</span> </label>
+                <div class="col-sm-5">
+                  <div id="cp3" class="input-group colorpicker-component">
+                    <input type="text" readonly name="unhighlight_color" value="" class="form-control"/>
+                    <span class="input-group-addon"><i></i></span>
+                  </div>
+                </div>
+                <div class="clearfix"></div>  <hr class="small_m">
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-5" for="email"><span data-lang="default_res_load">Default Resource Load Layout</span></label>
+                <div class="col-sm-5">
+                  <select class="form-control" id="default_resource_load_layout" name="default_resource_load_layout" data-title-lang="select_res_load_pholder" placeholder="Select Resource Load Layout">
+                    <option value="none" data-lang="none"> None</option>
+                    <option value="basic" data-lang="basic_layout"> Basic Layout</option>
+                    <option value="detail" data-lang="detailed_layout"> Detailed Layout</option>
+                  </select>
+                </div>
+                <div class="clearfix"></div>  <hr class="small_m">
+              </div>
+              <div class="form-group">
+                <table class="table table-bordered table-responsive">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th data-lang="balance_load_color"> Balance Load Color</th>
+                      <th data-lang="overload_color">Over Load Color</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class='col-md-3'><span data-lang="res_timeline">Resource Time Line</span></td>
+                      <td><div id="cp3" class="input-group colorpicker-component">
+                        <input type="text" readonly name="resource_balanced_color" id="resource_balanced_color" value="" class="form-control"/>
+                        <span class="input-group-addon"><i></i></span>
+                      </div></td>
+                      <td><div id="cp3" class="input-group colorpicker-component">
+                        <input type="text" readonly name="resource_overload_color"  id="resource_overload_color"value="" class="form-control"/>
+                        <span class="input-group-addon"><i></i></span>
+                      </div></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <hr class="small_m">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-5 left_side_border">
+            <div class="popup_heading">
+              <h4><span data-lang="personalization">Personalization</span></h4>
+              <hr class="small_m">
+              <div class="clearfix"></div>
+            </div> 
+            <div class="form_contents">
+              <div class="form-group">
+                <label class="control-label col-sm-5" for="email"><span data-lang="default_theme">Default Theme</span></label>
+                <div class="col-sm-6">
+                  <select class="form-control" id="default_theme" name="default_theme" placeholder="Select Default Timeline View">
+                    <option value="material"> Default Rich</option>
+                    <option value="terrace"> Basic Terrace</option>
+                    <option value="contrast_white"> High Contrast White</option>
+                    <option value="contrast_black"> High Contrast Black</option>
+                  </select>
+                </div>
+                <div class="clearfix"></div>  <hr class="small_m">
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-sm-5" for="email" data-lang="default_timeline_view">Default Timeline View</label>
+                <div class="col-sm-6">
+                  <select class="form-control" id="default_timeline_view" name="default_timeline_view" data-title-lang="default_view_pholder" placeholder="Select Default Timeline View">
+                    <option value="day" data-lang="day_view"> Day View</option>
+                    <option value="week" data-lang="week_view"> Week View</option>
+                    <option value="month" data-lang="month_view"> Month View</option>
+                  </select>
+                </div>
+                <div class="clearfix"></div>  <hr class="small_m">
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-5" for="task_column_width" data-lang="task_column_width">Task Column Width</label>
+                <div class="col-sm-6">
+                 <input type="number" class="form-control" id="task_column_width" name="task_column_width" value="" placeholder="50">
+               </div>
+               <div class="clearfix"></div> <hr class="small_m">
+             </div> 
+             <div class="form-group">
+              <label class="control-label col-sm-5" for="chart_table_row_height" data-lang="chart_table_row_height">Chart Table Row Height</label>
+              <div class="col-sm-6">
+               <input type="number" class="form-control" id="chart_table_row_height" name="chart_table_row_height" value="" placeholder="30">
+             </div>
+             <div class="clearfix"></div> <hr class="small_m">
+           </div> 
+           <div class="form-group">
+            <label class="control-label col-sm-5" for="chart_header_scale_height" data-lang="chart_header_scale_height">Chart Header Scale Height</label>
+            <div class="col-sm-6">
+             <input type="number" class="form-control" id="chart_header_scale_height" name="chart_header_scale_height" value="" placeholder="20">
+           </div>
+           <div class="clearfix"></div> <hr class="small_m">
+         </div>
+         <div class="form-group">
+          <label class="control-label col-sm-5" for="left_panel_width" data-lang="left_panel_width">Left Panel Width</label>
+          <div class="col-sm-6">
+           <input type="number" class="form-control" id="left_panel_width" name="left_panel_width" value="" placeholder="60">
+         </div>
+         <div class="clearfix"></div> <hr class="small_m">
+       </div>
+       <div class="form-group">
+        <label class="control-label col-sm-5" for="left_panel_width" data-lang="left_panel_resize">Left Panel Enable Resizing</label>
+        <div class="col-sm-6">
+          <label class="radio-inline"><input type="radio" name="left_panel_resize" value="1" data-lang="true_flag">True</label>
+          <label class="radio-inline"><input type="radio" name="left_panel_resize" value="0" data-lang="false_flag">False</label>
+        </div>
+        <div class="clearfix"></div> <hr class="small_m">
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-5" for="enable_keyboard_shortcut"><span data-lang="enable_keyboard_shortcut">Enable Keyboard Shortcuts</span> <a href="javascript:;" class="keyboard_shortcut_help">
+          <span class="text-primary">
+            <i class="fa fa-info-circle"></i>
+          </span>
+        </a>
+      </label> 
+      <div class="col-sm-6">
+        <label class="radio-inline"><input type="radio" name="enable_keyboard_shortcut" value="1" data-lang="true_flag">True</label>
+        <label class="radio-inline"><input type="radio" name="enable_keyboard_shortcut" value="0" data-lang="false_flag">False</label>
+      </div>
+
+      <div class="clearfix"></div> <hr class="small_m">
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-5" for="email" data-lang="drag_lightbox">Task Popup Enable Draging</label>
+      <div class="col-sm-6">
+        <label class="radio-inline"><input type="radio" name="drag_lightbox" value="1" data-lang="true_flag">True</label>
+        <label class="radio-inline"><input type="radio" name="drag_lightbox" value="0" data-lang="false_flag">False</label>
+      </div>
+      <div class="clearfix"></div> <hr class="small_m">
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-5" for="lightbox_additional_height" data-lang="lightbox_additional_height">Task Popup Height</label>
+      <div class="col-sm-6">
+       <input type="number" class="form-control" id="lightbox_additional_height" name="lightbox_additional_height" value="" placeholder="90">
+     </div>
+     <div class="clearfix"></div> <hr class="small_m">
+   </div>
+   <div class="form-group">
+    <label class="control-label col-sm-5" for="left_right_panel_font_size" data-lang="left_right_panel_font_size">Task Area Font Size</label>
+    <div class="col-sm-6">
+     <input type="number" class="form-control" id="left_right_panel_font_size" name="left_right_panel_font_size" value="" placeholder="10">
+   </div>
+   <div class="clearfix"></div> <hr class="small_m">
+ </div>
+</div>
+</div>
+</div>
+<div class="f1-buttons">
+  <button type="button" class="btn btn btn-previous" data-previous-block="connection"> <i class="fa fa-arrow-alt-circle-left"></i>  <span data-lang="previos">Previous</span></button>
+  <button type="button" class="btn btn btn-next install_upgrade" data-next-block="install_upgrade"> <span data-lang="next">Next</span> <i class="fa fa-arrow-alt-circle-right"></i></button>
+</div>
+</fieldset>
+
+<!-- v0.02 New Data step added-->
+<fieldset data-block_id="install_upgrade" class="one_step_block">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="text-center">
+        <h2 data-lang="install_upgrade">Install & Upgrade</h2>
+        <p id="start_install_msg" data-lang="choose_radio_action">Choose the radio button to perform the actions</p>
+        <div class="install_start_loader" style='display:none; text-transform: capitalize;'>
+          <h3 >
+            <i class="fa fa-spinner fa-spin" style="font-size: 60px;"></i>
+          </h3>
+        </div>
+      </div>
+
+      <!--Created a code block-->
+      <p><span data-lang="selected">Selected</span> <b class="text-grey" data-lang="">databases</b></p>
+      <div id="show_details_block" class="" style="display: none"></div>
+      <div class="row">
+        <div class="col-md-12 col-sm-12" style="width:2%;"></div>
+        <div class="text-center">
+          <p id="start_install_msg" data-lang="choose_radio_action">Choose the radio button to perform the actions</p>
+        </div> 
+        <hr>
+        <div class="col-md-12 col-sm-12">
+          <div class="radio_section">
+            <div class="radio">
+              <label><input type="radio" class="is_selected" name="install_option" value="install_only"><b class="ml5"> <span data-lang="install_only">Install Only</span></b></label>
+            </div>
+            <span class="text-muted" data-lang="install_only_msg">This option will install the SWB in those database, which dont have SWB installed, Any database that has SWB installed will be ignored and wont be effected by this option.</span>
+          </div>
+          <div class="radio_section">
+            <div class="radio">
+             <label><input type="radio" class="is_selected" name="install_option" value="upgrade_only"><b class="ml5"> <span data-lang="upgrade_only">Upgrade Only</span></b></label>
+           </div>
+           <span class="text-muted" data-lang="upgrade_only_msg">This option will update the SWB in those database, which include SWB installed, Any database that has SWB installed will be upgraded and the fresh database wont be effected by this option.</span>
+         </div>
+         <div class="radio_section">
+          <div class="radio">
+           <label><input type="radio" class="is_selected" name="install_option" value="uninstall_install"><b class="ml5"> <span data-lang="unistall_install">Uninstall & Install</span></b></label>
+         </div>
+         <span class="text-muted" data-lang="uninstall_only_msg">This Option will Unistall and install the SWB in those all database which include or dont include SWB setup, All the databases will be affected by this option.</span>
+       </div>
+     </div>
+   </div>
+      <!-- <div class="form-group text-center">
+        <button type="button" class="btn btn btn-success show_details">Show Details <i class="fa fa-eye"></i></button>
+      </div> -->
+    </div>
+  </div>
+
+  <div class="f1-buttons">
+    <button type="button" class="btn btn btn-previous" data-previous-block="customizations"> <i class="fa fa-arrow-alt-circle-left"></i>  <span data-lang="previos">Previous</span></button>
+    <button type="button" class="btn btn btn-next install_upgrade_next" data-next-block="start" disabled> <span data-lang="next">Next</span> <i class="fa fa-arrow-alt-circle-right"></i></button>
+  </div>
+</fieldset>
+
+
+<fieldset data-block_id="start" class="one_step_block">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="text-center">
+        <h2 class='final_heading'><span data-lang="start_installation">Start Installation</span></h2>
+        <p id="start_install_msg"> <span data-lang="click_submit_msg">Click on <b>"Finish"</b> Button, To start installation process</span></p>
+        <div class="install_start_loader" style='display:none; text-transform: capitalize;'>
+          <h3 >
+            <i class="fa fa-spinner fa-spin" style="font-size: 60px;"></i>
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="f1-buttons">
+    <input type="hidden"  name="filtered_db" class="filtered_db"  value="">
+    <input type="hidden"  name="app_url" class="app_url"  value="">
+    <button type="button" class="btn btn btn-previous" data-previous-block="install_upgrade"> <i class="fa fa-arrow-alt-circle-left"></i>  <span data-lang="previos">Previous</span></button>
+    <button type="submit" class="btn btn-success btn-submit  final_submit" disabled ><i class="fa fa-check-circle"></i> <span data-lang="finish">Finish</span></button>
+  </div>
+</fieldset>
+</form>
+</div>
+</div>
+</div>
+<!-- Load Chart -->
+<script src="bower_components/js.cookie.js"></script>
+<!-- Load grantt chart  -->
+<script src="assets/gantt/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Load Bootstrap -->
+<script src="bower_components/bootstrap/bootstrap.min.js"></script>
+<script src="bower_components/bootstrap-colorpicker-master/js/bootstrap-colorpicker.min.js" type="text/javascript" charset="utf-8"></script>
+<!-- Data -->
+<script src="assets/js/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="setup/js/setup.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>
+
+<script></script>
+
+

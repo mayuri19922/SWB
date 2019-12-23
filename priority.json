@@ -1,0 +1,23 @@
+{
+    "priority": [{
+        "code": "1",
+        "min_value": "1",
+        "max_value" : "10",
+        "range" : "1-10",
+        "description": "High"
+    },
+    {
+        "code": "11",
+        "min_value": "11",
+        "max_value" : "30",
+        "range" : "11-30",
+        "description": "Medium"
+    },
+    {
+        "code": "31",
+        "min_value": "31",
+        "max_value" : "99",
+        "range" : "31-99",
+        "description": "Low"
+    }]
+}

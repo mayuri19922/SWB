@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="_nK">
+  <link rel="icon" href="assets/images/schedule_icon.png">
+  <title class="app_title"></title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900" rel="stylesheet" type="text/css">
+  <!-- FontAwesome -->
+  <!--<link rel="stylesheet" type="text/css" href="bower_components/fontawesome/css/font-awesome.min.css"> -->
+  <link rel="stylesheet" type="text/css" href="bower_components/fontawesome5/css/fontawesome-all.min.css">
+
+  <link rel="stylesheet" id="gantt_skin"   href="assets/gantt/skins/dhtmlxgantt_material.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+  <link rel="stylesheet" href="assets/css/common.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="assets/css/login.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="bower_components/bootstrap/bootstrap.min.css">
+  
+  <!-- Google fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+
+  <!-- Load Jquery -->
+  <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+</head>
+<body>
+  <div class="login_box">
+    <section id="login">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-wrap">
+              <h1 class="app_title_heading"></h1>
+              <form role="form" action="javascript:;" method="post" id="login-form" autocomplete="off">
+                <div class="form-group">
+                  <label class="sr-only" data-lang="user_name">User Name</label>
+                  <input type="text" name="email" id="username" class="form-control" data-lang="username_placeholder" placeholder="John">
+                </div>
+                <div class="form-group">
+                  <label for="password" class="sr-only" data-lang="password">Password</label>
+                  <input type="password" name="password" id="password" class="form-control" data-lang="password" placeholder="john@123">
+                </div>
+
+                <button type="submit" id="btn-connect" class="btn btn-custom btn-lg btn-block"  onclick="connect()"> <i class="fa fa-plug"></i> <span data-lang="connect">Connect</span></button>
+
+                <div class="form-group" >
+                  <label for="company" class="sr-only" data-lang="company">Company</label>
+                  <select style = "display:none" name="company" id="company" data-lang="company" placeholder="Company" class="form-control" id="sel1" >
+                    <option data-lang="select_company">Select Company</option>
+                  </select>
+                </div>
+              <!-- 
+                <div class="checkbox">
+                  <span class="character-checkbox" onclick="showPassword()"></span>
+                  <span class="label">Show password</span>
+                </div> -->
+                <button style = "display:none" type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" disabled onclick="loginPress()" ><i class="fa fa-sign-in-alt"></i> <span dat-lang='login'>Log in</span></button>
+              </form>
+              <!-- <a href="javascript:;" class="forget" data-toggle="modal" data-target=".forget-modal">Forgot your password?</a> -->
+              <hr>
+            </div>
+          </div> <!-- /.col-xs-12 -->
+        </div> <!-- /.row -->
+      </div> <!-- /.container -->
+    </section>
+
+    <div class="modal fade forget-modal" tabindex="-1" role="dialog" aria-labelledby="myForgetModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">×</span>
+              <span class="sr-only" data-lang='close'>Close</span>
+            </button>
+            <h4 class="modal-title" data-lang="recover_password">Recovery password</h4>
+          </div>
+          <div class="modal-body">
+            <p data-lang="type_email_acc">Type your email account</p>
+            <input type="email" name="recovery-email" id="recovery-email" class="form-control" autocomplete="off">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" data-lang="cancel">Cancel</button>
+            <button type="button" class="btn btn-custom" data-lang="recovery">Recovery</button>
+          </div>
+        </div> <!-- /.modal-content -->
+      </div> <!-- /.modal-dialog -->
+    </div> <!-- /.modal -->
+
+    <footer id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+            <p> <span data-lang="copyright">Copyright © -</span> <span class="date_div"></span></p>
+            <p><span data-lang="powered_by">Powered by</span> <strong><a href="#" target="_blank">OptiPro Manufacturing</a></strong></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <!-- JS Cookie -->
+<script src="bower_components/js.cookie.js"></script>
+<!-- Load grantt chart  -->
+  <script src="assets/gantt/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+  <!-- Load Bootstrap -->
+  <script src="bower_components/bootstrap/bootstrap.min.js"></script>
+  <!-- Data -->
+  <script src="assets/js/common.js" type="text/javascript" charset="utf-8"></script>
+  <script src="assets/js/login.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

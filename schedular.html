@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="_nK">
+  <link rel="icon" href="assets/images/icon.png">
+  <title>Optipro APS</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900" rel="stylesheet" type="text/css">
+  <!-- FontAwesome -->
+   <!--<link rel="stylesheet" type="text/css" href="bower_components/fontawesome/css/font-awesome.min.css"> -->
+  <link rel="stylesheet" type="text/css" href="bower_components/fontawesome5/css/fontawesome-all.min.css">
+
+  <!-- Main -->
+  <link rel='stylesheet' type='text/css' href='assets/schedular/dhtmlxscheduler.css'>
+  <!-- Jquery -->
+  <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+  
+  <!-- Load Schedular  -->
+  <script src='assets/schedular/dhtmlxscheduler.js' type="text/javascript" charset="utf-8"></script>
+  <script src='assets/schedular/ext/dhtmlxscheduler_timeline.js' type="text/javascript" charset="utf-8"></script>
+  <script src='assets/schedular/ext/dhtmlxscheduler_treetimeline.js' type="text/javascript" charset="utf-8"></script>
+
+  <!-- data -->
+  <script src="assets/common.js" type="text/javascript" charset="utf-8"></script>
+  
+  <style type="text/css" >
+  html, body{
+    margin:0;
+    padding:0;
+    height:100%;
+    overflow:hidden;
+  }
+</style>
+
+
+<script type="text/javascript" charset="utf-8">
+  var $current_date = new Date();
+  function init() {
+
+
+    var sections = "";
+    var group_section = "";
+    scheduler.locale.labels.timeline_tab = "Timeline";
+    scheduler.locale.labels.section_custom="Section";
+    scheduler.config.details_on_create=true;
+    scheduler.config.details_on_dblclick=true;
+    scheduler.config.xml_date="%d-%m-%Y %H:%i";
+
+      //===============
+      //Configuration
+      //===============
+
+      var elements = [ // original hierarhical array to display
+      {key:10, label:"Web Testing Dep.", open: true, children: [
+      {key:20, label:"Elizabeth Taylor"},
+      {key:30, label:"Managers",  children: [
+      {key:40, label:"John Williams"},
+      {key:50, label:"David Miller"}
+      ]},
+      {key:60, label:"Linda Brown"},
+      {key:70, label:"George Lucas"}
+      ]},
+      {key:110, label:"Human Relations Dep.", open:true, children: [
+      {key:80, label:"Kate Moss"},
+      {key:90, label:"Dian Fossey"}
+      ]}
+      ];
+
+
+
+      service_call("get_schedular_work_center_resources", "", "", function(res){
+        // sections = res.data;
+        group_section = res.data; 
+      });
+
+      scheduler.createTimelineView({
+        section_autoheight: false,
+        name: "timeline",
+        x_unit: "minute",
+        x_date: "%H:%i",
+        x_step: 60,
+        x_size: 24,
+        x_start: 0,
+        x_length: 24,
+        y_unit: group_section,
+        y_property: "section_id",
+        render:"tree",
+        folder_dy:30,
+        dy:50,
+      });
+
+      //===============
+      //Data loading
+      //===============
+      scheduler.config.lightbox.sections=[
+      { name:"description", height:130, map_to:"text", type:"textarea" , focus:true },
+      { name:"custom", height:23, type:"select", options:sections, map_to:"section_id" },
+      { name:"time", height:72, type:"time", map_to:"auto" }
+      ];
+
+      scheduler.init('scheduler_here',$current_date,"timeline");
+      service_call("get_operations", "schedular", "", function(res){
+
+
+        scheduler.parse(res.data,"json");
+      });
+      
+    }
+  </script>
+
+</head>
+
+<body onload="init();">
+
+
+
+
+  <!-- schedular HTML -start -->
+  <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:100%;'>
+
+    <div class="dhx_cal_navline">
+      <div class="dhx_cal_prev_button">&nbsp;</div>
+      <div class="dhx_cal_next_button">&nbsp;</div>
+      <div class="dhx_cal_today_button"></div>
+      <div class="dhx_cal_date"></div>
+
+      <div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+      <div class="dhx_cal_tab" name="timeline_tab" style="right:280px;"></div>
+
+      <div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+      <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+    </div>
+    <div class="dhx_cal_header">
+    </div>
+    <div class="dhx_cal_data">
+    </div>    
+  </div>
+  <!-- schedular HTML - end -->
+</body>
+
+</html>
+

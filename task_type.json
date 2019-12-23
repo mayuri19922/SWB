@@ -1,0 +1,47 @@
+{
+    "task_type": [{
+        "code": "1",
+        "key": "setup",
+        "description": "Setup"
+    },
+    {
+        "code": "2",
+        "key": "operation",
+        "description": "Operation"
+    },
+    {
+        "code": "3",
+        "key": "interruption",
+        "description": "Interruption"
+    },
+    {
+        "code": "4",
+        "key": "overload",
+        "description": "Overload"
+    },
+    {
+        "code": "5",
+        "key": "breakdown",
+        "description": "Breakdown"
+    },
+    {
+        "code": "6",
+        "key": "maintenance",
+        "description": "maintenance"
+    },
+    {
+        "code": "7",
+        "key": "lunch_break",
+        "description": "Lunch Break"
+    },
+    {
+        "code": "8",
+        "key": "machine_down",
+        "description": "Machine Down"
+    },
+    {
+        "code": "9",
+        "key": "power_cut",
+        "description": "Power Cut"
+    }]
+}

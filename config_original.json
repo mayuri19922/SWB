@@ -1,0 +1,1 @@
+{"company_name":"Optipro ERP","app_title":"Scheduling Workbench","locale":"en","system_version":"0.1.3","base_url":"","default_db_driver":"","connection_parameter":{"ms_sql_srv":{"server_name":"","username":"","password":"","pointing_db":""},"sap_hana":{"driver":"","server_name":"","port":"","username":"","password":""}},"theme":"material","installed":0}

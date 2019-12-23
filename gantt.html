@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="_nK">
+  <link rel="icon" href="assets/images/schedule_icon.png">
+  <title class="app_title"></title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900" rel="stylesheet" type="text/css">
+  <!-- FontAwesome -->
+  <link rel="stylesheet" type="text/css" href="bower_components/fontawesome5/css/fontawesome-all.min.css">
+  
+  <!-- Main -->
+  <link rel="stylesheet" href="assets/dhtmlx_menu/skins/dhtmlxmenu_material.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+  <link rel="stylesheet" id="gantt_skin"   href="assets/gantt/skins/dhtmlxgantt_material.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  
+  <link rel="stylesheet" href="assets/css/common.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="assets/css/loader.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="assets/css/slider.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="assets/css/gantt_chart.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="bower_components/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/bootstrap-colorpicker-master/css/bootstrap-colorpicker.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <!-- Load Bootstrap Date Picker-->
+  <link rel="stylesheet" href="bower_components/bootstrap-datepicker-master/css/bootstrap-datepicker.css">
+
+  <!-- Load Jquery -->
+  <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+  <style id="color_code_block">
+
+</style> 
+
+</head>
+
+<body style="overflow-y: hidden;">
+  <div class="overlay operation_loader" style="display:none" > <div class="overlay-content"></div></div>
+
+  <div class="overlay loading_div" align="center"><div id="loader"><img src="assets/images/loader.gif"  style="width:120px; height:120px;" alt="" ><h4 class=""><b data-lang="plz_wait">Please Wait!</b></h4></div></div>
+
+  <div  id="icon_action_menu" style='display:none;'>
+    <nav class="navbar navbar-inverse "  >
+     <div class="navbar-header">
+      <p class="navbar-brand text-white" href="javscript:;" ><b class='app_title_heading' ></b></p>
+    </div>
+    <div class="nav navbar-nav" id="gantt_menu_here"></div>   
+    <div class="container-fluid navigation_body ">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="resync_progess_toggle_line_item"  style='display:none;' >
+          <input type="checkbox" data-title-lang="start_resyn_progress" title="Start Auto Re-sync progress " class="toggle_checkbox_sm" id="auto_resync_toggle" value="1" /><label for="auto_resync_toggle" class="toggle_label_sm" data-title-lang="start_resyn_progress" title="Start Auto Re-sync progress " ><span data-lang="toggle">Toggle</span></label>
+        </li>
+        <li class="current_plan_detail_quicklook"><a href="javascript:;" title="" onClick="schedule_details_popup()" class="top_menu_items"><i class="fa fa-info-circle fa-1_5x"></i></a></li>
+      </ul>
+    </div>
+  </nav>
+  <nav class="navbar navbar-inverse" >
+    <div class="container-fluid navigation_body ">
+      <ul class="nav navbar-nav menu_actions">
+       <li class="" style='display:none;'><a href="javascript:;" id="minute" class="change_chart_view" data-title-lang="minute_view"  title="Minute View" ><i class="fa fa-clock fa-1_5x"></i> <span data-lang="Minute">Minute</span></a></li>
+       <li class=""><a href="javascript:;" id="day" class="change_chart_view" data-title-lang="day_view"  title="Day View" ><i class="fa fa-calendar-minus fa-1_5x"></i> <span data-lang="day">Day</span></a></li>
+       <li><a href="javascript:;" id="week" class="change_chart_view" data-title-lang="week_view" title="Week View"> <i class="fa fa-calendar-plus fa-1_5x"></i> <span data-lang="week">Week</span></a></li>
+       <li><a href="javascript:;" id="month" class="change_chart_view" data-title-lang="month_view" title="Month View"><i class="fa fa-calendar-alt fa-1_5x"></i> <span data-lang="month">Month</span></a></li>
+       <li style='display:none;'><a href="javascript:;" id="year" class="change_chart_view" data-title-lang="year_view" title="Year View"><i class="fa fa-calendar fa-1_5x"></i> <span data-lang="year">Year</span></a></li>
+       <li><a href="javascript:;" id="previous_timeline" data-title-lang="previos" class="top_menu_items change_dashboard_display previous_day" title="Previous"><i class="fa fa-chevron-left fa-1_5x"></i></a></li>
+       <li><a href="javascript:;" id="next_timeline" data-title-lang="next" class="top_menu_items change_dashboard_display next_day" title="Next"><i class="fa fa-chevron-right fa-1_5x"></i></a></li>
+       <li><a href="javascript:;" id="next_timeline" data-title-lang="jump_current_date" class="top_menu_items current_date" title="Jump to Current Date"><i class="fa fa-calendar-check fa-1_5x"></i> <span data-lang="today">Today</span></a></li>
+
+     </ul>
+     <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <i class="fa fa-users fa-1_5x"></i> <span data-lang="group">Group</span> 
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="javascript:;" title="Group task by priority" data-title-lang="group_priority" onclick="showGroups('priority')"> <i class="fa fa-exclamation-triangle fa-1_5x"></i> <span data-lang="group_priority">Group By Priority</span></a></li>
+            <li><a href="javascript:;" title="Group task by resource" data-title-lang="group_resource" onclick="showGroups('resource')"> <i class="fa fa-user fa-1_5x"></i> <span data-lang="group_resource">Group by Resource</span></a></li>
+            <li><a href="javascript:;" title="Remove Grouping" data-title-lang="remove_grouping" onclick="showGroups()"><i class="fa fa-times fa-1_5x"></i> <span data-lang="remove_grouping">Remove Grouping</span></a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-sync fa-1_5x"></i> <span data-lang="resync">Re-sync</span> 
+            <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="javascript:;" data-title-lang="resync_get_progress" title="Re-sync and get progress of the work order " onclick="refresh_status()"> <i class="fa fa-spinner fa-1_5x"></i> <span data-lang="resyn_status">Re-sync Status</span></a></li>
+              <li><a href="javascript:;" data-title-lang="resync_new_work" title="Re-sync and get the new work orders that are not present in SWB" onclick="refresh_data()"> <i class="fa fa-sync fa-1_5x"></i> <span data-lang="resync_data">Re-sync Data</span> </a> </li>
+
+            </ul>
+          </li>
+          <li><a href="javascript:;" data-title-lang="collapse_all_task" title="Collapse all tasks" class="top_menu_items expand_collapse_task" data-hide='1'><i class="fa fa-compress fa-1_5x"></i></a></li>
+          <li><a href="javascript:;"  data-title-lang="save_draft" onclick="save_all_tasks();" title="Save as Draft" class="top_menu_items"><i class="fa fa-save fa-1_5x"></i></a></li>
+
+          <li><a href="javascript:;"  data-title-lang="undo" title="Undo" onclick="task_undo();" class="top_menu_items"><i class="fa fa-undo-alt fa-1_5x"></i></a></li>
+          <li><a href="javascript:;"  data-title-lang="redo" title="Redo" onclick="task_redo();" class="top_menu_items"><i class="fa fa-redo-alt fa-1_5x"></i></a></li>
+          <li><a href="javascript:;"  data-title-lang="delete_selected_task" title="Delete Selected Task" onclick="delete_selected_task()" class="top_menu_items"><i class="fa fa-trash fa-1_5x"></i></a></li>
+          <li><a href="javascript:;"  data-title-lang="complete_select_task" title="Completed Selected Task" onclick="complete_selected_task()" class="top_menu_items"><i class="fa fa-check-square fa-1_5x"></i></a></li>
+          <li><a href="javascript:;"  data-title-lang="lock_task" title="Lock Task" onclick="lock_selected_task()"  class="top_menu_items"><i class="lock_icon fa fa-lock fa-1_5x"></i></a></li>
+          <li><a href="javascript:;"  data-title-lang="push_to_production" onclick="push_to_production();" title="Push all changes to production" class="top_menu_items"><i class="fa fa-upload fa-1_5x"></i></a></li>
+          <li><a href="javascript:;" data-title-lang="open_config" title="Open Configuration" class="configuration_launch top_menu_items"><i class="fa fa-cogs fa-1_5x"></i></a></li>
+          <li><a href="javascript:;"  data-title-lang="close_plan_change" onclick="confirm_plan_change();" title="Close current schedule & Change Schedule" class="top_menu_items"><i class="fa fa-sign-out-alt fa-1_5x"></i></a></li>
+          <li><a href="javascript:;"  data-title-lang="signout" onclick="signout_system();" title="Signout" class="top_menu_items"><i class="fa fa-power-off fa-1_5x"></i></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+<div id="gantt_here"></div>
+<div class="load_table_box" >
+  <div class="">
+    <div class="" id="load_table_section_revamp"></div>
+  </div>
+</div>
+
+<!-- Data Lightbox Modal -->
+<div id="lightbox_modal" class="modal" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><span class="task_operation_code_heading">Operation-010-1</span></h4>
+        <span class="operation_duration_start_end"> 2018-06-01 to 2018-06-20</span>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+
+          <div class="form-group" data-section="operation_code">
+            <label class="control-label col-sm-3" for="oper_code" data-lang="description">Operation code</label>
+            <div class="col-sm-8">
+             <input type="text" class="form-control close_task_popup_alert" id="oper_code" name="oper_code" value="" placeholder="">
+           </div>
+           <div class="clearfix"></div> <hr class="small_m">
+         </div>
+
+         <div class="form-group" data-section="operation_description">
+          <label class="control-label col-sm-3" for="operation_description" data-lang="description">Operation Description</label>
+          <div class="col-sm-8">
+           <input type="text" class="form-control close_task_popup_alert" id="operation_description" name="operation_description" value="" placeholder="">
+         </div>
+         <div class="clearfix"></div> <hr class="small_m">
+       </div>
+
+       <div class="form-group" data-section="task_type">
+        <label class="control-label col-sm-3" for="task_type_select"><span data-lang="task_type">Task Type</span></label>
+        <div class="col-sm-8">
+          <select class="form-control close_task_popup_alert" id="task_type_select" name="task_type_select" >
+          </select>
+        </div>
+        <div class="clearfix"></div>  <hr class="small_m" style="border: 1px solid #eee;">
+      </div>
+
+      <div class="form-group" data-section="priority">
+        <label class="control-label col-sm-3" for="priority_select"><span data-lang="priority">Priority</span></label>
+        <div class="col-sm-8">
+          <select class="form-control close_task_popup_alert" id="priority_select" name="priority_select" >
+          </select>
+        </div>
+        <div class="clearfix"></div>  <hr class="small_m">
+      </div>
+
+      <div class="form-group" data-section="work_center">
+        <label class="control-label col-sm-3" for="task_wc_code"><span data-lang="work_center">Work Center</span></label>
+        <div class="col-sm-8">
+          <select class="form-control work_center_popup_select_change close_task_popup_alert" id="task_wc_code" name="task_wc_code">
+          </select>
+        </div>
+        <div class="clearfix"></div>  <hr class="small_m">
+      </div>
+      <div class="form-group" data-section="resource">
+        <label class="control-label col-sm-3" for="task_assigned_res"><span data-lang="resource">Resource</span></label>
+        <div class="col-sm-8">
+          <select class="form-control resource_popup_select close_task_popup_alert" id="task_assigned_res" name="task_assigned_res" data-parent_wc_id='task_wc_code'>
+          </select>
+        </div>
+        <div class="clearfix"></div>  <hr class="small_m">
+      </div>
+      <div class="row" data-section="time">
+
+       <div class="col-md-12">
+         <div class="form-group" >
+          <label class="control-label col-sm-3"  for="popup_start_date"  data-lang="time_period_from">Time Period From</label>
+          <div class="col-sm-3">
+            <div class='input-group date' id='popup_start_date_picker'>
+              <input type="text" name="popup_start_date" id="popup_start_date" readonly  class="close_task_popup_alert popup_start_date  form-control from_date_picker"  data-lang="from_date" placeholder="From Date">
+              <span class="input-group-addon">
+               <span class="fa fa-calendar-alt"></span>
+             </span>
+           </div>
+         </div>
+         <div class="col-sm-6">
+          <select name="start_hours" class=" close_task_popup_alert form-control pull-left start_hours" style="width:35%; margin-right:10px" id="popup_start_hours"></select>
+          <select name="start_minutes" class=" close_task_popup_alert form-control pull-left start_minutes" style="width:35%; margin-right:10px" id="popup_start_minutes"></select> 
+        </div>
+
+        <div class="clearfix"></div>  <hr class="small_m">
+      </div>
+
+      <div class="form-group" >
+        <label class="control-label col-sm-3"  for="popup_end_date"  data-lang="time_period_to">Time Period To</label>
+        <div class="col-sm-3">
+          <div class='input-group date' id='popup_end_date_picker'>
+            <input type="text" name="popup_end_date" id="popup_end_date" readonly  class="close_task_popup_alert form-control popup_end_date to_date_picker"  data-lang="to_date" placeholder="To Date">
+            <span class="input-group-addon">
+             <span class="fa fa-calendar-alt"></span>
+           </span>
+         </div>
+       </div>
+       <div class="col-sm-6">
+        <select name="end_hours" class=" close_task_popup_alert form-control pull-left end_hours" style="width:35%; margin-right:10px" id="popup_end_hours"></select>
+        <select name="end_minutes" class=" close_task_popup_alert form-control pull-left end_minutes" style="width:35%; margin-right:10px" id="popup_end_minutes"></select>
+      </div>
+      <div class="clearfix"></div>  <hr class="small_m">
+    </div>
+
+  </div>  
+</div>
+
+</div>
+</div>
+<div class="modal-footer">
+ <div class="pull-left">
+  <button type="button" class="btn btn-success" name="save_update_lightbox_task" value="save_update_lightbox_task" id="save_update_lightbox_task"><i class="fa fa-check"></i>  <span data-lang="save">Save</span> </button>
+  <button type="button" class="btn btn-primary" name="complete_action" value="complete_action" id="complete_action"><i class="fa fa-check"></i> <span data-lang="complete">Complete</span></button>
+</div> 
+<button type="button" class="btn btn-danger" name="delete_lightbox_task" value="delete_lightbox_task" id="delete_lightbox_task"><i class="fa fa-check"></i> <span data-lang="delete">Delete</span></button>
+<button type="button" class="btn btn-light"   name="close_lightbox_custom" value="close_lightbox_custom" id="close_lightbox_custom"><i class="fa fa-times"></i> <span data-lang="close">Close</span></button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Configuration Modal -->
+<div id="help_model" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">
+          <b><i class="fa fa-question"></i> <span data-lang="help_readme">Help - User Manual</span>
+          </b>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12"> 
+            <iframe src="readme/manual.pdf#zoom=90"  width="800px" height="600px" ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Configuration Modal -->
+<div id="myModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <form action="" id="configuration_form" class="configuration_form" class="form">
+        <div class="modal-header">
+          <button type="button" class="close close_configuration_popup"  >&times;</button>
+          <h4 class="modal-title">
+            <b><i class="fa fa-cogs"></i> <span data-lang="configuration">Configurations</span>
+            </b>
+          </h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="first_section popup_sections" data-display="1" data-step="1">
+
+              <div class="col-sm-6 right_side_border">
+                <div class="popup_heading">
+                  <h4><i class="fa fa-cog"></i> <span data-lang="chart_settings">Chart Settings</span></h4>
+                  <hr class="small_m">
+                  <div class="clearfix"></div>
+                </div> 
+                <div class="form_contents">
+                 <div class="form-group">
+                  <label class="control-label col-sm-5" for="email"><span data-lang="work_center">Work Center</span></label>
+                  <div class="col-sm-5">
+                    <select class="form-control close_setting_popup_alert" id="default_work_center" name="default_work_center" data-lang="select_wc_pholder" placeholder="Select Work Center">
+                      <option value="all" data-lang="all">All</option>
+                      <option value="1"> Work Center 1</option>
+                      <option value="2"> Work Center 2</option>
+                      <option value="3"> Work Center 3</option>
+                    </select>
+                  </div>
+                  <div class="clearfix"></div>  <hr class="small_m">
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-5" for="email"><span data-lang="default_task_color_coding">Default Task Color Coding</span></label>
+                  <div class="col-sm-5">
+                    <select class="form-control close_setting_popup_alert" id="default_task_color_code" name="default_task_color_code" data-title-lang="select_cc_pholder"  placeholder="Select Color Coding">
+                      <option value="priority" data-lang="by_priority"> By Priority</option>
+                      <option value="task_type" data-lang="by_task_type"> By Task Type</option>
+                    </select>
+                  </div> 
+                  <div class="clearfix"></div>  <hr class="small_m">
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-12 color_scheme priority_box" style="display:none;" >
+                  </div>
+                  <div class="clearfix"></div> 
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-12 color_scheme task_type_box" style="display:none;">
+                  </div>
+                  <div class="clearfix"></div> 
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-5" for="unhighlight_color"><span data-lang="unhighlight_color">Un-highlighted Task Color </span></label>
+                  <div class="col-sm-5">
+                    <div id="cp3" class="input-group colorpicker-component">
+                      <input type="text" readonly name="unhighlight_color" value="" class="form-control close_setting_popup_alert"/>
+                      <span class="input-group-addon"><i></i></span>
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>  <hr class="small_m">
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-5" for="email"><span data-lang="default_res_load">Default Resource Load Layout</span></label>
+                  <div class="col-sm-5">
+                    <select class="form-control close_setting_popup_alert" id="default_resource_load_layout" name="default_resource_load_layout" data-title-lang="select_res_load_pholder" placeholder="Select Resource Load Layout">
+                     <option value="none" data-lang="none"> None</option>
+                     <option value="basic"  data-lang="basic_layout"> Basic Layout</option>
+                     <option value="detail" data-lang="detailed_layout"> Detailed Layout</option>
+                   </select>
+                 </div>
+                 <div class="clearfix"></div>  <hr class="small_m">
+               </div>
+               <div class="form-group">
+                <table class="table table-bordered table-responsive">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th data-lang="balance_load_color">Balance Load Color</th>
+                      <th data-lang="overload_color">Over Load Color</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class='col-md-3'><span data-lang="res_timeline">Resource Time Line</span></td>
+                      <td><div id="cp3" class="input-group colorpicker-component">
+                        <input type="text" readonly name="resource_balanced_color" id="resource_balanced_color" value="" class="form-control close_setting_popup_alert"/>
+                        <span class="input-group-addon"><i></i></span>
+                      </div></td>
+                      <td><div id="cp3" class="input-group colorpicker-component">
+                        <input type="text" readonly name="resource_overload_color"  id="resource_overload_color"value="" class="form-control close_setting_popup_alert"/>
+                        <span class="input-group-addon"><i></i></span>
+                      </div></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <hr class="small_m">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 left_side_border">
+            <div class="popup_heading">
+              <h4><i class="fa fa-paint-brush"></i> <span data-lang="personalization">Personalization</span></h4>
+              <hr class="small_m">
+              <div class="clearfix"></div>
+            </div> 
+            <div class="form_contents">
+              <div class="form-group">
+                <label class="control-label col-sm-5" for="email" data-lang="default_theme">Default Theme</label>
+                <div class="col-sm-5">
+                  <select class="form-control close_setting_popup_alert" id="default_theme" name="default_theme" data-title-lang="default_view_pholder" placeholder="Select Default Timeline View">
+                    <option value="material" > Default Rich</option>
+                    <option value="terrace"> Basic Terrace</option>
+                    <option value="contrast_white"> High Contrast White</option>
+                    <option value="contrast_black"> High Contrast Black</option>
+                  </select>
+                </div>
+                <div class="clearfix"></div>  <hr class="small_m">
+              </div>
+
+              <div class="form-group">
+               <label class="control-label col-sm-5" for="tash_popup_minute_scale" data-lang="enable_minute_view_scale">Enable Minute View Scale</label> 
+               <div class="col-sm-4">
+                 <input type="checkbox" data-title-lang="enable_minute_view_scale" title="Enable Minute View Scale" id="enable_minute_view_scale_toggle" data-setting="enable_minute_view_scale" class="toggle_checkbox_sm check_uncheck_value_switcher add_remove_timeline_option close_setting_popup_alert" data-timeline_option="minute" data-linked_field="enable_minute_view_scale"  />
+                 <label for="enable_minute_view_scale_toggle" class="toggle_label_sm" data-title-lang="start_resyn_progress" title="Start Auto Re-sync progress" style="margin: 0px;" >
+                  <span data-lang="enable_minute_view_scale">Enable Minute View Scale</span> 
+                </label>
+                <input type="hidden" id="enable_minute_view_scale" name="enable_minute_view_scale" value="1" />
+              </div>
+              <div class="clearfix"></div> <hr class="small_m">
+            </div>
+
+            <div class="form-group">
+             <label class="control-label col-sm-5" for="tash_popup_minute_scale" data-lang="enable_year_view_scale">Enable Year View Scale</label> 
+             <div class="col-sm-4">
+               <input type="checkbox" data-title-lang="enable_year_view_scale" title="Enable Year View Scale" id="enable_year_view_scale_toggle" data-setting="enable_year_view_scale" class="toggle_checkbox_sm check_uncheck_value_switcher add_remove_timeline_option close_setting_popup_alert"  data-timeline_option="year"  data-linked_field="enable_year_view_scale"  />
+               <label for="enable_year_view_scale_toggle" class="toggle_label_sm" data-title-lang="enable_year_view_scale" title="Enable Year View Scale" style="margin: 0px;" >
+                <span data-lang="enable_year_view_scale">Enable Year View Scale</span> 
+              </label>
+              <input type="hidden" id="enable_year_view_scale" name="enable_year_view_scale" value="1" />
+            </div>
+            <div class="clearfix"></div> <hr class="small_m">
+          </div>
+
+          <div class="form-group">
+            <label class="control-label col-sm-5" for="email" data-lang="default_timeline_view">Default Timeline View</label>
+            <div class="col-sm-4">
+              <select class="form-control close_setting_popup_alert" id="default_timeline_view" name="default_timeline_view" placeholder="Select Default Timeline View">
+                <option value="minute" data-lang="minute_view"> Minute View</option>
+                <option value="day" data-lang="day_view"> Day View</option>
+                <option value="week" data-lang="week_view"> Week View</option>
+                <option value="month" data-lang="month_view"> Month View</option>
+                <option value="year" data-lang="year_view"> Year View</option>
+              </select>
+            </div>
+            <div class="clearfix"></div>  <hr class="small_m">
+          </div>
+
+
+
+          <div class="form-group">
+           <label class="control-label col-sm-5" for="tash_popup_dragging" data-lang="left_panel_resize">Left Panel Enable Resizing</label> 
+           <div class="col-sm-4">
+             <input type="checkbox" data-title-lang="left_panel_resize" title="Left Panel Enable Resizing" id="left_panel_resize_toggle" data-setting="left_panel_resize" class="toggle_checkbox_sm check_uncheck_value_switcher close_setting_popup_alert" data-linked_field="left_panel_resize"  />
+             <label for="left_panel_resize_toggle" class="toggle_label_sm" data-title-lang="left_panel_resize" title="Left Panel Enable Resizing" style="margin: 0px;" >
+              <span data-lang="left_panel_resize">Left Panel Enable Resizing</span> 
+            </label>
+            <input type="hidden" id="left_panel_resize" name="left_panel_resize" value="1" />
+          </div>
+          <div class="clearfix"></div> <hr class="small_m">
+        </div>
+
+        <div class="form-group">
+         <label class="control-label col-sm-5" for="enable_keyboard_shortcut_toggle" data-lang="enable_keyboard_shortcut">Enable Keyboard Shortcuts</label> 
+         <div class="col-sm-4">
+           <input type="checkbox" data-title-lang="enable_keyboard_shortcut" title="Enable Keyboard Shortcuts" id="enable_keyboard_shortcut_toggle" data-setting="enable_keyboard_shortcut" class="toggle_checkbox_sm check_uncheck_value_switcher close_setting_popup_alert" data-linked_field="enable_keyboard_shortcut"  />
+           <label for="enable_keyboard_shortcut_toggle" class="toggle_label_sm" data-title-lang="enable_keyboard_shortcut" title="Enable Keyboard Shortcuts" style="margin: 0px;" >
+            <span data-lang="enable_keyboard_shortcut">Enable Keyboard Shortcuts</span> 
+          </label>
+          <input type="hidden" id="enable_keyboard_shortcut" name="enable_keyboard_shortcut" value="1" />
+        </div>
+        <div class="col-sm-3">
+          <a href="javascript:;" class="keyboard_shortcut_help">
+            <span class="text-primary">
+              <i class="fa fa-info-circle fa-1_5x"></i>
+            </span>
+          </a>
+        </div>
+        <div class="clearfix"></div> <hr class="small_m">
+      </div>
+
+      <div class="form-group">
+       <label class="control-label col-sm-5" for="tash_popup_dragging" data-lang="drag_lightbox">Task Popup Enable Draging</label> 
+       <div class="col-sm-4">
+         <input type="checkbox" data-title-lang="drag_lightbox" title="Task Popup Enable Draging" id="drag_lightbox_toggle" data-setting="drag_lightbox" class="toggle_checkbox_sm check_uncheck_value_switcher close_setting_popup_alert" data-linked_field="drag_lightbox"  />
+         <label for="drag_lightbox_toggle" class="toggle_label_sm" data-title-lang="drag_lightbox" title="Task Popup Enable Draging" style="margin: 0px;" >
+          <span data-lang="drag_lightbox">Task Popup Enable Draging</span> 
+        </label>
+        <input type="hidden" id="drag_lightbox" name="drag_lightbox" value="1" />
+      </div>
+      <div class="clearfix"></div> <hr class="small_m">
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-5" for="task_column_width" data-lang="task_column_width">Task Column Width</label>
+      <div class="col-sm-4 slidecontainer">
+       <input type="range" class="form-control close_setting_popup_alert slider slider_slide" id="task_column_width" oninput="range_value_show(this)" name="task_column_width" min="20" max="100" value="" placeholder="50">
+     </div>
+     <div class="col-md-2">
+      <div class="round_badge range_input_value"  data-linked_field="task_column_width"></div>
+    </div>
+    <div class="clearfix"></div> <hr class="small_m">
+  </div> 
+  <div class="form-group">
+    <label class="control-label col-sm-5" for="chart_table_row_height" data-lang="chart_table_row_height">Chart Table Row Height</label>
+    <div class="col-sm-4 slidecontainer">
+     <input type="range" class="form-control close_setting_popup_alert slider" id="chart_table_row_height" name="chart_table_row_height" oninput="range_value_show(this)"   min="20" max="60" value="" placeholder="30">
+   </div>
+   <div class="col-md-2">
+    <div class="round_badge range_input_value"  data-linked_field="chart_table_row_height"></div>
+  </div>
+  <div class="clearfix"></div> <hr class="small_m">
+</div> 
+</div>
+</div>
+
+</div>
+<div class="second_section popup_sections hide" data-display="0" data-step="2" >
+  <div class="col-sm-6 right_side_border">
+    <div class="popup_heading">
+      <h4 ><i class="fa fa-cog"></i> <span data-lang="chart_settings">Chart Settings</span></h4>
+      <hr class="small_m">
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="form-group">
+     <label class="control-label col-sm-5" for="tash_popup_dragging" data-lang="enable_auto_resync_progress">Enable Auto Resync.</label> 
+     <div class="col-sm-4">
+       <input type="checkbox" data-title-lang="start_resyn_progress" title="Start Auto Re-sync progress" id="enable_auto_resync_progress_toggle" data-setting="enable_auto_resync_progress" class="toggle_checkbox_sm check_uncheck_value_switcher close_setting_popup_alert" data-linked_field="enable_auto_resync_progress"  />
+       <label for="enable_auto_resync_progress_toggle" class="toggle_label_sm" data-title-lang="start_resyn_progress" title="Start Auto Re-sync progress" style="margin: 0px;" >
+        <span data-lang="enable_auto_resync_progress">Enable Auto Resync.</span> 
+      </label>
+      <input type="hidden" id="enable_auto_resync_progress" name="enable_auto_resync_progress" value="1" />
+    </div>
+    <div class="clearfix"></div> <hr class="small_m">
+  </div>
+
+  <div class="form-group">
+    <div class="enable_auto_resync_progress_box" style="display:none;" >
+      <label class="control-label col-sm-5" for="auto_resync_duration" data-lang="auto_resync_duration">Auto Resync. Duration </label>
+      <div class="col-sm-4">
+        <div class="input-group">
+          <input type="number" min="1" max="15" class="form-control close_setting_popup_alert" id="auto_resync_duration" name="auto_resync_duration" value="" placeholder="90">
+          <span class="input-group-addon" id="basic-addon3" data-lang="minute_short">Min.</span>
+        </div>
+      </div>
+      <div class="clearfix"></div> <hr class="small_m">
+    </div>
+    <div class="clearfix"></div> 
+  </div>
+
+
+</div>
+<div class="col-sm-6 left_side_border">
+  <div class="popup_heading">
+    <h4><i class="fa fa-paint-brush"></i> <span data-lang="personalization"></span> Personalization</h4>
+    <hr class="small_m">
+    <div class="clearfix"></div>
+  </div>
+  
+  <div class="form-group">
+    <label class="control-label col-sm-5" for="chart_header_scale_height" data-lang="chart_header_scale_height"> Chart  Header Scale Height</label>
+    <div class="col-sm-4 slidecontainer">
+     <input type="range" class="form-control close_setting_popup_alert slider" id="chart_header_scale_height" name="chart_header_scale_height" oninput="range_value_show(this)"  min="30" max="70" value="" placeholder="20">
+   </div>
+   <div class="col-md-2">
+    <div class="round_badge range_input_value"  data-linked_field="chart_header_scale_height"></div>
+  </div>
+  <div class="clearfix"></div> <hr class="small_m">
+</div>
+<div class="form-group">
+  <label class="control-label col-sm-5" for="left_panel_width" data-lang="left_panel_width">Left Panel Width</label>
+  <div class="col-sm-4 slidecontainer">
+   <input type="range" class="form-control close_setting_popup_alert slider" id="left_panel_width" oninput="range_value_show(this)"  min="400" max="700" name="left_panel_width" value="" placeholder="60">
+ </div>
+ <div class="col-md-2">
+  <div class="round_badge range_input_value"  data-linked_field="left_panel_width"></div>
+</div>
+<div class="clearfix"></div> <hr class="small_m">
+</div>
+
+<!-- <div class="form-group">
+  <label class="control-label col-sm-5" for="lightbox_additional_height" data-lang="lightbox_additional_height">Task Popup Height</label>
+  <div class="col-sm-4 slidecontainer">
+   <input type="range" class="form-control close_setting_popup_alert slider" id="lightbox_additional_height" oninput="range_value_show(this)"  min="100" max="250" name="lightbox_additional_height" value="" placeholder="90">
+ </div>
+ <div class="col-md-2">
+  <div class="round_badge range_input_value"  data-linked_field="lightbox_additional_height"></div>
+</div>
+<div class="clearfix"></div> <hr class="small_m">
+</div> -->
+<div class="form-group">
+  <label class="control-label col-sm-5" for="left_right_panel_font_size" data-lang="left_right_panel_font_size">Task Area Font Size</label>
+  <div class="col-sm-4 slidecontainer">
+   <input type="range" class="form-control close_setting_popup_alert slider" id="left_right_panel_font_size" oninput="range_value_show(this)"  min="10" max="18" name="left_right_panel_font_size" value="" placeholder="10">
+ </div>
+ <div class="col-md-2">
+  <div class="round_badge range_input_value"  data-linked_field="left_right_panel_font_size"></div>
+</div>
+<div class="clearfix"></div> <hr class="small_m">
+</div>    
+</div>
+</div>
+
+</div>
+</div>
+<div class="modal-footer">
+ <div class="pull-left">
+  <button type="button" class="btn btn-light popup_navigation" name="popup_prev_btn" disabled value="popup_prev_btn" id="popup_prev_btn"><i class="fa fa-chevron-circle-left fa-1_5x"></i> </button>
+  <button type="button" class="btn btn-light popup_navigation" name="popup_next_btn" disabled value="popup_next_btn" id="popup_next_btn"><i class="fa fa-chevron-circle-right fa-1_5x"></i> </button>
+</div> 
+<button type="submit" class="btn btn-success" name="save_poup_data" value="save_poup_data" id="save_poup_data"><i class="fa fa-check"></i> <span data-lang="save_reload">Save & Reload</span></button>
+<button type="button" class="btn btn-danger close_configuration_popup" ><i class="fa fa-times"></i> <span data-lang="close">Close</span></button>
+</div>
+</form>
+</div>
+</div>
+</div>
+
+</body>
+
+<!-- moment js  -->
+<script src="bower_components/bootstrap-datepicker-master/js/moment.min.js"></script>
+<!-- JS Cookie -->
+<script src="bower_components/js.cookie.js"></script>
+<!-- Load Bootstrap -->
+<script src="bower_components/bootstrap/bootstrap.min.js"></script>
+<!-- Additional Library -->
+<script src="bower_components/bootstrap-colorpicker-master/js/bootstrap-colorpicker.min.js" type="text/javascript" charset="utf-8"></script>
+<!-- Load Bootstrap Date Picker-->
+<script src="bower_components/bootstrap-datepicker-master/js/bootstrap-datepicker.js"></script>
+
+<!-- Dhtmlx menu files -->
+<script type="text/javascript" src="assets/dhtmlx_menu/dhtmlxmenu.js"></script>
+<script type="text/javascript" src="assets/dhtmlx_menu/ext/dhtmlxmenu_ext.js"></script>
+<script type="text/javascript" src="assets/dhtmlx_menu/ext/dhtmlxmenu_effects.js"></script>
+<script type="text/javascript" src="assets/dhtmlx_menu/dhtmlxmenu_deprecated.js"></script>
+
+<!-- Dhtmlx gantt chart -->
+<script src="assets/gantt/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+<script src="//export.dhtmlx.com/gantt/api.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Dhtmlx gantt extensions -->
+<script src="assets/gantt/ext/dhtmlxgantt_auto_scheduling.js" type="text/javascript" charset="utf-8"></script>
+<script src="assets/gantt/ext/dhtmlxgantt_grouping.js" type="text/javascript" charset="utf-8"></script>
+<script src="assets/gantt/ext/dhtmlxgantt_undo.js"></script>
+<!-- <script src="assets/gantt/ext/dhtmlxgantt_tooltip.js"></script> -->
+<script src="assets/gantt/ext/dhtmlxgantt_quick_info.js" type="text/javascript" charset="utf-8"></script>
+<script src="assets/gantt/ext/dhtmlxgantt_fullscreen.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- data -->
+<script src="assets/js/common.js" type="text/javascript" charset="utf-8"></script>
+<!-- Page JS -->
+<script src="assets/js/gantt_split_task.js" type="text/javascript" charset="utf-8"></script>
+<script src="assets/js/gantt_main.js" type="text/javascript" charset="utf-8"></script>
+<script src="assets/js/resource_load.js" type="text/javascript" charset="utf-8"></script>
+
+</html>
