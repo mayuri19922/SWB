@@ -1,0 +1,240 @@
+
+
+{"date":"26-07-2018 09:45","action":"install_SWB","query":"DROP TABLE OptiAPS..\"OPTM_APS_SCH_REF\" "}
+
+
+
+{"date":"26-07-2018 09:45","action":"install_SWB","query":"DROP TABLE OptiAPS..\"OPTM_APS_PRODOPER\" "}
+
+
+
+{"date":"26-07-2018 09:45","action":"install_SWB","query":"DROP TABLE OptiAPS..\"OPTM_APS_PRODOPER_LINKS\" "}
+
+
+
+{"date":"26-07-2018 09:45","action":"install_SWB","query":"DROP TABLE OptiAPS..\"OPTM_APS_DSHBD_SETTINGS\""}
+
+
+
+{"date":"26-07-2018 09:45","action":"install_SWB","query":"\r\n\tCREATE TABLE OptiAPS..\"OPTM_APS_SCH_REF\" (\r\n\tOPTM_REF_ID              INT           NOT NULL    IDENTITY    PRIMARY KEY,\r\n\tOPTM_PLAN_NAME           VARCHAR(100)  NOT NULL,\r\n\tOPTM_FROM_DATE  datetime,\r\n\tOPTM_TO_DATE  datetime,\r\n\tOPTM_SCHEDULING_STATUS  VARCHAR(100),\r\n\tOPTM_IS_DELETED  tinyint,\r\n)"}
+
+
+
+{"date":"26-07-2018 09:45","action":"install_SWB","query":"\r\nCREATE TABLE OptiAPS..\"OPTM_APS_DSHBD_SETTINGS\" (\r\nID              INT           NOT NULL    IDENTITY    PRIMARY KEY,\r\nNAME varchar(400) NULL,\r\nVALUE text NULL,\r\n\"GROUP\" varchar(150) NULL,\r\n)"}
+
+
+
+{"date":"26-07-2018 09:45","action":"install_SWB","query":" INSERT INTO OptiAPS..\"OPTM_APS_DSHBD_SETTINGS\" (NAME, VALUE, \"GROUP\") VALUES\r\n('default_work_center',\t'all',\t'system'),\r\n('task_column_width',\t'50',\t'system'),\r\n('chart_table_row_height',\t'25',\t'system'),\r\n('left_panel_width',\t'580',\t'system'),\r\n('left_panel_resize',\t'1',\t'system'),\r\n('enable_keyboard_shortcut',\t'1',\t'system'),\r\n('chart_header_scale_height',\t'50',\t'system'),\r\n('default_timeline_view',\t'day',\t'system'),\r\n('default_task_color_code',\t'task_type',\t'system'),\r\n('drag_lightbox',\t'1',\t'system'),\r\n('lightbox_additional_height',\t'120',\t'system'),\r\n('default_theme',\t'material',\t'system'),\r\n('task_type_color_set',\t'{\"1\":{\"tc\":\"#48be1a\",\"pc\":\"#2a8607\"},\"2\":{\"tc\":\"#4682db\",\"pc\":\"#1a68d9\"},\"3\":{\"tc\":\"#cc3d3d\",\"pc\":\"#8d0e0e\"},\"4\":{\"tc\":\"#d96c49\",\"pc\":\"#d74a1c\"},\"5\":{\"tc\":\"#f13535\",\"pc\":\"#da2c2c\"},\"6\":{\"tc\":\"#33b4ea\",\"pc\":\"#2a9dce\"},\"7\":{\"tc\":\"#c7c340\",\"pc\":\"#aea913\"},\"8\":{\"tc\":\"#626262\",\"pc\":\"#000000\"},\"9\":{\"tc\":\"#c5261b\",\"pc\":\"#941a11\"}}',\t'system'),\r\n('priority_color_set',\t'{\"1\":{\"tc\":\"#d96c49\",\"pc\":\"#d8572e\"},\"11\":{\"tc\":\"#42b849\",\"pc\":\"#068525\"},\"31\":{\"tc\":\"#56a1ec\",\"pc\":\"#0747ae\"}}',\t'system'),\r\n('left_right_panel_font_size',\t'12',\t'system'),\r\n('unhighlight_color',\t'#e4e4e4',\t'system'),\r\n( 'default_resource_load_layout', 'detail', 'system'),\r\n( 'resource_balanced_color', '#42b849', 'system'),\r\n( 'resource_overload_color', '#d96c49', 'system' )"}
+
+
+
+{"date":"26-07-2018 09:45","action":"install_SWB","query":"\r\nCREATE TABLE OptiAPS..\"OPTM_APS_PRODOPER\" (\r\nOPER_ID  INT           NOT NULL    IDENTITY    PRIMARY KEY,\r\nREF_ID   VARCHAR(100)  NOT NULL,\r\nHEAD_DOC_ENTRY VARCHAR(20)  NOT NULL,\r\nOPER_DOC_ENTRY VARCHAR(20)  NOT NULL,\r\nOPER_LINE_ID VARCHAR(20)  NOT NULL,\r\nRES_LINE_ID VARCHAR(20)  NOT NULL,\r\nOPERATION_TYPE VARCHAR(20)  NOT NULL,\r\nTASK_TYPE VARCHAR(20)  NOT NULL,\r\nWORK_CENTER_ID VARCHAR(100)  NOT NULL,\r\nWORK_ORDER_ID VARCHAR(100)  NOT NULL, \r\nRESOURCE_ID VARCHAR(100)  NOT NULL,\r\nRESOURCE_NAME  VARCHAR(100)  NOT NULL,\r\nPLANNED_RESOURCE_ID VARCHAR(100)  NOT NULL,\r\nPLANNED_RESOURCE_NAME  VARCHAR(100)  NOT NULL,\r\nOPERATION_NUMBER VARCHAR(100)  NOT NULL,\r\nOPERATION_CODE VARCHAR(100)  NOT NULL,\r\nDESCRIPTION VARCHAR(100)  NOT NULL,\r\nPRIORITY VARCHAR(100)  NOT NULL,\r\nREADONLY  tinyint,\r\nSTATUS VARCHAR(50)  NOT NULL,\r\nSTART_DATE datetime,\r\nEND_DATE datetime,\r\nDURATION VARCHAR(50)  NOT NULL,\r\nMIN_DURATION VARCHAR(50)  NOT NULL,\r\nPROGRESS VARCHAR(50)  NOT NULL,\r\nIS_LOCAL_TASK  tinyint,\r\nIS_DELETED tinyint,\r\nSPLIT_TASK_GRP_ID VARCHAR(100) NULL\r\n)"}
+
+
+
+{"date":"26-07-2018 09:45","action":"install_SWB","query":"\r\nCREATE TABLE OptiAPS..\"OPTM_APS_PRODOPER_LINKS\" (\r\nOPR_LINK_ID  INT           NOT NULL    IDENTITY    PRIMARY KEY,\r\nREF_ID   VARCHAR(100)  NOT NULL,\r\nPRED_TASK_ID VARCHAR(20)  NOT NULL,\r\nSUCC_TASK_ID VARCHAR(20)  NOT NULL,\r\nCONNECTION_TYPE VARCHAR(20)  NOT NULL,\r\n)"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"ALTER TABLE OptiAPS..\"OPTM_APS_PRODOPER\" ADD required_resource int;"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"INSERT INTO OptiAPS..\"OPTM_APS_DSHBD_SETTINGS\" ( NAME, value, \"group\") VALUES ( 'enable_auto_resync_progress', '0', 'system' )"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"INSERT INTO OptiAPS..\"OPTM_APS_DSHBD_SETTINGS\" ( NAME, value, \"group\") VALUES ( 'auto_resync_duration', '5', 'system' )"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"INSERT INTO OptiAPS..\"OPTM_APS_DSHBD_SETTINGS\" ( NAME, value, \"group\") VALUES ( 'default_day_view_layout', 'hour', 'system' )"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"ALTER TABLE OptiAPS..\"OPTM_APS_SCH_REF\" ADD WORKING_WC varchar(200) NULL"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"INSERT INTO OptiAPS..\"OPTM_APS_DSHBD_SETTINGS\" ( NAME, value, \"group\") VALUES ( 'enable_minute_view_scale', '1', 'system' )"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"INSERT INTO OptiAPS..\"OPTM_APS_DSHBD_SETTINGS\" ( NAME, value, \"group\") VALUES ( 'enable_year_view_scale', '1', 'system' )"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"ALTER TABLE OptiAPS..\"OPTM_APS_PRODOPER\" ALTER COLUMN REF_ID INT"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"ALTER TABLE OptiAPS..\"OPTM_APS_PRODOPER\" ALTER COLUMN HEAD_DOC_ENTRY INT"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"ALTER TABLE OptiAPS..\"OPTM_APS_PRODOPER\" ALTER COLUMN OPER_DOC_ENTRY INT"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"ALTER TABLE OptiAPS..\"OPTM_APS_PRODOPER\" ALTER COLUMN OPER_LINE_ID INT"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"ALTER TABLE OptiAPS..\"OPTM_APS_PRODOPER\" ALTER COLUMN RES_LINE_ID INT"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"ALTER TABLE OptiAPS..\"OPTM_APS_PRODOPER\" ALTER COLUMN OPERATION_NUMBER INT"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"ALTER TABLE OptiAPS..\"OPTM_APS_PRODOPER\" ALTER COLUMN \"PRIORITY\" INT"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"ALTER TABLE OptiAPS..\"OPTM_APS_PRODOPER\" ALTER COLUMN PROGRESS FLOAT"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"ALTER TABLE OptiAPS..\"OPTM_APS_PRODOPER\" ADD WO_STATUS int;"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"INSERT INTO OptiAPS..\"OPTM_APS_DSHBD_SETTINGS\" ( NAME, value, \"group\") VALUES ( 'enable_today_marker', '1', 'system' )"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"INSERT INTO OptiAPS..\"OPTM_APS_DSHBD_SETTINGS\" ( NAME, value, \"group\") VALUES ( 'highlight_weekend', '1', 'system' )"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"INSERT INTO OptiAPS..\"OPTM_APS_DSHBD_SETTINGS\" ( NAME, value, \"group\") VALUES ( 'enable_multiple_select_task', '1', 'system' )"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"INSERT INTO OptiAPS..\"OPTM_APS_DSHBD_SETTINGS\" ( NAME, value, \"group\") VALUES ( 'enable_task_quick_info', '1', 'system' )"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"UPDATE OptiAPS..\"OPTM_APS_DSHBD_SETTINGS\" SET VALUE = '{\"1\":{\"tc\":\"#48be1a\",\"pc\":\"#2a8607\"},\"2\":{\"tc\":\"#4682db\",\"pc\":\"#1a68d9\"},\"3\":{\"tc\":\"#cc3d3d\",\"pc\":\"#8d0e0e\"},\"4\":{\"tc\":\"#d96c49\",\"pc\":\"#d74a1c\"},\"5\":{\"tc\":\"#f13535\",\"pc\":\"#da2c2c\"},\"6\":{\"tc\":\"#33b4ea\",\"pc\":\"#2a9dce\"},\"7\":{\"tc\":\"#c7c340\",\"pc\":\"#aea913\"},\"8\":{\"tc\":\"#626262\",\"pc\":\"#000000\"},\"9\":{\"tc\":\"#c5261b\",\"pc\":\"#941a11\"}}' WHERE NAME =  'task_type_color_set'"}
+
+
+
+{"date":"26-07-2018 09:45","action":"install_SWB","query":"DROP TABLE OptiAPS_DEV..\"OPTM_APS_SCH_REF\" "}
+
+
+
+{"date":"26-07-2018 09:45","action":"install_SWB","query":"DROP TABLE OptiAPS_DEV..\"OPTM_APS_PRODOPER\" "}
+
+
+
+{"date":"26-07-2018 09:45","action":"install_SWB","query":"DROP TABLE OptiAPS_DEV..\"OPTM_APS_PRODOPER_LINKS\" "}
+
+
+
+{"date":"26-07-2018 09:45","action":"install_SWB","query":"DROP TABLE OptiAPS_DEV..\"OPTM_APS_DSHBD_SETTINGS\""}
+
+
+
+{"date":"26-07-2018 09:45","action":"install_SWB","query":"\r\n\tCREATE TABLE OptiAPS_DEV..\"OPTM_APS_SCH_REF\" (\r\n\tOPTM_REF_ID              INT           NOT NULL    IDENTITY    PRIMARY KEY,\r\n\tOPTM_PLAN_NAME           VARCHAR(100)  NOT NULL,\r\n\tOPTM_FROM_DATE  datetime,\r\n\tOPTM_TO_DATE  datetime,\r\n\tOPTM_SCHEDULING_STATUS  VARCHAR(100),\r\n\tOPTM_IS_DELETED  tinyint,\r\n)"}
+
+
+
+{"date":"26-07-2018 09:45","action":"install_SWB","query":"\r\nCREATE TABLE OptiAPS_DEV..\"OPTM_APS_DSHBD_SETTINGS\" (\r\nID              INT           NOT NULL    IDENTITY    PRIMARY KEY,\r\nNAME varchar(400) NULL,\r\nVALUE text NULL,\r\n\"GROUP\" varchar(150) NULL,\r\n)"}
+
+
+
+{"date":"26-07-2018 09:45","action":"install_SWB","query":" INSERT INTO OptiAPS_DEV..\"OPTM_APS_DSHBD_SETTINGS\" (NAME, VALUE, \"GROUP\") VALUES\r\n('default_work_center',\t'all',\t'system'),\r\n('task_column_width',\t'50',\t'system'),\r\n('chart_table_row_height',\t'25',\t'system'),\r\n('left_panel_width',\t'580',\t'system'),\r\n('left_panel_resize',\t'1',\t'system'),\r\n('enable_keyboard_shortcut',\t'1',\t'system'),\r\n('chart_header_scale_height',\t'50',\t'system'),\r\n('default_timeline_view',\t'day',\t'system'),\r\n('default_task_color_code',\t'task_type',\t'system'),\r\n('drag_lightbox',\t'1',\t'system'),\r\n('lightbox_additional_height',\t'120',\t'system'),\r\n('default_theme',\t'material',\t'system'),\r\n('task_type_color_set',\t'{\"1\":{\"tc\":\"#48be1a\",\"pc\":\"#2a8607\"},\"2\":{\"tc\":\"#4682db\",\"pc\":\"#1a68d9\"},\"3\":{\"tc\":\"#cc3d3d\",\"pc\":\"#8d0e0e\"},\"4\":{\"tc\":\"#d96c49\",\"pc\":\"#d74a1c\"},\"5\":{\"tc\":\"#f13535\",\"pc\":\"#da2c2c\"},\"6\":{\"tc\":\"#33b4ea\",\"pc\":\"#2a9dce\"},\"7\":{\"tc\":\"#c7c340\",\"pc\":\"#aea913\"},\"8\":{\"tc\":\"#626262\",\"pc\":\"#000000\"},\"9\":{\"tc\":\"#c5261b\",\"pc\":\"#941a11\"}}',\t'system'),\r\n('priority_color_set',\t'{\"1\":{\"tc\":\"#d96c49\",\"pc\":\"#d8572e\"},\"11\":{\"tc\":\"#42b849\",\"pc\":\"#068525\"},\"31\":{\"tc\":\"#56a1ec\",\"pc\":\"#0747ae\"}}',\t'system'),\r\n('left_right_panel_font_size',\t'12',\t'system'),\r\n('unhighlight_color',\t'#e4e4e4',\t'system'),\r\n( 'default_resource_load_layout', 'detail', 'system'),\r\n( 'resource_balanced_color', '#42b849', 'system'),\r\n( 'resource_overload_color', '#d96c49', 'system' )"}
+
+
+
+{"date":"26-07-2018 09:45","action":"install_SWB","query":"\r\nCREATE TABLE OptiAPS_DEV..\"OPTM_APS_PRODOPER\" (\r\nOPER_ID  INT           NOT NULL    IDENTITY    PRIMARY KEY,\r\nREF_ID   VARCHAR(100)  NOT NULL,\r\nHEAD_DOC_ENTRY VARCHAR(20)  NOT NULL,\r\nOPER_DOC_ENTRY VARCHAR(20)  NOT NULL,\r\nOPER_LINE_ID VARCHAR(20)  NOT NULL,\r\nRES_LINE_ID VARCHAR(20)  NOT NULL,\r\nOPERATION_TYPE VARCHAR(20)  NOT NULL,\r\nTASK_TYPE VARCHAR(20)  NOT NULL,\r\nWORK_CENTER_ID VARCHAR(100)  NOT NULL,\r\nWORK_ORDER_ID VARCHAR(100)  NOT NULL, \r\nRESOURCE_ID VARCHAR(100)  NOT NULL,\r\nRESOURCE_NAME  VARCHAR(100)  NOT NULL,\r\nPLANNED_RESOURCE_ID VARCHAR(100)  NOT NULL,\r\nPLANNED_RESOURCE_NAME  VARCHAR(100)  NOT NULL,\r\nOPERATION_NUMBER VARCHAR(100)  NOT NULL,\r\nOPERATION_CODE VARCHAR(100)  NOT NULL,\r\nDESCRIPTION VARCHAR(100)  NOT NULL,\r\nPRIORITY VARCHAR(100)  NOT NULL,\r\nREADONLY  tinyint,\r\nSTATUS VARCHAR(50)  NOT NULL,\r\nSTART_DATE datetime,\r\nEND_DATE datetime,\r\nDURATION VARCHAR(50)  NOT NULL,\r\nMIN_DURATION VARCHAR(50)  NOT NULL,\r\nPROGRESS VARCHAR(50)  NOT NULL,\r\nIS_LOCAL_TASK  tinyint,\r\nIS_DELETED tinyint,\r\nSPLIT_TASK_GRP_ID VARCHAR(100) NULL\r\n)"}
+
+
+
+{"date":"26-07-2018 09:45","action":"install_SWB","query":"\r\nCREATE TABLE OptiAPS_DEV..\"OPTM_APS_PRODOPER_LINKS\" (\r\nOPR_LINK_ID  INT           NOT NULL    IDENTITY    PRIMARY KEY,\r\nREF_ID   VARCHAR(100)  NOT NULL,\r\nPRED_TASK_ID VARCHAR(20)  NOT NULL,\r\nSUCC_TASK_ID VARCHAR(20)  NOT NULL,\r\nCONNECTION_TYPE VARCHAR(20)  NOT NULL,\r\n)"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"ALTER TABLE OptiAPS_DEV..\"OPTM_APS_PRODOPER\" ADD required_resource int;"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"INSERT INTO OptiAPS_DEV..\"OPTM_APS_DSHBD_SETTINGS\" ( NAME, value, \"group\") VALUES ( 'enable_auto_resync_progress', '0', 'system' )"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"INSERT INTO OptiAPS_DEV..\"OPTM_APS_DSHBD_SETTINGS\" ( NAME, value, \"group\") VALUES ( 'auto_resync_duration', '5', 'system' )"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"INSERT INTO OptiAPS_DEV..\"OPTM_APS_DSHBD_SETTINGS\" ( NAME, value, \"group\") VALUES ( 'default_day_view_layout', 'hour', 'system' )"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"ALTER TABLE OptiAPS_DEV..\"OPTM_APS_SCH_REF\" ADD WORKING_WC varchar(200) NULL"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"INSERT INTO OptiAPS_DEV..\"OPTM_APS_DSHBD_SETTINGS\" ( NAME, value, \"group\") VALUES ( 'enable_minute_view_scale', '1', 'system' )"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"INSERT INTO OptiAPS_DEV..\"OPTM_APS_DSHBD_SETTINGS\" ( NAME, value, \"group\") VALUES ( 'enable_year_view_scale', '1', 'system' )"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"ALTER TABLE OptiAPS_DEV..\"OPTM_APS_PRODOPER\" ALTER COLUMN REF_ID INT"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"ALTER TABLE OptiAPS_DEV..\"OPTM_APS_PRODOPER\" ALTER COLUMN HEAD_DOC_ENTRY INT"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"ALTER TABLE OptiAPS_DEV..\"OPTM_APS_PRODOPER\" ALTER COLUMN OPER_DOC_ENTRY INT"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"ALTER TABLE OptiAPS_DEV..\"OPTM_APS_PRODOPER\" ALTER COLUMN OPER_LINE_ID INT"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"ALTER TABLE OptiAPS_DEV..\"OPTM_APS_PRODOPER\" ALTER COLUMN RES_LINE_ID INT"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"ALTER TABLE OptiAPS_DEV..\"OPTM_APS_PRODOPER\" ALTER COLUMN OPERATION_NUMBER INT"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"ALTER TABLE OptiAPS_DEV..\"OPTM_APS_PRODOPER\" ALTER COLUMN \"PRIORITY\" INT"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"ALTER TABLE OptiAPS_DEV..\"OPTM_APS_PRODOPER\" ALTER COLUMN PROGRESS FLOAT"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"ALTER TABLE OptiAPS_DEV..\"OPTM_APS_PRODOPER\" ADD WO_STATUS int;"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"INSERT INTO OptiAPS_DEV..\"OPTM_APS_DSHBD_SETTINGS\" ( NAME, value, \"group\") VALUES ( 'enable_today_marker', '1', 'system' )"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"INSERT INTO OptiAPS_DEV..\"OPTM_APS_DSHBD_SETTINGS\" ( NAME, value, \"group\") VALUES ( 'highlight_weekend', '1', 'system' )"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"INSERT INTO OptiAPS_DEV..\"OPTM_APS_DSHBD_SETTINGS\" ( NAME, value, \"group\") VALUES ( 'enable_multiple_select_task', '1', 'system' )"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"INSERT INTO OptiAPS_DEV..\"OPTM_APS_DSHBD_SETTINGS\" ( NAME, value, \"group\") VALUES ( 'enable_task_quick_info', '1', 'system' )"}
+
+
+
+{"date":"26-07-2018 09:45","action":"upgrade_SWB","query":"UPDATE OptiAPS_DEV..\"OPTM_APS_DSHBD_SETTINGS\" SET VALUE = '{\"1\":{\"tc\":\"#48be1a\",\"pc\":\"#2a8607\"},\"2\":{\"tc\":\"#4682db\",\"pc\":\"#1a68d9\"},\"3\":{\"tc\":\"#cc3d3d\",\"pc\":\"#8d0e0e\"},\"4\":{\"tc\":\"#d96c49\",\"pc\":\"#d74a1c\"},\"5\":{\"tc\":\"#f13535\",\"pc\":\"#da2c2c\"},\"6\":{\"tc\":\"#33b4ea\",\"pc\":\"#2a9dce\"},\"7\":{\"tc\":\"#c7c340\",\"pc\":\"#aea913\"},\"8\":{\"tc\":\"#626262\",\"pc\":\"#000000\"},\"9\":{\"tc\":\"#c5261b\",\"pc\":\"#941a11\"}}' WHERE NAME =  'task_type_color_set'"}
+

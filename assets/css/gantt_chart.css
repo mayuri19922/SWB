@@ -1,0 +1,606 @@
+
+html, body{
+	margin:0;
+	padding:0;
+	height:100%;
+	/*   overflow:hidden; */
+}
+
+#gantt_here{
+	background:white;
+	width:100%; 
+	height:100%;
+	overflow-x: hidden;
+	overflow-y: hidden;
+}
+
+
+
+.gantt_task_progress{
+	text-align:left;
+	padding-left:10px;
+	box-sizing: border-box;
+	color:white;
+	font-weight: bold;
+	font-size: 9px !important;
+}
+
+.gantt_grid div, .gantt_data_area div{
+	font-size:12px;
+}
+
+.task_readonly, .task_readonly > .gantt_task_content {
+	cursor:not-allowed !important;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+	/* padding: 13px !important; */
+}
+
+table.table th, .modal-header {
+	background-color: #222;
+	border-color: #080808;
+	color: #9d9d9d;
+
+}
+
+
+
+.gantt-fullscreen{
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+	width: 30px;
+	height: 30px;
+	padding: 2px;
+	font-size: 32px;
+	background: transparent;
+	cursor: pointer;
+	opacity: 0.5;
+	text-align: center;
+	-webkit-transition:background-color 0.5s, opacity 0.5s;
+	transition:background-color 0.5s, opacity 0.5s;
+}
+.gantt-fullscreen:hover{
+	background: rgba(150, 150, 150, 0.5);
+	opacity: 1;
+}
+.load_table_box{
+	/* margin-top: 10px; */
+	margin-bottom: 10px;
+}
+
+.complete_button{
+	margin-top: 2px;
+	background-image:url("../images/v_complete_white.png");
+	width: 20px;
+}
+
+.complete_button_set{
+	background: #278247;
+	text-shadow: 0 -1px 0 #126f38;
+	color: #fff;
+}
+
+.gantt_btn_set.gantt_cancel_btn_set {
+	background: #FFFFFF;
+	color: #116aff;
+	border: 1px solid #8d8d8d;
+
+}
+
+.gantt_btn_split_action_save_button{
+	background-color: #448AFF;
+	color: #FFFFFF;
+	outline: none;
+	float: left;
+} 
+
+.gantt_btn_split_action_save_button:hover {
+	background-color: #005cf6;
+}
+
+.gantt_btn_split_action_cancel_button{
+	background: #ffffff;
+	color: #2b8de0;
+	border: 1px solid #8d8d8d;
+	outline: none;
+	float: right;
+} 
+
+.gantt_btn_split_action_cancel_button:hover {
+	background: rgba(17, 106, 255, 0.25);
+	color: #005cf7;
+}
+
+.table_sub_heading {
+	text-align: center;
+	font-weight: bolder;
+	vertical-align: middle !important;
+}
+
+.navigation_body{
+	font-size: 12px;
+}
+
+.modal-xl {
+	width: 90% !important;
+	max-width:1200px;
+}
+
+.modal-header .close{
+	color: white;
+	font-size: 2.5em;
+}
+
+.container-fluid{
+	padding-right: 0 !important;
+}
+
+body{
+	padding-right: 0 !important;
+}
+
+
+
+.summary-row, .summary-row.odd{
+	background-color:#EEEEEE;
+	font-weight: bold;
+}
+
+.summary-bar{
+	opacity: 0.4;
+}
+
+.dropdown-menu {
+	color: #fff !important;
+	position: absolute !important;
+  /* 
+  top: 100% !important;
+  left: 0 !important;
+  z-index: 1000 !important; */
+  float: left !important;
+  min-width: 160px !important;
+  padding: 2px 0 !important;
+  margin: 2px 0 0 !important;
+  font-size: 12px !important;
+  text-align: left !important;
+  list-style: none !important;
+  background-color: #222 !important;
+  -webkit-background-clip: padding-box !important;
+  background-clip: padding-box !important;
+  border: 1px solid #ccc !important;
+  border: 1px solid rgba(0,0,0,.15) !important;
+  border-radius: 4px !important;
+  -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175) !important;
+  box-shadow: 0 6px 12px rgba(0,0,0,.175) !important;
+}
+
+.dropdown-menu>li>a {
+	display: block;
+	padding: 10px 15px !important;
+	clear: both;
+	font-weight: 400;
+	line-height: 1.42857143;
+	color: #9d9d9d !important;
+	white-space: nowrap;
+}
+
+.dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover {
+	color: #262626;
+	text-decoration: none;
+	background-color: #0a0a0a !important;
+	color: white !important;
+}
+
+.gantt_task_line.gantt_task_inline_color{
+	border-color: #9e9e9e !important;
+}
+
+.gantt_task_line.gantt_project{
+ /*  background-color: #65c16f;
+ border: 1px solid #909891; */
+}
+
+.gantt_task_line.gantt_project .gantt_task_progress{
+	/* background-color: #46ad51; */
+}
+
+select[disabled], input[disabled], textarea[disabled] {
+	cursor: not-allowed;
+}
+
+.gantt_cal_light{
+	min-height: 310px !important;
+}
+
+.gantt_cal_larea{
+	min-height:250px;
+}
+
+/* Material CSS*/
+
+div.gantt_cal_light{
+	padding: 10px !important;
+}
+div.gantt_cal_light .gantt_cal_ltext{
+	padding: inherit !important;
+}
+
+div.gantt_cal_light{
+	width: 620px !important;
+}
+
+.gantt_modal_box{
+	padding: 15px 15px !important;
+}
+
+.gantt_modal_box{
+	width: 350px !important;
+}
+
+.gantt_modal_box .gantt_popup_text{
+	text-align: center !important;
+}
+.gantt_popup_button.gantt_cancel_button{
+	float: left;
+	float: right;
+	margin-right: 20px;
+	border: 1px solid #8d8d8d;
+}
+
+.gantt_cal_light .gantt_btn_set.gantt_save_btn_set, .gantt_qi_big_icon.icon_edit, .gantt_popup_button.gantt_ok_button{
+	float: left;
+}
+
+.gantt_cal_light .gantt_btn_set.gantt_delete_btn_set{
+	border: 1px solid;
+}
+.gantt_cal_ltitle, .gantt_cal_larea{
+	border-bottom: 1px solid #8d8d8d !important;
+}
+
+.gantt_grid_scale, .gantt_task_scale{
+	font-size:12px;
+}
+
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon{
+	position:absolute;
+	border:1px solid #c7c7c7;
+	box-shadow:0 0 5px rgba(127,127,127,0.35);
+	padding:3px 0;
+	border-bottom-left-radius:1px;
+	border-bottom-right-radius:1px;
+	border-top-right-radius:1px;
+	background-color:#f5f5f5;
+	overflow:hidden;
+	cursor:default;
+	line-height:normal;
+	-webkit-user-select:none;
+	-khtml-user-select:none;
+	-moz-user-select:none;
+	-o-user-select:none;
+	user-select:none;
+}
+
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl td.sub_item_icon {
+	width: 18px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl td {
+	font-family: Arial,Helvetica;
+	font-size: 13px;
+	color: #333;
+	line-height: normal;
+	padding: 0 5px;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl div.sub_item_text {
+	padding: 0 16px 0 1px;
+	height: 26px;
+	line-height: 25px;
+	white-space: nowrap;
+	text-align: left;
+}
+
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl td.sub_item_hk {
+	padding-left: 8px;
+	padding-right: 8px;
+}
+
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl div.complex_arrow {
+	width: 4px;
+	margin: 0 2px 0 5px;
+	height: 22px;
+	background-image: url(../gantt/common/dhtmlxSuite/skins/terrace/imgs/dhxmenu_terrace/dhxmenu_subar.gif);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	overflow: hidden;
+	font-size: 1px;
+	float: right;
+}
+
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl div.sub_icon.chbx_1 {
+	background-position: -18px 0!important;
+}
+
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl div.sub_icon.chbx_0 {
+	background-position: -37px 0!important;
+}
+
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl div.sub_icon {
+	float: left;
+	margin: 0;
+	width: 18px;
+	height: 18px;
+	background-position: top right;
+	background-repeat: no-repeat;
+	background-image: url(../gantt/common/dhtmlxSuite/skins/terrace/imgs/dhxmenu_terrace/dhxmenu_chrd.gif);
+}
+
+div.gantt_grid_data{
+	text-align: center;
+}
+
+.gantt_grid .gantt_grid_scale .gantt_grid_head_cell, .gantt_task .gantt_task_scale .gantt_scale_cell{
+	text-transform: inherit !important; 
+	font-weight: bold;
+	color: rgba(0,0,0, 0.7);
+}
+
+.gantt_row, .gantt_task_row {
+	border-bottom: 1px solid #ebebeb;
+}
+
+/* .gantt_layout_cell_border_bottom{
+  height: 250px !important;
+  } */
+
+  .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th{
+  	vertical-align: middle;
+  }
+
+  .input-group-addon{
+  	padding: 4px 12px !important;
+  }
+
+
+  .grey_line_inc_index > .gantt_line_wrapper{
+  	z-index : 99;
+  }
+
+  /*Menu - Start */
+
+  /*Menu */
+  .dhtmlxMenu_material_Middle{
+  	font-family: Arial,Helvetica;
+  	font-size:12px;
+  	background-color: #222;
+  	color: #9d9d9d;
+  	height: 34px;
+  }
+
+  .dhtmlxMenu_material_Middle div.dhtmlxMenu_material_TopLevel_Item_Normal, .dhtmlxMenu_material_Middle div.dhtmlxMenu_material_TopLevel_Item_Disabled, .dhtmlxMenu_material_Middle div.dhtmlxMenu_material_TopLevel_Item_Selected{
+  	height :auto;
+  	border-right: 1px solid #9d9d9d;
+  	height: 35px;
+  	line-height: 35px;
+  }
+
+  .dhtmlxMenu_material_Middle div.dhtmlxMenu_material_TopLevel_Item_Selected{
+  	background-color: #222;
+  	color: #ffffff;
+  }
+  /*Menu - End */
+
+
+  .gantt_task_cell.week_end{
+  	background-color: #EFF5FD;
+  }
+  .gantt_task_row.gantt_selected .gantt_task_cell.week_end{
+  	background-color: #F8EC9C;
+  }
+
+
+  .gantt_resizer_y .gantt_resizer_y{
+  	/*  background:#222222; */
+  	height: 13px;
+  	z-index: 99;
+  }
+
+  .load_tbl_par_el_icon{
+  	cursor: pointer;
+  	padding-right:5px;
+  }
+
+  .sub_elements:hover {
+  	background: white;
+  }
+
+  .gantt-split_task_popup.dhtmlx-split_task_popup{
+  	width: 350px !important;
+  	padding: 10px 10px !important;
+  }
+
+  .gantt_split_popup_area{
+  	border-bottom: 1px solid #8d8d8d !important;
+  	border-left: none;
+  	border-right: none;
+  	background-color: #FFFFFF;
+  	overflow: hidden;
+  	height: auto;
+  	/* min-height: 200px; */
+  	padding-bottom: 20px;
+  }
+
+  .split_popup_duration_area{
+  	margin-left:10px;
+  }
+
+
+  #load_table_section_revamp{
+  	border-top: 2px solid #ccc;
+  }
+
+  .align_center_middle{
+  	text-align: center;
+  	vertical-align: middle;
+
+  }
+
+  .gantt_task_progress_drag {
+  	display: none !important;
+  	visibility: hidden;
+  }
+
+  .sch_detail_block {
+  	border: 1px solid #ccc;
+  	text-align: left;
+  }
+
+  .inner_sections{
+  	padding: 12px;
+  	border: 1px solid #ccc;
+  }
+
+  .gantt_close_button.dhtmlx_close_button{
+  	background: #ccc;
+  }
+
+  .gantt_modal_box .gantt_popup_title{
+  	text-align: center;
+  }
+
+  .gantt_grid_data  .gantt_cell {
+  	text-align: left !important;
+  	padding-left: 15px;
+  }
+
+
+  .gantt_grid_head_res, .gantt_grid_head_name {
+  	text-align: left;
+  	padding-left: 20px;
+  }
+
+  .gantt_layout_cell:nth-child(3) .gantt_tree_icon.gantt_blank {
+  	display:none;
+  }
+
+
+  .gantt_popup_controls {
+  	border-radius: 6px;
+  	padding: 20px 0px 0px 0px;
+  }
+
+  .form-group {
+  	margin-bottom: 18px !important;
+  }
+
+  .gantt_qi_big_icon.icon_delete{
+  	display:none;
+  }
+
+
+  .resource_marker{
+  	text-align: center;
+  }
+  .resource_marker div{
+  	width: 28px;
+  	height: 28px;
+  	line-height: 29px;
+  	display: inline-block;
+
+  	color: #FFF;
+  	margin: 3px;
+  }
+  .resource_marker.workday_ok div {
+  	border-radius: 15px;
+  	background: #51c185;
+  }
+
+  .resource_marker.workday_over div{
+  	border-radius: 3px;
+  	background: #ff8686;
+  }
+
+  .folder_row {
+  	font-weight: bold;
+  }
+
+  .highlighted_resource,
+  .highlighted_resource.odd
+  {
+  	background-color: rgba(255, 251, 224, 0.6);
+  }
+  
+  .resource-controls .gantt_layout_content{
+  	padding: 7px;
+  	overflow: hidden;
+  }
+  .resource-controls label{
+  	margin: 0 10px;
+  	vertical-align: bottom;
+  	display: inline-block;
+  	color: #3e3e3e;
+  	padding: 2px;
+  	transition: box-shadow 0.2s;
+  }
+
+  .resource-controls label:hover{
+  	box-shadow: 0 2px rgba(84, 147, 255, 0.42);
+  }
+
+  .resource-controls label.active,
+  .resource-controls label.active:hover
+  {
+  	box-shadow: 0 2px #5493ffae;
+  	color: #1f1f1f;
+  }
+
+  .resource-controls input{
+  	vertical-align: top;
+  }
+
+  .gantt_grid_head_cell {
+  	text-align: left !important;
+  	padding-left: 15px;
+  }
+
+.resource_radio_change, .gantt_layout_content label{
+	cursor : pointer;
+} 
+
+.round_badge{
+	background: #3a3a3a;
+    color: white;
+    font-weight: 600;
+    border-radius: 50px;
+    width: 45px;
+    line-height: 25px;
+    margin: 0 auto;
+    padding-left: 20%;
+}
+
+
+.datepicker table tr td.day:hover, .datepicker table tr td.day.focused {
+    background: #eee;
+    cursor: pointer;
+    color: #000000 !important;
+}
+
+.datepicker table tr td span:hover, .datepicker table tr td span.focused {
+    background: #eee;
+    color: #000000 !important;
+}
+
+.datepicker .datepicker-switch:hover, .datepicker .prev:hover, .datepicker .next:hover, .datepicker tfoot tr th:hover {
+    background: #eee;
+    color: #000000;
+}

@@ -1,0 +1,174 @@
+/*    --------------------------------------------------
+	:: Login Section
+	-------------------------------------------------- */
+
+    body{
+     background-color: #222 !important;
+ }
+
+
+ hr{
+     border: 1px solid #fff !important;
+     clear: both;
+ }
+
+ #login {
+    padding-top: 10%;
+}
+#login .form-wrap {
+    width: 30%;
+    margin: 0 auto;
+}
+#login h1 {
+    color: #4492de;
+    /*   font-size: 18px; */
+    text-align: center;
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+#login .form-group {
+    margin-bottom: 25px;
+}
+#login .checkbox {
+    margin-bottom: 20px;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+#login .checkbox.show:before {
+    content: '\e013';
+    color: #4492de;
+    font-size: 17px;
+    margin: 1px 0 0 3px;
+    position: absolute;
+    pointer-events: none;
+    font-family: 'fontawesome';
+}
+#login .checkbox .character-checkbox {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    vertical-align: middle;
+    display: inline-block;
+}
+#login .checkbox .label {
+    color: #6d6d6d;
+    font-size: 13px;
+    font-weight: normal;
+}
+#login .btn.btn-custom {
+    font-size: 14px;
+    margin-bottom: 20px;
+   /*  background: #347dd2; */
+}
+#login .forget {
+    font-size: 13px;
+    text-align: center;
+    display: block;
+    outline: none;
+    text-decoration: none;
+}
+
+/*    --------------------------------------------------
+	:: Inputs & Buttons
+	-------------------------------------------------- */
+    .form-control {
+        color: #212121;
+    }
+    .btn-custom {
+        color: #fff !important;
+        background-color: #4492de !important;
+    }
+    .btn-custom:hover,
+    .btn-custom:focus {
+        color: #fff;
+    }
+
+/*    --------------------------------------------------
+    :: Footer
+    -------------------------------------------------- */
+    #footer {
+        color: #6d6d6d;
+        font-size: 12px;
+        text-align: center;
+    }
+    #footer p {
+        margin-bottom: 0;
+    }
+    #footer a {
+        color: inherit;
+    }
+
+    /*custom css for scheduling plan page */
+
+    .sub_title{
+     color: #4492de;
+ }
+
+ label{
+     color: #676666 !important;
+ }
+
+
+/*floating buttons */
+
+
+  #floating-button{
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: #db4437;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    cursor: pointer;
+    box-shadow: 0px 2px 5px #666;
+  }
+
+  #floating-button i.fa{
+        margin: 18px;
+    color: white;
+    font-size: 1.5em;
+  }
+
+  #container-floating{
+    position: fixed;
+    width: 70px;
+    height: 70px;
+    bottom: 30px;
+    right: 30px;
+    z-index: 50px;
+  }
+
+  #container-floating:hover{
+    height: 400px;
+    width: 90px;
+    padding: 30px;
+  }
+
+  
+  @keyframes edit-in{
+    from {opacity: 0; transform: rotateZ(-70deg);}
+    to {opacity: 1; transform: rotateZ(0deg);}
+  }
+
+  @keyframes edit-out{
+    from {opacity: 1; transform: rotateZ(0deg);}
+    to {opacity: 0; transform: rotateZ(-70deg);}
+  }
+
+  @keyframes plus-in{
+    from {opacity: 1; transform: rotateZ(0deg);}
+    to {opacity: 0; transform: rotateZ(180deg);}
+  }
+
+  @keyframes plus-out{
+    from {opacity: 0; transform: rotateZ(180deg);}
+    to {opacity: 1; transform: rotateZ(0deg);}
+  }
+

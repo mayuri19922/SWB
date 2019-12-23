@@ -1,0 +1,88 @@
+!SESSION 2018-04-16 12:20:07.731 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_151
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86
+
+!ENTRY com.sap.ndb.studio.rdl.common 4 0 2018-04-16 12:20:09.166
+!MESSAGE [SCR] Found components with duplicated names inside their bundle! This component will not be processed: Component[
+	name = IXPath
+	activate = activate
+	deactivate = deactivate
+	modified = 
+	configuration-policy = optional
+	factory = null
+	autoenable = true
+	immediate = false
+	implementation = com.sap.ndb.studio.rdl.common.util.XPathUtils
+	state = Unsatisfied
+	properties = 
+	serviceFactory = false
+	serviceInterface = [com.sap.ndb.studio.rdl.common.interfaces.xpath.IXPath]
+	references = null
+	located in bundle = com.sap.ndb.studio.rdl.common_1.80.3 [151]
+] 
+
+!ENTRY com.sap.ndb.studio.rdl.common 4 0 2018-04-16 12:20:09.168
+!MESSAGE [SCR] Found components with duplicated names inside their bundle! This component will not be processed: Component[
+	name = IXPath
+	activate = activate
+	deactivate = deactivate
+	modified = 
+	configuration-policy = optional
+	factory = null
+	autoenable = true
+	immediate = false
+	implementation = com.sap.ndb.studio.rdl.common.util.XPathUtils
+	state = Unsatisfied
+	properties = 
+	serviceFactory = false
+	serviceInterface = [com.sap.ndb.studio.rdl.common.interfaces.xpath.IXPath]
+	references = null
+	located in bundle = com.sap.ndb.studio.rdl.common_1.80.3 [151]
+] 
+
+!ENTRY org.eclipse.ui 2 0 2018-04-16 12:21:50.978
+!MESSAGE Warnings while parsing the images from the 'org.eclipse.ui.commandImages' extension point.
+!SUBENTRY 1 org.eclipse.ui 2 0 2018-04-16 12:21:50.978
+!MESSAGE Cannot bind to an undefined command: plug-in='com.sap.ndb.studio.federation.catalog', id='com.sap.ndb.studio.federation.addasproxy'
+
+!ENTRY org.eclipse.osgi 2 1 2018-04-16 12:21:51.959
+!MESSAGE NLS unused message: ERROR_NON_EXISTING_YMSG in: com.sap.ndb.studio.rules.i18n.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-04-16 12:21:51.961
+!MESSAGE NLS missing message: ERROR_LENGTH_FOUR_XLOG in: com.sap.ndb.studio.rules.i18n.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-04-16 12:21:51.961
+!MESSAGE NLS missing message: ERROR_LENGTH_THREE_XLOG in: com.sap.ndb.studio.rules.i18n.messages
+
+!ENTRY com.sap.ndb.studio.hampton.common 1 0 2018-04-16 12:22:08.754
+!MESSAGE Start up Hampton Event Manager
+
+!ENTRY com.sap.ndb.studio.hampton.common 1 1 2018-04-16 12:22:08.770
+!MESSAGE Class com.sap.ndb.studio.hampton.common.PlanValidator registered for listening
+
+!ENTRY org.eclipse.osgi 2 1 2018-04-16 12:22:09.141
+!MESSAGE NLS unused message: NEW_PROJECT_PAGE_PROJECT_DOCUMENTATION_XFLD in: com.sap.ndb.studio.rdl.editor.ui.i18n.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-04-16 12:22:09.142
+!MESSAGE NLS unused message: NEW_PROJECT_PAGE_MODELER_RADIO_XBUT in: com.sap.ndb.studio.rdl.editor.ui.i18n.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-04-16 12:22:09.143
+!MESSAGE NLS unused message: NEW_PROJECT_PAGE_PROJECT_DOCUMENTATION_XMSG in: com.sap.ndb.studio.rdl.editor.ui.i18n.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-04-16 12:22:09.144
+!MESSAGE NLS unused message: NEW_PROJECT_INITIAL_CONTENT_CSDL_RADIO_XBUT in: com.sap.ndb.studio.rdl.editor.ui.i18n.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-04-16 12:22:09.144
+!MESSAGE NLS unused message: NEW_PROJECT_INITIAL_CONTENT_BROWSE_BUT_XBUT in: com.sap.ndb.studio.rdl.editor.ui.i18n.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-04-16 12:22:09.145
+!MESSAGE NLS unused message: NEW_PROJECT_INITIAL_CONTENT_PARSE_SUCCESS_XMSG in: com.sap.ndb.studio.rdl.editor.ui.i18n.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-04-16 12:22:09.146
+!MESSAGE NLS unused message: NEW_PROJECT_INITIAL_CONTENT_FILE_BROWSER_XTIT in: com.sap.ndb.studio.rdl.editor.ui.i18n.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-04-16 12:22:09.146
+!MESSAGE NLS unused message: NEW_PROJECT_INITIAL_CONTENT_PARSE_FAIL_XMSG in: com.sap.ndb.studio.rdl.editor.ui.i18n.messages
