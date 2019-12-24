@@ -76,7 +76,7 @@ WHERE IS_LOCAL_TASK = 1
 
  SELECT * FROM "@OPTMWC_RESOSHIFT"
 
-
+ 
 SELECT OPTM_REF_ID as ref_id, OPTM_FROM_DATE as from_date, OPTM_TO_DATE as to_date, OPTM_SCHEDULING_STATUS as scheduling_status, OPTM_IS_DELETED as is_deleted, OPTM_PLAN_NAME as plan_name FROM "OptiAPS".."OPTM_APS_SCH_REF" 
 
 

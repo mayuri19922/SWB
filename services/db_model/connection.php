@@ -16,7 +16,8 @@ function connection_db($config_file, $connect_db = ''){
 	// v0.0.2
 	// $connect_db = $db_parameters['pointing_db'];
 	if($connect_db == ""){
-		$connect_db = "DEVSCHEDULING"; // connection to default db when no database if found, useful for services like login and before login
+		//connect_db = "OPTIPROADMIN"; // connection to default db when no database if found, useful for services like login and before login
+		$connect_db = "DEVSCHEDULING";
 	}
 
 if($db_driver == "sap_hana"){ // Connection to HANA
@@ -30,7 +31,7 @@ if($db_driver == "sap_hana"){ // Connection to HANA
 } else if($db_driver == "ms_sql_srv"){ // Connection to MS SQL Server
 
 	$server_name = $db_parameters['server_name']; 
-	$dsn = "sqlsrv:Server=$server_name;Database=$connect_db;";
+	$dsn = "sqlsrv:Server=$server_name;Database=$connect_db";
 
 	require_once 'ms_sqlsrv_queries.php';
 
@@ -63,8 +64,4 @@ catch (Exception $e) {
 	print_r($e); die;
 }
 }
-
-
-
-
 

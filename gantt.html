@@ -13,11 +13,13 @@
   <title class="app_title"></title>
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900" rel="stylesheet" type="text/css">
   <!-- FontAwesome -->
+  <!--<link rel="stylesheet" type="text/css" href="bower_components/fontawesome/css/font-awesome.min.css"> -->
   <link rel="stylesheet" type="text/css" href="bower_components/fontawesome5/css/fontawesome-all.min.css">
   
   <!-- Main -->
   <link rel="stylesheet" href="assets/dhtmlx_menu/skins/dhtmlxmenu_material.css" type="text/css" media="screen" title="no title" charset="utf-8">
 
+  <!-- <link id="gantt_skin" rel="stylesheet" href="assets/gantt/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8"> -->
   <link rel="stylesheet" id="gantt_skin"   href="assets/gantt/skins/dhtmlxgantt_material.css" type="text/css" media="screen" title="no title" charset="utf-8">
   
   <link rel="stylesheet" href="assets/css/common.css" type="text/css" media="screen" title="no title" charset="utf-8">
@@ -60,7 +62,11 @@
   </nav>
   <nav class="navbar navbar-inverse" >
     <div class="container-fluid navigation_body ">
+      <!-- <div class="navbar-header">
+        <p class="navbar-brand text-white" href="javscript:;" ><b class='app_title'></b></p>
+      </div> -->
       <ul class="nav navbar-nav menu_actions">
+       <!--  <li class=""><a href="javascript:;" id="toggle_sidebar" class="toggle_sidebar top_menu_items" data-visible='1' title="Hide Left Grid" ><i class="fa fa-navicon fa-1_5x"></i></a></li> -->
        <li class="" style='display:none;'><a href="javascript:;" id="minute" class="change_chart_view" data-title-lang="minute_view"  title="Minute View" ><i class="fa fa-clock fa-1_5x"></i> <span data-lang="Minute">Minute</span></a></li>
        <li class=""><a href="javascript:;" id="day" class="change_chart_view" data-title-lang="day_view"  title="Day View" ><i class="fa fa-calendar-minus fa-1_5x"></i> <span data-lang="day">Day</span></a></li>
        <li><a href="javascript:;" id="week" class="change_chart_view" data-title-lang="week_view" title="Week View"> <i class="fa fa-calendar-plus fa-1_5x"></i> <span data-lang="week">Week</span></a></li>
@@ -106,17 +112,21 @@
       </div>
     </nav>
   </div>
+</nav>
+<!--  <button onclick="save_all_tasks();">Save</button> -->
+<!-- <button onclick="log_schedular_data();">Print Data</button> -->
 
+<!-- <div style="height: 40px;"><div id="menuObj"></div></div> -->
 <div id="gantt_here"></div>
 <div class="load_table_box" >
   <div class="">
+    <!-- <div class="" id="load_table_section"></div> -->
     <div class="" id="load_table_section_revamp"></div>
   </div>
 </div>
-
 <!-- Data Lightbox Modal -->
 <div id="lightbox_modal" class="modal" role="dialog" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-lg"> <!-- modal-lg or modal-xl -->
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title"><span class="task_operation_code_heading">Operation-010-1</span></h4>
@@ -200,7 +210,7 @@
         <label class="control-label col-sm-3"  for="popup_end_date"  data-lang="time_period_to">Time Period To</label>
         <div class="col-sm-3">
           <div class='input-group date' id='popup_end_date_picker'>
-            <input type="text" name="popup_end_date" id="popup_end_date" readonly  class="close_task_popup_alert form-control popup_end_date to_date_picker"  data-lang="to_date" placeholder="To Date">
+            <input type="text" name="popup_end_date" id="popup_end_date" readonly  class="close_task_popup_alert form-control popup_end_date to_date_picker"  data-lang="to_date" placeholder="To Date" placeholder="From Date">
             <span class="input-group-addon">
              <span class="fa fa-calendar-alt"></span>
            </span>
@@ -374,6 +384,19 @@
                 </div>
                 <div class="clearfix"></div>  <hr class="small_m">
               </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-5" for="resource_graph" data-lang="resource_graph">Enable Resource Graph</label>
+                <div class="col-sm-5">
+                  <select class="form-control close_setting_popup_alert" id="resource_graph" name="resource_graph" placeholder="Select Resource Graph View">
+                    <option value="no"> No</option>
+                    <option value="yes"> Yes</option>
+                  </select>
+                </div>
+                <div class="clearfix"></div>  <hr class="small_m">
+              </div>
+
+
 
               <div class="form-group">
                <label class="control-label col-sm-5" for="tash_popup_minute_scale" data-lang="enable_minute_view_scale">Enable Minute View Scale</label> 
@@ -604,8 +627,6 @@
 
 <!-- Dhtmlx gantt chart -->
 <script src="assets/gantt/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
-<script src="https://docs.dhtmlx.com/gantt/codebase/ext/dhtmlxgantt_drag_timeline.js?v=6.3.2" type="text/javascript" charset="utf-8"></script>
-
 <script src="//export.dhtmlx.com/gantt/api.js" type="text/javascript" charset="utf-8"></script>
 
 <!-- Dhtmlx gantt extensions -->

@@ -1,7 +1,8 @@
+
 <?php 
 require_once 'functions/common.php';
 
-require_once 'db_model/connection.php';
+require_once 'db_model/connection.php'; 
 
 
 $current_company ='';

@@ -264,7 +264,7 @@ function get_ref_data_query($reference_id = NULL){
 	$where = "";
 	if($reference_id != ""){
 		$where = " WHERE OPTM_REF_ID= '$reference_id' ";
-	} 
+	}; 
 	$query = "SELECT OPTM_REF_ID as ref_id, OPTM_FROM_DATE as from_date, OPTM_TO_DATE as to_date, OPTM_SCHEDULING_STATUS as scheduling_status, OPTM_IS_DELETED as is_deleted, OPTM_PLAN_NAME as plan_name, WORKING_WC as working_wc FROM \"OPTM_APS_SCH_REF\" $where ";
 	return $query;
 }

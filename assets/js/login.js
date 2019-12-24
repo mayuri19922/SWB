@@ -35,8 +35,6 @@ $(document).ready(function() {
  function get_login_service_URL(){
  	basic_request_call(service_url+"?action=get_login_service_URL", function(res){
 		//if res is not empty then will set it into global var
-		ps_url = res.data.url;
-		//console.log(res);
 		if(res != undefined){
 			ps_url = res.data.url;
 		}
@@ -55,6 +53,7 @@ if(user_name != undefined || user_name != '' && pass != undefined || pass != '')
 	show_button_loading("btn-connect", $_LANG["connecting"]);
 	ajax_form_submit(ps_url+'/api/login/ValidateUserLogin', jObject,function(res){
 		if(res.Table.length > 0){
+			//debugger;
 			response = res.Table;
 			//Check whether the user is active or not 
 			if(res.Table[0].OPTM_ACTIVE == 1){
@@ -65,6 +64,7 @@ if(user_name != undefined || user_name != '' && pass != undefined || pass != '')
 			ajax_form_submit(ps_url+'/api/login/GetCompaniesAndLanguages', jObject,function(res){
 		//if data found we will populate the companies in the dropdown
 		if(res.Table.length > 0){
+			//debugger;
 			var company_selection = '<option value="">'+$_LANG['select_company']+'</option>';
 			company_selection += generate_options(res.Table, 'OPTM_COMPID', 'OPTM_COMPID');
 			$("#company").html(company_selection);
@@ -107,8 +107,9 @@ else{
 }
 }
 
+
 function loginPress(){
-		//If the Product is nmot assigned to the selected Data Base then we ill prompt an error
+		//If the Product is not assigned to the selected Data Base then we ill prompt an error
 		show_button_loading("btn-login", $_LANG['plz_wait']);
 		set_cookie('user_name',user_name);	
 		set_cookie('is_logged_in',1);	
@@ -117,5 +118,5 @@ function loginPress(){
 		//Afterwards navigate to this page
 		window.location=scheduling_criteria_page_link;
 	}, default_pause);
-	}
+}
 

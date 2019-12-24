@@ -3,6 +3,7 @@
 //=============== 
 
 function split_task_only(){
+  debugger;
 
  var t_ref_id = right_click_task.ref_id; 
  var c_split_task_id = right_click_task.id;

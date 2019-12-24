@@ -142,7 +142,9 @@ $(".menu_actions").find("li").each(function(){
 //=============== 
 service_call("get_all_list", "",  system_settings['default_work_center'], function(res){
 	if(res.resources != "none"){
+
 		gantt.serverList("resource", res.resources);
+		// log_data(res.resources);
 		gantt.serverList("task_type", res.task_type);
 		gantt.serverList("priority", res.priority_list);
 		gantt.serverList("work_center", res.work_centers);
@@ -263,6 +265,7 @@ if(system_settings['default_resource_load_layout'] == "detail"){
 		$("#color_code_block").append(additional_color);
 	}
 } else if(system_settings['default_resource_load_layout'] == "basic"){
+	//debugger;
 	if(system_settings['resource_balanced_color']!=""){
 		additional_color += '\
 		.resource_marker.workday_ok div{\
@@ -374,6 +377,7 @@ var resourceGridConfig = {
 	]
 };
 
+
 //===============
 // Timeline Layout
 //=============== 
@@ -394,7 +398,8 @@ if(system_settings['default_resource_load_layout'] == "detail"){
 		{view: "scrollbar", scroll: "x", id:"scrollHor"}
 		]
 	};
-} else if(system_settings['default_resource_load_layout'] == "basic"){
+} else if(system_settings['default_resource_load_layout'] == "basic" && system_settings['resource_graph'] == "no"){
+	//debugger;
 	gantt.config.resource_store = "resource_load_data_store";
 	gantt.config.resource_property = "resourceID";
 	resource_load_layout = {
@@ -451,6 +456,48 @@ if(system_settings['default_resource_load_layout'] == "detail"){
 		{view: "scrollbar", scroll: "x", id:"scrollHor"}
 		]
 	};
+}
+else if(system_settings['resource_graph'] == "yes"){
+	//debugger;
+	gantt.config.resource_store = "resource_load_data_store";
+	gantt.config.resource_property = "resourceID";
+	resource_load_layout = {
+    css: "gantt_container",
+    rows: [
+        {
+            gravity: 2,
+            cols: [
+                { view: "grid", group: "grids", scrollable: true, scrollY: "scrollVer" },
+                {resizer: true, width: 1},
+                {view: "timeline", scrollX: "scrollHor", scrollY: "scrollVer"},
+                {view: "scrollbar", id: "scrollVer", group:"vertical"}
+            ]
+        },
+        { resizer: true, width: 1, next: "resources"},
+        // {
+        //     height: 35,
+        //     cols: [
+        //         { html: "<label>Resource<select class='resource-select'></select>", css :"resource-select-panel", group: "grids"},
+        //         { resizer: true, width: 1},
+        //         { html: ""}
+        //     ]
+        // },
+
+        {
+            gravity:2,
+            id: "resources",
+            config: resourceGridConfig,
+            templates: resourceTemplates,
+            cols: [
+                { view: "resourceGrid", group:"grids",width:200, scrollY: "resourceVScroll" },
+                { resizer: true, width: 1 },
+                { view: "resourceHistogram", capacity:24, scrollX: "scrollHor", scrollY: "resourceVScroll" },
+                { view: "scrollbar", id: "resourceVScroll", group: "vertical" }
+            ]
+        },
+        { view: "scrollbar", id: "scrollHor" }
+    ]
+};
 }
 gantt.config.layout = resource_load_layout;
 
@@ -610,6 +657,42 @@ gantt.templates.resource_cell_value = function(start_date, end_date, resource, t
 	return html;
 };
 
+//===============
+// Resource Histogram Graph Template
+//===============
+
+gantt.templates.histogram_cell_class = function (start_date, end_date, resource, tasks) {
+    //debugger;
+    if (getAllocatedValue(tasks, resource) > getCapacity(start_date, resource)) {
+        return "column_overload"
+    }
+};
+
+gantt.templates.histogram_cell_label = function (start_date, end_date, resource, tasks) {
+    //debugger;
+    if (tasks.length && !resourcesStore.hasChild(resource.id)) {
+        return getAllocatedValue(tasks, resource) + "/" + getCapacity(start_date, resource);
+    } else {
+        if (!resourcesStore.hasChild(resource.id)) {
+            return '&ndash;';
+        }
+        return '';
+    }
+};
+
+gantt.templates.histogram_cell_allocated = function (start_date, end_date, resource, tasks) {
+    //debugger;
+    return getAllocatedValue(tasks, resource);
+};
+
+gantt.templates.histogram_cell_capacity = function (start_date, end_date, resource, tasks) {
+    //debugger;
+    if (!gantt.isWorkTime(start_date)) {
+        return 0;
+    }
+    return getCapacity(start_date, resource);
+};
+
 
 //===============
 // Gantt Initialize
@@ -659,7 +742,7 @@ gantt.showLightbox = function(id) {
 	var form = custom_lightbox_form('lightbox_modal');
 
 	custom_lightbox_fill_data(task, current_popup_task_id);
-
+	//debugger;
 	// lightbox validations 
 	if(task.type== "project" || task.type== "work_order"){
 
@@ -845,6 +928,7 @@ gantt.attachEvent("onLightboxSave", function(id, task, is_new){
 	var $field_ed = ($("#popup_end_date").val()).split('-');
 	task.end_date = new Date($field_ed[2], ($field_ed[1]-1), $field_ed[0], end_hours, $("#popup_end_minutes").val(), 00, 00);
 
+	 return;
 	if(!task.text){
 		gantt.message({type:"error", text:$_LANG['desc_required']});
 		return false;
@@ -1033,7 +1117,7 @@ main_header_menu.attachEvent("onClick", function(item_id){
 
 
 gantt.attachEvent("onContextMenu", function(taskId, linkId, event){
-
+    debugger;
 	var x = event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft,
 	y = event.clientY + document.body.scrollTop + document.documentElement.scrollTop;
 	if(taskId ){
@@ -1064,6 +1148,7 @@ gantt.attachEvent("onContextMenu", function(taskId, linkId, event){
 
 
 right_click_menu.attachEvent("onClick", function(item_id){
+	debugger;
 	switch(item_id) {
 		case "split_task":
 		break;
@@ -1151,6 +1236,7 @@ $(document).on("submit", ".configuration_form", function(event){
 });
 
 $(document).on("click", ".change_chart_view", function(event){
+	//debugger;
 	var vObj = $(this);
 	vObj.parents("li").siblings('li').removeClass('active');
 	vObj.parents("li").addClass('active');
@@ -1567,13 +1653,14 @@ var checkin =  $('#popup_start_date_picker').datepicker({
 	startDate: plan_from
 }).on('changeDate', function(ev) {
 
-	/*var newDate = new Date(ev.date);
+	var newDate = new Date(ev.date);
 	newDate.setDate(newDate.getDate());
 	$('#popup_end_date_picker').datepicker('update', newDate);
 	$('#popup_end_date_picker').datepicker('setStartDate', newDate);
 
 	checkin.hide();
-	$("#popup_start_date").removeAttr('style');*/
+	$("#popup_start_date").removeAttr('style');
+//	$('.to_date_picker')[0].focus();
 }).data('datepicker')
 
 var checkout =  $('#popup_end_date_picker').datepicker({
@@ -1582,8 +1669,8 @@ var checkout =  $('#popup_end_date_picker').datepicker({
 	keyboardNavigation : true,
 	todayHighlight : true
 }).on('changeDate', function(ev) {
-	/*checkout.hide();
-	$("#popup_start_date").removeAttr('style');*/
+	checkout.hide();
+	$("#popup_start_date").removeAttr('style');
 }).data('datepicker');
 
 }); // document ready

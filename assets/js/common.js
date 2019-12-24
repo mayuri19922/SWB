@@ -110,6 +110,8 @@ var resourcesStore = '';
 var resourceMode = "hours";
 var close_task_popup_alert = 0;
 var close_setting_popup_alert = 0;
+var WORK_DAY = 8; //for histogram
+var cap = {};  //for histogram
 
 //===============
 // Variables and Constants
@@ -256,7 +258,7 @@ function task_redo(){
 }
 
 function log_data(data){
-  //console.log(data);
+  console.log(data);
 }
 
 function log_schedular_data(){
@@ -316,6 +318,7 @@ function clear_all_cookies(){
     remove_cookie(key);
   }
 }
+
 
 //===============
 // Server Calling Functions
@@ -546,6 +549,7 @@ function custom_lightbox_fill_data(task, task_id){
 }
 
 function duplicate_selected_task(){
+  debugger;
   if(selected_task_id == null){
     show_toast("warning_gantt", no_task_select);
     return false;
@@ -704,6 +708,7 @@ function delete_task_link(id){
 // Menu Functions
 //=============== 
 function right_click_menu_init(){
+  //debugger;
   right_click_menu = new dhtmlXMenuObject();
   right_click_menu.renderAsContextMenu();
   right_click_menu.setSkin("material");
@@ -1090,8 +1095,10 @@ function get_resource_detail(resource_id, resource_wc){
 }
 
 function detail_layout_call(){
+  //debugger;
   if(system_settings['default_resource_load_layout'] == "detail"){
     setTimeout(function(){
+      //debugger;
       generate_resource_load_report();
     }, default_pause_short);
   }
@@ -1433,6 +1440,7 @@ function generate_color_code_style(server_list, style_label_key, color_set_setti
 //=============== 
 
 function day_list(list_type, selected_option){
+  debugger;
   var temp_array = [];
   var temp_html = '';
   var selected_value;
@@ -1876,6 +1884,7 @@ function month_view_configuration(){
     gantt.config.end_date =  $end; // new Date(2017, 9, 31, 24, 00);
     enable_disable_project_drag(true);
   } 
+
 
 //===============
 // Refresh Functions  

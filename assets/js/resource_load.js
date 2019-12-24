@@ -7,6 +7,7 @@
 //===============
 
 function shouldHighlightResource(resource){
+	//debugger;
 	var selectedTaskId = gantt.getState().selected_task;
 	if(gantt.isTaskExists(selectedTaskId)){
 		var selectedTask = gantt.getTask(selectedTaskId),
@@ -21,7 +22,49 @@ function shouldHighlightResource(resource){
 	return false;
 }
 
+
+
+function getCapacity(date, resource) {
+    //debugger;
+    /* it is sample function your could to define your own function for get Capability of resources in day */
+    if (resourcesStore.hasChild(resource.id)) {
+        return -1;
+    }
+
+    var val = date.valueOf();
+    if (!cap[val + resource.id]) {
+        cap[val + resource.id] = [0, 1, 2, 3][Math.floor(Math.random() * 100) % 4];
+    }
+    return cap[val + resource.id] * WORK_DAY;
+}
+
+// function getAllocatedValue(tasks, resource) {
+//     //debugger;
+//     var result = 0;
+//     //var tasks = getResourceTasks(resource.id);
+//    // tasks.forEach(function(item) {
+//         //if(item.value>0){
+//         //result += Number(item.value);
+//       //  }
+//     //});
+//     return result;
+// }
+
+function getAllocatedValue(tasks,resource){
+	var allocation_result=0;
+	if(tasks.length>0){
+		tasks.forEach(function (item){
+			if(item.duration>0){
+				allocation_result+=Number(item.duration);
+			}
+		});
+	}
+	return allocation_result;
+}
+
+
 function getResourceTasks(resource_id, resource_wc){
+	//debugger;
 	var res = [];
 	gantt.eachTask(function(task){
 		if( (task.resource == resource_id) && (task.work_center == resource_wc) &&  (task.type != gantt.config.types.project) ) {
@@ -31,7 +74,9 @@ function getResourceTasks(resource_id, resource_wc){
 	return res;
 }
 
+
 function resource_time_grid(tasks, step){
+	//debugger;
 	var timegrid = {};
 
 	for(var i = 0; i < tasks.length; i++){
@@ -60,9 +105,8 @@ function resource_time_grid(tasks, step){
 }
 
 function calculateResourceLoad(tasks, scale){
-	
+	//debugger;
 	var step = scale.unit;
-
 	var timegrid = resource_time_grid(tasks, step);
 
 	var timetable = [];
@@ -81,6 +125,7 @@ function calculateResourceLoad(tasks, scale){
 }
 
 var renderResourceLine = function(resource, timeline){
+	//debugger;
 //  log_data(timeline.getScale());
 var tasks = getResourceTasks(resource.key, resource.work_center_id);
 
@@ -132,6 +177,7 @@ if(tasks.length > 0 ){
 //=============== 
 
 function generate_resource_load_report(){
+	//debugger;
 	var table_content = '';
 	var load_resources = gantt.serverList('resource');
 //  log_data(load_resources);
@@ -198,11 +244,14 @@ $.ajax({
 	cache : false,
 	data : send_data,
 	success : function(res){
+		debugger;
+	    console.log(res);
 		server_response = res;
 	}, 
 });
 
 if(server_response.success != "none"){
+	debugger;
 	var calculated_row_height = total_row_height*6;
 	var load_class = "";
 	var total_no_of_res = 0;

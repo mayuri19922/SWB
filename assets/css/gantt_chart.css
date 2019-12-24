@@ -604,3 +604,6 @@ div.gantt_grid_data{
     background: #eee;
     color: #000000;
 }
+.column_overload .gantt_histogram_fill {
+        background-color:#ffa9a9;
+}
