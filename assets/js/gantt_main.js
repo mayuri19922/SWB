@@ -35,6 +35,17 @@ service_call("get_system_settings", "", "", function(res){
 		show_toast(res.success, res.message);
 	} else {
 		system_settings = res.data;
+		if(system_settings['enable_draggable_timeline'] == 1){
+			gantt.config.drag_timeline = {
+				ignore:".gantt_task_line, .gantt_task_link",
+				useKey: false
+			};
+		}else if(system_settings['enable_draggable_timeline'] == 0){
+			gantt.config.drag_timeline = {
+				ignore:".gantt_task_line, .gantt_task_link",
+				useKey: true
+			};
+		}
 		priority_color_set = system_settings['priority_color_set'];
 		task_type_color_set = system_settings['task_type_color_set'];
 		if(system_settings['default_resource_load_layout'] == "detail"){
