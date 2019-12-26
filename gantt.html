@@ -385,6 +385,7 @@
                 <div class="clearfix"></div>  <hr class="small_m">
               </div>
               
+              
               <div class="form-group">
                 <label class="control-label col-sm-5" for="resource_graph" data-lang="resource_graph">Enable Resource Graph</label>
                 <div class="col-sm-5">
@@ -436,7 +437,17 @@
             <div class="clearfix"></div>  <hr class="small_m">
           </div>
 
-
+          <div class="form-group">
+            <label class="control-label col-sm-5" for="draggable_timeline" data-lang="enable_draggable_timeline">Draggable Timeline</label> 
+            <div class="col-sm-4">
+              <input type="checkbox" data-title-lang="enable_draggable_timeline" title="Enable Draggable Timeline" id="enable_draggable_timeline_toggle" data-setting="enable_draggable_timeline" class="toggle_checkbox_sm check_uncheck_value_switcher add_remove_timeline_option close_setting_popup_alert" data-timeline_option="minute" data-linked_field="enable_draggable_timeline"  />
+              <label for="enable_draggable_timeline_toggle" class="toggle_label_sm" data-title-lang="start_resyn_progress" title="Enable Draggable Timeline" style="margin: 0px;" >
+                <span data-lang="enable_draggable_timeline">Enable Draggable Timeline</span> 
+              </label>
+              <input type="hidden" id="enable_draggable_timeline" name="enable_draggable_timeline" value="1" />
+           </div>
+           <div class="clearfix"></div> <hr class="small_m">
+         </div>
 
           <div class="form-group">
            <label class="control-label col-sm-5" for="tash_popup_dragging" data-lang="left_panel_resize">Left Panel Enable Resizing</label> 
@@ -627,6 +638,7 @@
 
 <!-- Dhtmlx gantt chart -->
 <script src="assets/gantt/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://docs.dhtmlx.com/gantt/codebase/ext/dhtmlxgantt_drag_timeline.js?v=6.3.2" type="text/javascript" charset="utf-8"></script>
 <script src="//export.dhtmlx.com/gantt/api.js" type="text/javascript" charset="utf-8"></script>
 
 <!-- Dhtmlx gantt extensions -->

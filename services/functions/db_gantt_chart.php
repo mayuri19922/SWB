@@ -908,9 +908,7 @@ function get_system_settings(){
 
 function save_system_settings(){
 	global $conn;
-	$post_data  = $_POST;
-	// print_r($post_data);
-	
+	$post_data  = $_POST;	
 	$succes_count = 0;
 	foreach($post_data as $field_name => $field_value){
 		if(is_array($field_value)){
