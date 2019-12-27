@@ -923,7 +923,6 @@ gantt.attachEvent("onBeforeTaskChanged", function(id, mode, task){
 //===============
 
 gantt.attachEvent("onLightboxSave", function(id, task, is_new){
-
 	task.text = $("#oper_code").val();
 	task.description = $("#operation_description").val();
 	task.task_type = $("#task_type_select").val();
@@ -939,7 +938,6 @@ gantt.attachEvent("onLightboxSave", function(id, task, is_new){
 	var $field_ed = ($("#popup_end_date").val()).split('-');
 	task.end_date = new Date($field_ed[2], ($field_ed[1]-1), $field_ed[0], end_hours, $("#popup_end_minutes").val(), 00, 00);
 
-	 return;
 	if(!task.text){
 		gantt.message({type:"error", text:$_LANG['desc_required']});
 		return false;
@@ -952,7 +950,6 @@ gantt.attachEvent("onLightboxSave", function(id, task, is_new){
 	}
 	var temp_res_dtl = get_resource_detail(task.resource, task.work_center);
 	task.resource_name = temp_res_dtl['resource_name'];
-
 	if(task.$new){
 		task.priority = 99;
 		task.min_duration = 0; // task.duration;
