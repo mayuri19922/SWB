@@ -248,4 +248,8 @@ background: #33b73d;
 .ml5{
   margin-left:5px;
 }
+
+.multiselect-container>li>a>label.radio, .multiselect-container>li>a>label.checkbox {
+  margin: 0px 0px 0px 8px !important;
+}
        

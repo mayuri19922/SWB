@@ -1443,6 +1443,7 @@ $(document).on("change", ".split_task_type", function(){
 });
 
 $(document).on("click", ".work_center_popup_select_change", function(){
+	//debugger;
 	var cObj = $(this);
 	var current_elem_id = cObj.attr('id');
 	lightbox_work_center_res_list(current_elem_id, cObj.val());
@@ -1574,7 +1575,6 @@ $(document).on("change", ".resource_radio_change", function(event){
 	rrc.parent("label").addClass('active');	
 	gantt.getDatastore('resource_load_data_store').refresh();
 });
-
 
 
 //===============
