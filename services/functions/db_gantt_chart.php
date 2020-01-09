@@ -681,6 +681,8 @@ function push_to_production(){
 	global $conn;
 	
 	$reference_id = (isset($_POST['reference_id']) && $_POST['reference_id']!="") ? $_POST['reference_id'] : "";
+	
+  
 	$select_operation = get_aps_operations("", "", $reference_id, '');
 	//   echo '<pre>'. $select_operation; die;
 	$select_operation_result = $conn->query($select_operation);

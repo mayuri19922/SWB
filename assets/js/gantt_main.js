@@ -435,6 +435,15 @@ if(system_settings['default_resource_load_layout'] == "detail"){
 			"<label>Tasks per day <input type='radio' name='resource-mode' class='resource_radio_change' value='tasks'></label>", css:"resource-controls"}
 			]
 		},
+		{ resizer: true, width: 1, next: "resources" },
+		{
+            height: 35,
+            cols: [
+            { html: "<label>Resource<select class='resource-select'></select>", css: "resource-select-panel", group: "grids" },
+            { resizer: true, width: 1 },
+            { html: "" }
+            ]
+        },
 		{
 			gravity:1,
 			id: "resource_load_grid",
@@ -538,12 +547,33 @@ resourcesStore = gantt.createDatastore({
 	}
 });
 
+gantt.attachEvent("onGanttReady", function () {
+    var resourcesStore = gantt.getDatastore(gantt.config.resource_store);
+    var resource_select = gantt.$container.querySelector(".resource-select");
+    updateSelect(resourcesStore.getItems(), resource_select);
+    get_resource(resource_select);
+
+});
+
+resourcesStore.attachEvent("onAfterSelect", function (id) {
+    //debugger;
+    gantt.refreshData();
+});
+
+
+resourcesStore.attachEvent("onFilterItem", function (id, item) {
+    if (filterValue) {
+        return id == filterValue || resourcesStore.isChildOf(id, filterValue);
+    }
+    return true;
+});
+
 resourcesStore.parse(gantt.serverList("resource"));
 
 
-resourcesStore.attachEvent("onAfterSelect", function(id){
-	gantt.refreshData();
-});
+// resourcesStore.attachEvent("onAfterSelect", function(id){
+// 	gantt.refreshData();
+// });
 
 
 //===============
@@ -908,6 +938,7 @@ gantt.attachEvent("onBeforeTaskChanged", function(id, mode, task){
 	return true;
 });
 
+
 /*gantt.attachEvent("onGanttScroll", function (left, top){
 	//setTimeout(function(){
 	  log_data("onGanttScroll + ");
@@ -1125,7 +1156,7 @@ main_header_menu.attachEvent("onClick", function(item_id){
 
 
 gantt.attachEvent("onContextMenu", function(taskId, linkId, event){
-    debugger;
+    //debugger;
 	var x = event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft,
 	y = event.clientY + document.body.scrollTop + document.documentElement.scrollTop;
 	if(taskId ){

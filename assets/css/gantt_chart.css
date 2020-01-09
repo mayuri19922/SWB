@@ -607,3 +607,15 @@ div.gantt_grid_data{
 .column_overload .gantt_histogram_fill {
         background-color:#ffa9a9;
 }
+.resource-select-panel .gantt_layout_content {
+	line-height: 35px;
+	text-align: right;
+	padding-right: 15px;
+	overflow: hidden !important;
+}
+
+.resource-select {
+	padding: 3px;
+	margin-left: 13px;
+	font-weight:normal;
+}

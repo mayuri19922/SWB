@@ -112,7 +112,7 @@ var close_task_popup_alert = 0;
 var close_setting_popup_alert = 0;
 var WORK_DAY = 8; //for histogram
 var cap = {};  //for histogram
-
+var filterValue;
 //===============
 // Variables and Constants
 //=============== 
@@ -519,6 +519,7 @@ function enable_disable_project_drag($flag) {
 }
 
 function custom_lightbox_fill_data(task, task_id) {
+  
   $("[name='oper_code']").val(task.text).focus();
 
   var opr_desc = (task.description !== undefined) ? task.description : "";
@@ -545,7 +546,6 @@ function custom_lightbox_fill_data(task, task_id) {
   $("#popup_end_date").val(end_date_popup.getDate() + '-' + (end_date_popup.getMonth() + 1) + '-' + end_date_popup.getFullYear())
   $("#popup_end_hours").html(hour_list('html', end_date_popup.getHours() * 60))
   $("#popup_end_minutes").html(minute_list('html', end_date_popup.getMinutes()));
-
 }
 
 function duplicate_selected_task() {
@@ -1326,6 +1326,7 @@ function lightbox_work_center_res_list(current_lightbox_wc_select_id, value, tas
     if (t_wc_list.work_center_id == value) {
       var selected_option = '';
       if (task !== undefined && task.resource !== undefined) {
+        //var task_resource = task.resource_id.split(",");
         if (task.resource == t_wc_list.key) {
           selected_option = 'selected';
         }
@@ -1334,32 +1335,9 @@ function lightbox_work_center_res_list(current_lightbox_wc_select_id, value, tas
     }
   }
   child_select.html(new_res_serverlist);
-  if(new_res_serverlist!=''){
-  enable_multiselect_dropdown(new_res_serverlist);
-  }
-  else{
-  disable_multiselect_dropdown();
-  }
+ 
 }
 
-function enable_multiselect_dropdown(new_res_serverlist) {
-  
-    $('#task_assigned_res option').remove();
-    $('#task_assigned_res').append(new_res_serverlist);
-
-    // $('#task_assigned_res').multiselect({
-    //   includeSelectAllOption: true,
-    // });
-     $('#task_assigned_res').multiselect('rebuild'); //----add this line----
-  
-}
-
-function disable_multiselect_dropdown(){
-  $('#task_assigned_res').multiselect({
-    disableIfEmpty: true
-  });
-  //$('#task_assigned_res').multiselect('rebuild'); //----add this line----
-}
 
 function set_wc_res_classes() {
   var work_centerid = gantt.getLightboxSection("work_center").control.id;
@@ -2153,3 +2131,30 @@ $(document).ready(function (event) {
 
 
 }); // ready end
+
+//===============
+//Resource Grid Functions 
+//=============== 
+function updateSelect(options, resource_select) {
+
+  var select = resource_select;
+  var html = [];
+  html.push("<option value=''>All</option>");
+  options.forEach(function (option) {
+      html.push("<option value='" + option.id + "'>" + option.text + "</option>");
+  });
+  select.innerHTML = html.join("");
+}
+
+
+function selectResource() {
+  var node = this;
+  filterValue = node.value;
+  resourcesStore.refresh();
+}
+
+function get_resource(resource_select) {
+  var select = resource_select;
+  select.onchange = selectResource;
+
+}
