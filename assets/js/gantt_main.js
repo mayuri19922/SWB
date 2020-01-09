@@ -548,10 +548,14 @@ resourcesStore = gantt.createDatastore({
 });
 
 gantt.attachEvent("onGanttReady", function () {
-    var resourcesStore = gantt.getDatastore(gantt.config.resource_store);
-    var resource_select = gantt.$container.querySelector(".resource-select");
-    updateSelect(resourcesStore.getItems(), resource_select);
-    get_resource(resource_select);
+	//debugger;
+	if(system_settings['default_resource_load_layout'] == "basic" && system_settings['resource_graph'] == "no")
+	{
+		var resourcesStore = gantt.getDatastore(gantt.config.resource_store);
+		var resource_select = gantt.$container.querySelector(".resource-select");
+		updateSelect(resourcesStore.getItems(), resource_select);
+		get_resource(resource_select);
+	}
 
 });
 
@@ -705,7 +709,7 @@ gantt.templates.resource_cell_value = function(start_date, end_date, resource, t
 gantt.templates.histogram_cell_class = function (start_date, end_date, resource, tasks) {
     //debugger;
     if (getAllocatedValue(tasks, resource) > getCapacity(start_date, resource)) {
-        return "column_overload"
+        return "column_overload";
     }
 };
 
