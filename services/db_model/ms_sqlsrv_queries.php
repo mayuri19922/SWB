@@ -431,14 +431,18 @@ function insert_new_aps_opr($reference_id, $task_data){
 	
 	$work_center_id = $task_data['work_center'];
 	
-
+	//$task_resource=implode(",",$task_data['resource']);
 	$work_order_id = "";
 	if(@$task_data['work_order_id'] != ""){
 		$work_order_id = @$task_data['work_order_id'];
 	} else {
 		$work_order_id = 1; 
 	}
-	$insert_local_opr = "INSERT INTO \"OPTM_APS_PRODOPER\" (REF_ID, HEAD_DOC_ENTRY, OPER_DOC_ENTRY, OPER_LINE_ID, RES_LINE_ID, OPERATION_TYPE, TASK_TYPE, WORK_CENTER_ID, WORK_ORDER_ID, RESOURCE_ID, RESOURCE_NAME, PLANNED_RESOURCE_ID, PLANNED_RESOURCE_NAME, OPERATION_NUMBER, OPERATION_CODE, DESCRIPTION, PRIORITY, READONLY, STATUS, START_DATE, END_DATE, DURATION, MIN_DURATION, PROGRESS, IS_LOCAL_TASK, IS_DELETED, SPLIT_TASK_GRP_ID) VALUES  ( '$reference_id','$task_data[head_doc_entry]','$task_data[oper_doc_entry]','$task_data[oper_line_id]','$task_data[res_line_id]','task','$task_data[task_type]','$work_center_id','$work_order_id','$task_data[resource]','$task_data[resource_name]','$task_data[resource]','$task_data[resource_name]','$task_data[operation_number]','$task_data[text]','$task_data[description]','$task_data[priority]','$task_data[readonly]','0','$task_data[start_date]','$task_data[end_date]','$task_data[duration]','$task_data[min_duration]','$task_data[progress]','1',	'0', '$task_data[split_task_group_id]' )";
+	//old query
+	 $insert_local_opr = "INSERT INTO \"OPTM_APS_PRODOPER\" (REF_ID, HEAD_DOC_ENTRY, OPER_DOC_ENTRY, OPER_LINE_ID, RES_LINE_ID, OPERATION_TYPE, TASK_TYPE, WORK_CENTER_ID, WORK_ORDER_ID, RESOURCE_ID, RESOURCE_NAME, PLANNED_RESOURCE_ID, PLANNED_RESOURCE_NAME, OPERATION_NUMBER, OPERATION_CODE, DESCRIPTION, PRIORITY, READONLY, STATUS, START_DATE, END_DATE, DURATION, MIN_DURATION, PROGRESS, IS_LOCAL_TASK, IS_DELETED, SPLIT_TASK_GRP_ID) VALUES  ( '$reference_id','$task_data[head_doc_entry]','$task_data[oper_doc_entry]','$task_data[oper_line_id]','$task_data[res_line_id]','task','$task_data[task_type]','$work_center_id','$work_order_id','$task_data[resource]','$task_data[resource_name]','$task_data[resource]','$task_data[resource_name]','$task_data[operation_number]','$task_data[text]','$task_data[description]','$task_data[priority]','$task_data[readonly]','0','$task_data[start_date]','$task_data[end_date]','$task_data[duration]','$task_data[min_duration]','$task_data[progress]','1',	'0', '$task_data[split_task_group_id]' )";
+
+	//$insert_local_opr = "INSERT INTO \"OPTM_APS_PRODOPER\" (REF_ID, HEAD_DOC_ENTRY, OPER_DOC_ENTRY, OPER_LINE_ID, RES_LINE_ID, OPERATION_TYPE, TASK_TYPE, WORK_CENTER_ID, WORK_ORDER_ID, RESOURCE_ID, RESOURCE_NAME, PLANNED_RESOURCE_ID, PLANNED_RESOURCE_NAME, OPERATION_NUMBER, OPERATION_CODE, DESCRIPTION, PRIORITY, READONLY, STATUS, START_DATE, END_DATE, DURATION, MIN_DURATION, PROGRESS, IS_LOCAL_TASK, IS_DELETED, SPLIT_TASK_GRP_ID) VALUES  ( '$reference_id','$task_data[head_doc_entry]','$task_data[oper_doc_entry]','$task_data[oper_line_id]','$task_data[res_line_id]','task','$task_data[task_type]','$work_center_id','$work_order_id','$task_resource','$task_data[resource_name]','$task_resource','$task_data[resource_name]','$task_data[operation_number]','$task_data[text]','$task_data[description]','$task_data[priority]','$task_data[readonly]','0','$task_data[start_date]','$task_data[end_date]','$task_data[duration]','$task_data[min_duration]','$task_data[progress]','1',	'0', '$task_data[split_task_group_id]' )";
+
 
 	return $insert_local_opr;
 }

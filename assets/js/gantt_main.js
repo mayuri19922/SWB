@@ -679,6 +679,15 @@ if(system_settings['default_resource_load_layout'] == "detail"){
 			"<label>Tasks per day <input type='radio' name='resource-mode' class='resource_radio_change' value='tasks'></label>", css:"resource-controls"}
 			]
 		},
+		{ resizer: true, width: 1, next: "resources" },
+		{
+            height: 35,
+            cols: [
+            { html: "<label>Resource<select class='resource-select'></select>", css: "resource-select-panel", group: "grids" },
+            { resizer: true, width: 1 },
+            { html: "" }
+            ]
+        },
 		{
 			gravity:1,
 			id: "resource_load_grid",
@@ -770,11 +779,29 @@ resourcesStore = gantt.createDatastore({
 	}
 });
 
-resourcesStore.parse(gantt.serverList("resource"));
+gantt.attachEvent("onGanttReady", function () {
+	//debugger;
+	if(system_settings['default_resource_load_layout'] == "basic" && system_settings['resource_graph'] == "no")
+	{
+		var resourcesStore = gantt.getDatastore(gantt.config.resource_store);
+		var resource_select = gantt.$container.querySelector(".resource-select");
+		updateSelect(resourcesStore.getItems(), resource_select);
+		get_resource(resource_select);
+	}
+
+});
+
+resourcesStore.attachEvent("onAfterSelect", function (id) {
+    //debugger;
+    gantt.refreshData();
+});
 
 
-resourcesStore.attachEvent("onAfterSelect", function(id){
-	gantt.refreshData();
+resourcesStore.attachEvent("onFilterItem", function (id, item) {
+    if (filterValue) {
+        return id == filterValue || resourcesStore.isChildOf(id, filterValue);
+    }
+    return true;
 });
 
 /*-- resource tooltip end --*/
@@ -787,7 +814,7 @@ resourcesStore.attachEvent("onAfterSelect", function(id){
 gantt.templates.histogram_cell_class = function (start_date, end_date, resource, tasks) {
     //debugger;
     if (getAllocatedValue(tasks, resource) > getCapacity(start_date, resource)) {
-        return "column_overload"
+        return "column_overload";
     }
 };
 
@@ -1021,6 +1048,7 @@ gantt.attachEvent("onBeforeTaskChanged", function(id, mode, task){
 	return true;
 });
 
+
 /*gantt.attachEvent("onGanttScroll", function (left, top){
 	//setTimeout(function(){
 	  log_data("onGanttScroll + ");
@@ -1238,7 +1266,7 @@ main_header_menu.attachEvent("onClick", function(item_id){
 
 
 gantt.attachEvent("onContextMenu", function(taskId, linkId, event){
-    debugger;
+    //debugger;
 	var x = event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft,
 	y = event.clientY + document.body.scrollTop + document.documentElement.scrollTop;
 	if(taskId ){
@@ -1556,6 +1584,7 @@ $(document).on("change", ".split_task_type", function(){
 });
 
 $(document).on("click", ".work_center_popup_select_change", function(){
+	//debugger;
 	var cObj = $(this);
 	var current_elem_id = cObj.attr('id');
 	lightbox_work_center_res_list(current_elem_id, cObj.val());
@@ -1687,7 +1716,6 @@ $(document).on("change", ".resource_radio_change", function(event){
 	rrc.parent("label").addClass('active');	
 	gantt.getDatastore('resource_load_data_store').refresh();
 });
-
 
 
 //===============
