@@ -34,56 +34,6 @@ service_call("get_system_settings", "", "", function(res){
 	if(res.success == "error"){
 		show_toast(res.success, res.message);
 	} else {
-		var hourToStr = gantt.date.date_to_str("%H:%i");
-	var hourRangeFormat = function(step){
-		return function(date){
-			var intervalEnd = new Date(gantt.date.add(date, step, "hour") - 1)
-			return hourToStr(date) + " - " + hourToStr(intervalEnd);
-		};
-	};
-
-
-	gantt.config.min_column_width = 80;
-	var zoomConfig = {
-		minColumnWidth: 80,
-		maxColumnWidth: 150,
-		levels: [
-			[
-				{ unit: "month", format: "%M %Y", step: 1},
-				{unit: "week", step: 1, format: function (date) {
-						var dateToStr = gantt.date.date_to_str("%d %M");
-						var endDate = gantt.date.add(date, -6, "day");
-						var weekNum = gantt.date.date_to_str("%W")(date);
-						return "Week #" + weekNum + ", " + dateToStr(date) + " - " + dateToStr(endDate);
-					}}
-			],
-			[
-				{ unit: "month", format: "%M %Y", step: 1},
-				{ unit: "day", format: "%d %M", step: 1}
-			],
-			[
-				{ unit: "day", format: "%d %M", step: 1},
-				{ unit: "hour", format: hourRangeFormat(12), step: 12}
-			],
-			[
-				{unit: "day", format: "%d %M",step: 1},
-				{unit: "hour",format: hourRangeFormat(6),step: 6}
-			],
-			[
-				{ unit: "day", format: "%d %M", step: 1 },
-				{ unit: "hour", format: "%H:%i", step: 1}
-			]
-		],
-		startDate: new Date(2018, 02, 27),
-		endDate: new Date(2018, 03, 20),
-		useKey: "ctrlKey",
-		trigger: "wheel",
-		element: function(){
-			return gantt.$root.querySelector(".gantt_task");
-		}
-	}
-
-	gantt.ext.zoom.init(zoomConfig);
 		system_settings = res.data;
 		if(system_settings['enable_draggable_timeline'] == 1){
 			gantt.config.drag_timeline = {
@@ -440,6 +390,139 @@ var resourceGridConfig = {
 
 
 //===============
+// Timeline Layout
+//=============== 
+var resource_load_layout = "";
+if(system_settings['default_resource_load_layout'] == "detail"){
+	resource_load_layout =  {
+		css: "gantt_container",
+		rows:[
+		{
+			gravity:1,
+			cols: [
+			{view: "grid", group:"grids", scrollY: "scrollVer"},
+			{resizer: true, width: 1},
+			{view: "timeline", scrollX: "scrollHor", scrollY: "scrollVer"},
+			{view: "scrollbar", id: "scrollVer", group:"vertical"}
+			]
+		},
+		{view: "scrollbar", scroll: "x", id:"scrollHor"}
+		]
+	};
+} else if(system_settings['default_resource_load_layout'] == "basic" && system_settings['resource_graph'] == "no"){
+	//debugger;
+	gantt.config.resource_store = "resource_load_data_store";
+	gantt.config.resource_property = "resourceID";
+	resource_load_layout = {
+		css: "gantt_container",
+		rows: [
+		{
+			gravity: 1,
+			cols: [
+			{view: "grid", group:"grids", scrollY: "scrollVer"},
+			{resizer: true, width: 1},
+			{view: "timeline", scrollX: "scrollHor", scrollY: "scrollVer"},
+			{view: "scrollbar", id: "scrollVer", group:"vertical"}
+			]
+		},
+		{ resizer: true, width: 1, next: "resource_load_grid"},
+		{
+			height: 35,
+			cols: [
+			{ html:"", group:"grids"},
+			{ resizer: true, width: 1},
+			{ html:"<label class='active' >Hours per day <input checked type='radio' class='resource_radio_change' name='resource-mode' value='hours'></label>" +
+			"<label>Tasks per day <input type='radio' name='resource-mode' class='resource_radio_change' value='tasks'></label>", css:"resource-controls"}
+			]
+		},
+		{ resizer: true, width: 1, next: "resources" },
+		{
+            height: 35,
+            cols: [
+            { html: "<label>Resource<select class='resource-select'></select>", css: "resource-select-panel", group: "grids" },
+            { resizer: true, width: 1 },
+            { html: "" }
+            ]
+        },
+		{
+			gravity:1,
+			id: "resource_load_grid",
+			config: resourceGridConfig,
+			templates: "",
+			cols: [
+			{ view: "resourceGrid", group:"grids", scrollY: "resourceVScroll" },
+			{ resizer: true, width: 1},
+			{ view: "resourceTimeline", scrollX: "scrollHor", scrollY: "resourceVScroll"},
+			{ view: "scrollbar", id: "resourceVScroll", group:"vertical"}
+			]
+		},
+		{view: "scrollbar", id: "scrollHor"}
+		]	
+	};
+
+} else if(system_settings['default_resource_load_layout'] == "none"){
+	resource_load_layout =  {
+		css: "gantt_container",
+		rows:[
+		{
+			gravity:1,
+			cols: [
+			{view: "grid", group:"grids", scrollY: "scrollVer"},
+			{resizer: true, width: 1},
+			{view: "timeline", scrollX: "scrollHor", scrollY: "scrollVer"},
+			{view: "scrollbar", id: "scrollVer", group:"vertical"}
+			]
+		},
+		{view: "scrollbar", scroll: "x", id:"scrollHor"}
+		]
+	};
+}
+else if(system_settings['resource_graph'] == "yes"){
+	//debugger;
+	gantt.config.resource_store = "resource_load_data_store";
+	gantt.config.resource_property = "resourceID";
+	resource_load_layout = {
+    css: "gantt_container",
+    rows: [
+        {
+            gravity: 2,
+            cols: [
+                { view: "grid", group: "grids", scrollable: true, scrollY: "scrollVer" },
+                {resizer: true, width: 1},
+                {view: "timeline", scrollX: "scrollHor", scrollY: "scrollVer"},
+                {view: "scrollbar", id: "scrollVer", group:"vertical"}
+            ]
+        },
+        { resizer: true, width: 1, next: "resources"},
+        // {
+        //     height: 35,
+        //     cols: [
+        //         { html: "<label>Resource<select class='resource-select'></select>", css :"resource-select-panel", group: "grids"},
+        //         { resizer: true, width: 1},
+        //         { html: ""}
+        //     ]
+        // },
+
+        {
+            gravity:2,
+            id: "resources",
+            config: resourceGridConfig,
+            templates: resourceTemplates,
+            cols: [
+                { view: "resourceGrid", group:"grids",width:200, scrollY: "resourceVScroll" },
+                { resizer: true, width: 1 },
+                { view: "resourceHistogram", capacity:24, scrollX: "scrollHor", scrollY: "resourceVScroll" },
+                { view: "scrollbar", id: "resourceVScroll", group: "vertical" }
+            ]
+        },
+        { view: "scrollbar", id: "scrollHor" }
+    ]
+};
+}
+gantt.config.layout = resource_load_layout;
+
+
+//===============
 // Menu - Initialize
 //=============== 
 header_menu_init();
@@ -449,6 +532,85 @@ right_click_menu_init();
 //===============
 //Load Table Resource List
 //=============== 
+
+resourcesStore = gantt.createDatastore({
+	name:"resource_load_data_store",
+	type: "treeDatastore",
+	initItem: function(item){
+		// item.id = gantt.uid();
+		item.parent = 0;
+		item.owner_id = 0;
+		item.open = true;
+		item.text = item.label;
+
+		return item;
+	}
+});
+
+gantt.attachEvent("onGanttReady", function () {
+	//debugger;
+	if(system_settings['default_resource_load_layout'] == "basic" && system_settings['resource_graph'] == "no")
+	{
+		var resourcesStore = gantt.getDatastore(gantt.config.resource_store);
+		var resource_select = gantt.$container.querySelector(".resource-select");
+		updateSelect(resourcesStore.getItems(), resource_select);
+		get_resource(resource_select);
+	}
+
+	var tooltips = gantt.ext.tooltips;
+	tooltips.tooltipFor({
+		selector: ".gantt_resource_marker",
+		html: function (event, node) {
+			var dataElement = node.querySelector("[data-recource-tasks]");
+			var ids = JSON.parse(dataElement.getAttribute("data-recource-tasks"));
+
+			var date = gantt.templates.xml_date(dataElement.getAttribute("data-cell-date"));
+			var resourceId = dataElement.getAttribute("data-resource-id");
+
+			var relativePosition = gantt.utils.dom.getRelativeEventPosition(event, gantt.$task_scale);
+
+			var store = gantt.getDatastore("resource_load_data_store");
+
+			var html = [
+				"<b>" + store.getItem(resourceId).text + "</b>" + ", " + gantt.templates.tooltip_date_format(date),
+				"",
+				ids.map(function (id, index) {
+					var task = gantt.getTask(id);
+					var assignenment = gantt.getResourceAssignments(resourceId, task.id);
+					var amount = "";
+					var taskIndex = (index + 1);
+					if (assignenment[0]) {
+						amount = " (" + assignenment[0].value + "h) ";
+					}
+					return "Task #" + taskIndex + ": " + amount + task.text;
+				}).join("<br>")
+			].join("<br>");
+
+			return html;
+		}
+	});
+
+});
+
+resourcesStore.attachEvent("onAfterSelect", function (id) {
+    //debugger;
+    gantt.refreshData();
+});
+
+
+resourcesStore.attachEvent("onFilterItem", function (id, item) {
+    if (filterValue) {
+        return id == filterValue || resourcesStore.isChildOf(id, filterValue);
+    }
+    return true;
+});
+
+resourcesStore.parse(gantt.serverList("resource"));
+
+
+// resourcesStore.attachEvent("onAfterSelect", function(id){
+// 	gantt.refreshData();
+// });
 
 
 //===============
@@ -541,56 +703,6 @@ gantt.templates.quick_info_content = function(start, end, task){
 //===============
 // Resource Grid Layout Template
 //=============== 
-
-/*-- resource tooltip start --*/
-
-gantt.attachEvent("onGanttReady", function () {
-	var tooltips = gantt.ext.tooltips;
-	tooltips.tooltipFor({
-		selector: ".gantt_resource_marker",
-		html: function (event, node) {
-			var dataElement = node.querySelector("[data-recource-tasks]");
-			var ids = JSON.parse(dataElement.getAttribute("data-recource-tasks"));
-
-			var date = gantt.templates.xml_date(dataElement.getAttribute("data-cell-date"));
-			var resourceId = dataElement.getAttribute("data-resource-id");
-
-			var relativePosition = gantt.utils.dom.getRelativeEventPosition(event, gantt.$task_scale);
-
-			var store = gantt.getDatastore("resource_load_data_store");
-
-			var html = [
-				"<b>" + store.getItem(resourceId).text + "</b>" + ", " + gantt.templates.tooltip_date_format(date),
-				"",
-				ids.map(function (id, index) {
-					var task = gantt.getTask(id);
-					var assignenment = gantt.getResourceAssignments(resourceId, task.id);
-					var amount = "";
-					var taskIndex = (index + 1);
-					if (assignenment[0]) {
-						amount = " (" + assignenment[0].value + "h) ";
-					}
-					return "Task #" + taskIndex + ": " + amount + task.text;
-				}).join("<br>")
-			].join("<br>");
-
-			return html;
-		}
-	});
-});
-
-function getResourceAssignments(resource, store) {
-	var assignments = [];
-	if (store.hasChild(resource.id)) {
-		store.eachItem(function (res) {
-			assignments = assignments.concat(gantt.getResourceAssignments(res.id));
-		}, resource.id)
-	} else {
-		assignments = gantt.getResourceAssignments(resource.id)
-	}
-	return assignments;
-}
-
 var resourceTemplates = {
 	grid_row_class: function(start, end, resource){
 		return "";
@@ -630,182 +742,6 @@ gantt.templates.resource_cell_value = function(start_date, end_date, resource, t
 
 	return "<div style=\"margin: -10px; border-radius: 50px; \" " + tasksIds + " " + resourceId + " " + dateAttr + ">" + html + "</div>";
 };
-
-
-gantt.locale.labels.section_resources = "Owners";
-
-var resource_load_layout = "";
-if(system_settings['default_resource_load_layout'] == "detail"){
-	resource_load_layout =  {
-		css: "gantt_container",
-		rows:[
-		{
-			gravity:1,
-			cols: [
-			{view: "grid", group:"grids", scrollY: "scrollVer"},
-			{resizer: true, width: 1},
-			{view: "timeline", scrollX: "scrollHor", scrollY: "scrollVer"},
-			{view: "scrollbar", id: "scrollVer", group:"vertical"}
-			]
-		},
-		{view: "scrollbar", scroll: "x", id:"scrollHor"}
-		]
-	};
-} else if(system_settings['default_resource_load_layout'] == "basic" && system_settings['resource_graph'] == "no"){
-	//debugger;
-	gantt.config.resource_store = "resource_load_data_store";
-	gantt.config.resource_property = "owner";
-	gantt.config.order_branch = true;
-	gantt.config.open_tree_initially = true;
-	resource_load_layout = {
-		css: "gantt_container",
-		rows: [
-		{
-			gravity: 1,
-			cols: [
-			{view: "grid", group:"grids", scrollY: "scrollVer"},
-			{resizer: true, width: 1},
-			{view: "timeline", scrollX: "scrollHor", scrollY: "scrollVer"},
-			{view: "scrollbar", id: "scrollVer", group:"vertical"}
-			]
-		},
-		{ resizer: true, width: 1, next: "resource_load_grid"},
-		{
-			height: 35,
-			cols: [
-			{ html:"", group:"grids"},
-			{ resizer: true, width: 1},
-			{ html:"<label class='active' >Hours per day <input checked type='radio' class='resource_radio_change' name='resource-mode' value='hours'></label>" +
-			"<label>Tasks per day <input type='radio' name='resource-mode' class='resource_radio_change' value='tasks'></label>", css:"resource-controls"}
-			]
-		},
-		{ resizer: true, width: 1, next: "resources" },
-		{
-            height: 35,
-            cols: [
-            { html: "<label>Resource<select class='resource-select'></select>", css: "resource-select-panel", group: "grids" },
-            { resizer: true, width: 1 },
-            { html: "" }
-            ]
-        },
-		{
-			gravity:1,
-			id: "resource_load_grid",
-			config: resourceGridConfig,
-			templates: "",
-			cols: [
-			{ view: "resourceGrid", group:"grids", scrollY: "resourceVScroll" },
-			{ resizer: true, width: 1},
-			{ view: "resourceTimeline", scrollX: "scrollHor", scrollY: "resourceVScroll"},
-			{ view: "scrollbar", id: "resourceVScroll", group:"vertical"}
-			]
-		},
-		{view: "scrollbar", id: "scrollHor"}
-		]	
-	};
-
-} else if(system_settings['default_resource_load_layout'] == "none"){
-	resource_load_layout =  {
-		css: "gantt_container",
-		rows:[
-		{
-			gravity:1,
-			cols: [
-			{view: "grid", group:"grids", scrollY: "scrollVer"},
-			{resizer: true, width: 1},
-			{view: "timeline", scrollX: "scrollHor", scrollY: "scrollVer"},
-			{view: "scrollbar", id: "scrollVer", group:"vertical"}
-			]
-		},
-		{view: "scrollbar", scroll: "x", id:"scrollHor"}
-		]
-	};
-}
-else if(system_settings['resource_graph'] == "yes"){
-	//debugger;
-	gantt.config.resource_store = "resource_load_data_store";
-	gantt.config.resource_property = "owner";
-	resource_load_layout = {
-    css: "gantt_container",
-    rows: [
-        {
-            gravity: 2,
-            cols: [
-                { view: "grid", group: "grids", scrollable: true, scrollY: "scrollVer" },
-                {resizer: true, width: 1},
-                {view: "timeline", scrollX: "scrollHor", scrollY: "scrollVer"},
-                {view: "scrollbar", id: "scrollVer", group:"vertical"}
-            ]
-        },
-        { resizer: true, width: 1, next: "resources"},
-        // {
-        //     height: 35,
-        //     cols: [
-        //         { html: "<label>Resource<select class='resource-select'></select>", css :"resource-select-panel", group: "grids"},
-        //         { resizer: true, width: 1},
-        //         { html: ""}
-        //     ]
-        // },
-
-        {
-            gravity:2,
-            id: "resources",
-            config: resourceGridConfig,
-            templates: resourceTemplates,
-            cols: [
-                { view: "resourceGrid", group:"grids",width:200, scrollY: "resourceVScroll" },
-                { resizer: true, width: 1 },
-                { view: "resourceHistogram", capacity:24, scrollX: "scrollHor", scrollY: "resourceVScroll" },
-                { view: "scrollbar", id: "resourceVScroll", group: "vertical" }
-            ]
-        },
-        { view: "scrollbar", id: "scrollHor" }
-    ]
-};
-}
-gantt.config.layout = resource_load_layout;
-
-resourcesStore = gantt.createDatastore({
-	name:"resource_load_data_store",
-	type: "treeDatastore",
-	initItem: function(item){
-		// item.id = gantt.uid();
-		item.parent = 0;
-		item.owner_id = 0;
-		item.open = true;
-		item.text = item.label;
-
-		return item;
-	}
-});
-
-gantt.attachEvent("onGanttReady", function () {
-	//debugger;
-	if(system_settings['default_resource_load_layout'] == "basic" && system_settings['resource_graph'] == "no")
-	{
-		var resourcesStore = gantt.getDatastore(gantt.config.resource_store);
-		var resource_select = gantt.$container.querySelector(".resource-select");
-		updateSelect(resourcesStore.getItems(), resource_select);
-		get_resource(resource_select);
-	}
-
-});
-
-resourcesStore.attachEvent("onAfterSelect", function (id) {
-    //debugger;
-    gantt.refreshData();
-});
-
-
-resourcesStore.attachEvent("onFilterItem", function (id, item) {
-    if (filterValue) {
-        return id == filterValue || resourcesStore.isChildOf(id, filterValue);
-    }
-    return true;
-});
-
-/*-- resource tooltip end --*/
-
 
 //===============
 // Resource Histogram Graph Template
@@ -875,12 +811,14 @@ service_call("get_operations", "gantt_chart", system_settings['default_work_cent
 	} else {
 		data_source = { "data" : "", "links": ""  };
 	}
+
 	gantt.parse(data_source);
 	
 	detail_layout_call();
 	
 	log_data(data_source);
 });
+
 
 //===============
 //Custom lightbox Configuration 
