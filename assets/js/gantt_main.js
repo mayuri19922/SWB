@@ -494,14 +494,14 @@ else if(system_settings['resource_graph'] == "yes"){
             ]
         },
         { resizer: true, width: 1, next: "resources"},
-        // {
-        //     height: 35,
-        //     cols: [
-        //         { html: "<label>Resource<select class='resource-select'></select>", css :"resource-select-panel", group: "grids"},
-        //         { resizer: true, width: 1},
-        //         { html: ""}
-        //     ]
-        // },
+        {
+            height: 35,
+            cols: [
+                { html: "<label>Resource<select class='resource-select'></select>", css :"resource-select-panel", group: "grids"},
+                { resizer: true, width: 1},
+                { html: ""}
+            ]
+        },
 
         {
             gravity:2,
@@ -549,13 +549,10 @@ resourcesStore = gantt.createDatastore({
 
 gantt.attachEvent("onGanttReady", function () {
 	//debugger;
-	if(system_settings['default_resource_load_layout'] == "basic" && system_settings['resource_graph'] == "no")
-	{
 		var resourcesStore = gantt.getDatastore(gantt.config.resource_store);
 		var resource_select = gantt.$container.querySelector(".resource-select");
 		updateSelect(resourcesStore.getItems(), resource_select);
 		get_resource(resource_select);
-	}
 
 	var tooltips = gantt.ext.tooltips;
 	tooltips.tooltipFor({
