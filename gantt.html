@@ -68,6 +68,8 @@
       <ul class="nav navbar-nav menu_actions">
        <!--  <li class=""><a href="javascript:;" id="toggle_sidebar" class="toggle_sidebar top_menu_items" data-visible='1' title="Hide Left Grid" ><i class="fa fa-navicon fa-1_5x"></i></a></li> -->
        <li class="" style='display:none;'><a href="javascript:;" id="minute" class="change_chart_view" data-title-lang="minute_view"  title="Minute View" ><i class="fa fa-clock fa-1_5x"></i> <span data-lang="Minute">Minute</span></a></li>
+       <li class=""><a href="javascript:;" id="zoomIn"  data-title-lang="Zoom In"  title="Zoom In" ><i class="fa fa-search-plus fa-1_5x"></i> <span data-lang="zoom-in">Zoom In</span></a></li>
+       <li class=""><a href="javascript:;" id="zoomOut" data-title-lang="Zoom Out"  title="Zoom Out" ><i class="fa fa-search-minus fa-1_5x"></i> <span data-lang="zoom-out">Zoom Out</span></a></li>
        <li class=""><a href="javascript:;" id="day" class="change_chart_view" data-title-lang="day_view"  title="Day View" ><i class="fa fa-calendar-minus fa-1_5x"></i> <span data-lang="day">Day</span></a></li>
        <li><a href="javascript:;" id="week" class="change_chart_view" data-title-lang="week_view" title="Week View"> <i class="fa fa-calendar-plus fa-1_5x"></i> <span data-lang="week">Week</span></a></li>
        <li><a href="javascript:;" id="month" class="change_chart_view" data-title-lang="month_view" title="Month View"><i class="fa fa-calendar-alt fa-1_5x"></i> <span data-lang="month">Month</span></a></li>
@@ -75,8 +77,7 @@
        <li><a href="javascript:;" id="previous_timeline" data-title-lang="previos" class="top_menu_items change_dashboard_display previous_day" title="Previous"><i class="fa fa-chevron-left fa-1_5x"></i></a></li>
        <li><a href="javascript:;" id="next_timeline" data-title-lang="next" class="top_menu_items change_dashboard_display next_day" title="Next"><i class="fa fa-chevron-right fa-1_5x"></i></a></li>
        <li><a href="javascript:;" id="next_timeline" data-title-lang="jump_current_date" class="top_menu_items current_date" title="Jump to Current Date"><i class="fa fa-calendar-check fa-1_5x"></i> <span data-lang="today">Today</span></a></li>
-
-     </ul>
+      </ul>
      <ul class="nav navbar-nav navbar-right">
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <i class="fa fa-users fa-1_5x"></i> <span data-lang="group">Group</span> 
@@ -448,6 +449,18 @@
            </div>
            <div class="clearfix"></div> <hr class="small_m">
          </div>
+
+         <div class="form-group">
+          <label class="control-label col-sm-5" for="split_task" data-lang="enable_split_task">Split Task</label> 
+          <div class="col-sm-4">
+            <input type="checkbox" data-title-lang="enable_split_task" title="Enable Split Task" id="enable_split_task_toggle" data-setting="enable_split_task" class="toggle_checkbox_sm check_uncheck_value_switcher add_remove_timeline_option close_setting_popup_alert" data-timeline_option="minute" data-linked_field="enable_split_task"  />
+            <label for="enable_split_task_toggle" class="toggle_label_sm" data-title-lang="start_resyn_progress" title="Enable Split Task" style="margin: 0px;" >
+              <span data-lang="enable_split_task">Enable Split Task</span> 
+            </label>
+            <input type="hidden" id="enable_split_task" name="enable_split_task" value="1" />
+         </div>
+         <div class="clearfix"></div> <hr class="small_m">
+       </div>
 
           <div class="form-group">
            <label class="control-label col-sm-5" for="tash_popup_dragging" data-lang="left_panel_resize">Left Panel Enable Resizing</label> 
