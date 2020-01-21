@@ -906,7 +906,7 @@ gantt.attachEvent("onTaskClick", function(id,e){
 	var temp_class = get_task_class(id);
 	var t_task = gantt.getTask(id);
 	var task_h_flag = check_highlight(id);
-
+    log_data("Selected Task..."+JSON.stringify(t_task));
 	setTimeout(function(){
 		if(selected_task_id == null){
 			selected_task_id = id;
