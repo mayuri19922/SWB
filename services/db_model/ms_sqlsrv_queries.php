@@ -360,7 +360,7 @@ function get_aps_operations($start_date = NULL, $end_date = NULL, $ref_id= NULL,
 
 		if($where!="" && trim($where)!= "AND"){
 			$where .=  " AND ";
-		} 
+		}
 		$work_order_string = implode("','", $work_order);
 		$where .= " task.WORK_ORDER_ID IN ('$work_order_string') ";
 	}
