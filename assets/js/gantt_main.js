@@ -1329,17 +1329,21 @@ $(document).on("click", ".change_chart_view", function(event){
 		$(".load_table_box").show();  // temp for GA Release March 
 	} else if(vObj.attr("id") == "day"){
 		date_view_configuration();
+		gantt.ext.zoom.setLevel("day");
 		$(".load_table_box").show();  // temp for GA Release March 
 	} else if(vObj.attr("id") == "week"){
 		week_view_configuration();
+		gantt.ext.zoom.setLevel("week");
 		$(".load_table_box").hide(); // temp for GA Release March 
 	} else if(vObj.attr("id") == "month"){
 		month_view_configuration();
+		gantt.ext.zoom.setLevel("month");
 		$(".load_table_box").hide(); // temp for GA Release March 
 	} else if(vObj.attr("id") == "year"){
 		year_view_configuration();
+		gantt.ext.zoom.setLevel("year");
 		$(".load_table_box").hide(); // temp for GA Release March 
-	}
+	} 
 
 	current_timeline_view = vObj.attr("id");
 
@@ -1347,6 +1351,80 @@ $(document).on("click", ".change_chart_view", function(event){
 	gantt.render();
 });
 
+var zoomConfig = {
+	levels: [
+		{
+			name:"day",
+			scale_height: 27,
+			min_column_width:80,
+			scales:[
+				{unit: "day", step: 1, format: "%d %M"}
+			]
+		},
+		{
+			name:"week",
+			scale_height: 50,
+			min_column_width:50,
+			scales:[
+				{unit: "week", step: 1, format: function (date) {
+					var dateToStr = gantt.date.date_to_str("%d %M");
+					var endDate = gantt.date.add(date, -6, "day");
+					var weekNum = gantt.date.date_to_str("%W")(date);
+					return "#" + weekNum + ", " + dateToStr(date) + " - " + dateToStr(endDate);
+				}},
+				{unit: "day", step: 1, format: "%j %D"}
+			]
+		},
+		{
+			name:"month",
+			scale_height: 50,
+			min_column_width:120,
+			scales:[
+				{unit: "month", format: "%F, %Y"},
+				{unit: "week", format: "Week #%W"}
+			]
+		},
+		{
+			name:"year",
+			scale_height: 50,
+			min_column_width: 30,
+			scales:[
+				{unit: "year", step: 1, format: "%Y"}
+			]
+		}
+	]
+};
+
+gantt.ext.zoom.init(zoomConfig);
+gantt.ext.zoom.setLevel("day");
+gantt.ext.zoom.attachEvent("onAfterZoom", function(level, config){
+	if(config.name == "day"){
+		document.getElementById('day').click();
+		date_view_configuration();
+		$(".load_table_box").show();  
+	} else if(config.name == "week"){
+		document.getElementById('week').click();
+		week_view_configuration();
+		$(".load_table_box").hide(); 
+	} else if(config.name == "month"){
+		document.getElementById('month').click();
+		month_view_configuration();
+		$(".load_table_box").hide();  
+	} else if(config.name == "year"){
+		document.getElementById('year').click();
+		year_view_configuration();
+		$(".load_table_box").hide();  
+	} 
+	gantt.render();
+})
+
+$(document).on("click", "#zoomIn", function(event){
+	gantt.ext.zoom.zoomIn();	
+});
+
+$(document).on("click", "#zoomOut", function(event){
+	gantt.ext.zoom.zoomOut();
+});
 
 $(document).on("click", ".change_dashboard_display", function(event){
 	var curObj = $(this);
