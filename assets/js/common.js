@@ -889,7 +889,6 @@ function undo_redo_priority_change() {
       change_priority_of_target(tt_task.id, tt_task.priority);
     }
   }
-
 }
 
 function fullscreen_toggle() {
@@ -1104,6 +1103,12 @@ function detail_layout_call() {
   }
 }
 
+// formatting the duration
+var formatter = gantt.ext.formatters.durationFormatter({
+  enter: "minute",
+  store: "minute", // duration_unit
+  format: "hour",
+});
 
 function left_matrix_configuration(hide_element) {
 
@@ -1162,9 +1167,13 @@ function left_matrix_configuration(hide_element) {
       hide: false, "resize": true, name: "duration", label: $_LANG['hours'], align: "center", width: "55",
       template: function (item) {
         if (item.type == "project") {
-          return "";
+            return "";
         } else {
-          return (item.duration !== undefined && item.duration !== 0) ? item.duration : item.min_duration;
+          var msec = Math.abs(item.start_date - item.end_date);
+          var mins = Math.floor(msec / 60000);
+          return (item.duration !== undefined && item.duration !== 0) ? formatter.format(mins) : formatter.format(mins);
+          // return (item.duration !== undefined && item.duration !== 0) ? formatter.format(item.duration * 60) : formatter.format(item.min_duration * 60);
+          // return (item.duration !== undefined && item.duration !== 0) ? item.duration : item.min_duration;
         }
       }
     },

@@ -67,7 +67,7 @@ service_call("get_system_settings", "", "", function(res){
 
 gantt.config.sort = true; 
 // gantt.config.min_duration = 1000*60;
-// gantt.config.duration_unit = "minute";
+//gantt.config.duration_unit = "minute";
 gantt.config.time_step = 1;
 gantt.config.step = 0.1;
 gantt.config.min_column_width = system_settings['task_column_width'];
