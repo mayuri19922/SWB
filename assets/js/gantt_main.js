@@ -82,6 +82,8 @@ gantt.config.lightbox_additional_height = system_settings['lightbox_additional_h
 gantt.config.lightbox['project_sections'] = "";
 
 gantt.config.auto_scheduling = true;
+//gantt.config.show_tasks_outside_timescale = true;
+
 gantt.config.auto_scheduling_strict = false;
 
 gantt.config.details_on_create = true;
