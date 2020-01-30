@@ -113,6 +113,14 @@ var close_setting_popup_alert = 0;
 var WORK_DAY = 8; //for histogram
 var cap = {};  //for histogram
 var filterValue;
+var head_doc_entry_task;
+var oper_doc_entry_task;
+var work_order_id;
+var wo_status;
+var is_local_tasks;
+var left_matrix_editor;
+
+
 //===============
 // Variables and Constants
 //=============== 
@@ -1104,10 +1112,21 @@ function detail_layout_call() {
   }
 }
 
+function left_matrix_editor_configuration(){
+  left_matrix_custom_editor();
+    left_matrix_editor = {
+    text: {type: "text", map_to: "text"},
+    start_date: {type: "custom_editor", map_to: "start_date"},
+    end_date: {type: "date", map_to: "end_date"},
+    duration: {type: "duration", map_to: "duration",min:0, max: 100}
+  };
+}
 
 function left_matrix_configuration(hide_element) {
-
+  left_matrix_editor_configuration();
+  
   var left_matrix_config = "";
+  
   left_matrix_config = [
     {
       hide: false, "resize": true, name: "work_center", label: $_LANG['work_center'], align: "center", width: "*",
@@ -1122,7 +1141,7 @@ function left_matrix_configuration(hide_element) {
       }
     },
     {
-      hide: false, "resize": true, name: "text", label: $_LANG['task'], align: "center", width: "*", tree: true
+      hide: false, "resize": true, name: "text", label: $_LANG['task'], align: "center", width: "*", tree: true,editor:left_matrix_editor.text
     },
     {
       hide: false, "resize": true, name: "resource", label: $_LANG['res'], align: "center", width: "*",
@@ -1143,7 +1162,7 @@ function left_matrix_configuration(hide_element) {
       }
     },
     {
-      hide: false, "resize": true, name: "start_date", label: $_LANG['start_time'], align: "center", width: "55",
+      hide: false, "resize": true, name: "start_date", label: $_LANG['start_time'], align: "center", width: "55",editor:left_matrix_editor.start_date,
       template: function (item) {
         return start_time_task = get_time_from_date(item.start_date, 1);
       }
@@ -1179,6 +1198,46 @@ function left_matrix_configuration(hide_element) {
   left_matrix_config = left_matrix_config.filter(function () { return true; });
 
   return left_matrix_config;
+}
+
+function left_matrix_custom_editor(){
+  gantt.config.editor_types.custom_editor = {
+    show: function (id, column, config, placeholder) {
+      var html = "<div style='width:200px;'><input type='datetime-local' name='" + column.name + "'></div>";
+      placeholder.innerHTML = html;
+    },
+    hide: function () {
+      gantt.render();
+    },
+
+    set_value: function (value, id, column, node) {
+      var date_local_value = gantt.date.date_to_str("%Y-%m-%d")(value)+"T"+gantt.date.date_to_str("%H:%i")(value)
+      node.firstChild.firstChild.value = date_local_value;
+    },
+
+    get_value: function (id, column, node) {
+      var task = gantt.getTask(id);
+      var node_value = node.firstChild.firstChild.value;
+      node_value = node_value.replace('T', ' ')
+      var new_value = gantt.date.str_to_date("%Y-%m-%d %H:%i")(node_value)
+      task.start_date = new_value;
+
+      return task.start_date
+    },
+
+    is_changed: function (value, id, column, node) {
+      return true;
+    },
+
+    is_valid: function (value, id, column, node) {
+      return true;
+    },
+
+    save: function (id, column, node) {
+    },
+    focus: function (node) {
+    }
+  }
 }
 
 function change_lock_unlock_icon() {

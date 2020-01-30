@@ -413,6 +413,41 @@ if(system_settings['default_resource_load_layout'] == "detail"){
 	//debugger;
 	gantt.config.resource_store = "resource_load_data_store";
 	gantt.config.resource_property = "resourceID";
+	gantt.config.show_slack = false;
+	//for enable slack
+	if(system_settings['enable_slack'] == "yes"){
+		gantt.config.show_slack = true;
+		gantt.addTaskLayer(function addSlack(task) {
+			if (!gantt.config.show_slack) {
+				return null;
+			}
+
+			var slack = gantt.getFreeSlack(task);
+
+			if (!slack) {
+				return null;
+			}
+
+			var state = gantt.getState().drag_mode;
+
+			if (state == 'resize' || state == 'move') {
+				return null;
+			}
+
+			var slackStart = new Date(task.end_date);
+			var slackEnd = gantt.calculateEndDate(slackStart, slack);
+			var sizes = gantt.getTaskPosition(task, slackStart, slackEnd);
+			var el = document.createElement('div');
+
+			el.className = 'slack';
+			el.style.left = sizes.left + 'px';
+			el.style.top = sizes.top + 2 + 'px';
+			el.style.width = sizes.width + 'px';
+			el.style.height = sizes.height + 'px';
+
+			return el;
+		});
+	}
 	resource_load_layout = {
 		css: "gantt_container",
 		rows: [
@@ -610,6 +645,21 @@ resourcesStore.parse(gantt.serverList("resource"));
 // });
 
 
+//===============
+// Inline Editing Methods and Events
+//================
+
+
+gantt.ext.inlineEditors.attachEvent("onBeforeEditStart", function(state){
+  //debugger;
+  var task = gantt.getTask(state.id);
+  if(task.parent=="0"){
+    return false;
+  }
+  else{
+    return true;
+  }
+});
 //===============
 // Template Options
 //=============== 
@@ -906,7 +956,19 @@ gantt.attachEvent("onTaskClick", function(id,e){
 	var temp_class = get_task_class(id);
 	var t_task = gantt.getTask(id);
 	var task_h_flag = check_highlight(id);
-
+	var response={t_task};
+	
+	var copy_selected_task_=[];
+	
+	copy_selected_task_.push(t_task);
+	for (let i = 0; i < copy_selected_task_.length; i++) {
+		head_doc_entry_task=copy_selected_task_[i].head_doc_entry;
+		oper_doc_entry_task=head_doc_entry_task;
+		work_order_id=copy_selected_task_[i].work_order_id;
+		is_local_task=copy_selected_task_[i].is_local_task;
+		wo_status=6;
+	}
+	console.log(response);
 	setTimeout(function(){
 		if(selected_task_id == null){
 			selected_task_id = id;
@@ -1013,6 +1075,13 @@ gantt.attachEvent("onLightboxSave", function(id, task, is_new){
 	
 	var $field_ed = ($("#popup_end_date").val()).split('-');
 	task.end_date = new Date($field_ed[2], ($field_ed[1]-1), $field_ed[0], end_hours, $("#popup_end_minutes").val(), 00, 00);
+	//add additional parameters
+	task.head_doc_entry=head_doc_entry_task;
+	task.oper_doc_entry=oper_doc_entry_task;
+	task.work_order_id=work_order_id;
+	//task.new_work_order_id=work_order_id;
+	task.wo_status=wo_status;
+	//task.is_local_task=0;
 
 	if(!task.text){
 		gantt.message({type:"error", text:$_LANG['desc_required']});
@@ -1034,7 +1103,7 @@ gantt.attachEvent("onLightboxSave", function(id, task, is_new){
 		gantt.addTask(task,task.parent);
 		var rand_val =  Math.round(Math.random()*999)+100;
 		task.operation_number = rand_val;
-		task.work_order_id = rand_val;
+		//task.work_order_id = rand_val;
 	}else{
 		gantt.updateTask(task.id);
 	}

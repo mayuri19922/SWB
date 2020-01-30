@@ -440,6 +440,7 @@ function get_operations($presentation_type = NULL, $work_center = NULL){
 					"task_type"                => $row['task_type'], 
 					"type"                     => $row['operation_type'],
 					"work_center"              => $row['work_center_id'],
+					"work_order_id"            =>  $row['work_order_id'],
 					"start_date"               => change_date_format(trim($row['start_date'])),
 					"end_date"                 => change_date_format(trim($row['end_date'])),
 					"work_order"               => ($row['operation_type'] =="task") ? $row['work_order_id'] : (int)0,
@@ -556,7 +557,7 @@ function save_update_task(){
 	$new_links = array();
 	if($task_data!="") {
 		foreach($task_data as $key => $tasks){
-			// print_r($tasks);
+			 print_r($tasks);
 			if(!isset($tasks['$virtual'])){
 		//		echo 'in action ';
 		//		echo '<br>';
@@ -579,9 +580,10 @@ function save_update_task(){
 				$tasks['priority'] = (isset($tasks['priority']) && $tasks['priority']!="") ? $tasks['priority'] : (int)99;
 				$tasks['status']   = (isset($tasks['status']) && $tasks['status']!="") ? $tasks['status'] : (int)0;
 				$tasks['task_type']= (isset($tasks['task_type']) && $tasks['task_type']!="") ? $tasks['task_type'] : 'operation';
-				$tasks['work_order_id'] = (isset($tasks['work_order']) && $tasks['work_order']!="") ? utf8_decode($tasks['work_order']) : (int)rand(99,999);
-				$tasks['work_center'] = (isset($tasks['work_center']) && $tasks['work_center']!="") ? utf8_decode($tasks['work_center']) : (int)0;
+				//$tasks['work_order_id'] = (isset($tasks['work_order']) && $tasks['work_order']!="") ? utf8_decode($tasks['work_order']) : (int)rand(99,999);
 
+				$tasks['work_center'] = (isset($tasks['work_center']) && $tasks['work_center']!="") ? utf8_decode($tasks['work_center']) : (int)0;
+                $tasks['work_order_id'] = (isset($tasks['work_order_id']) && $tasks['work_order_id']!="") ? $tasks['work_order_id'] : (int)0;
 				$tasks['head_doc_entry'] = (isset($tasks['head_doc_entry']) && $tasks['head_doc_entry']!="") ? $tasks['head_doc_entry'] : (int)0;
 				$tasks['oper_doc_entry'] = (isset($tasks['oper_doc_entry']) && $tasks['oper_doc_entry']!="") ? $tasks['oper_doc_entry'] : (int)0;
 				$tasks['oper_line_id'] = (isset($tasks['oper_line_id']) && $tasks['oper_line_id']!="") ? $tasks['oper_line_id'] : (int)0;
@@ -593,7 +595,7 @@ function save_update_task(){
 				$tasks['min_duration']   = (isset($tasks['min_duration']) && $tasks['min_duration']!="") ? $tasks['min_duration'] : $tasks['duration'];
 				
 				$tasks['operation_number'] = (isset($tasks['operation_number']) && $tasks['operation_number']!="") ? $tasks['operation_number'] : rand(99,999);
-
+                $tasks['wo_status'] = (isset($tasks['wo_status']) && $tasks['wo_status']!="") ? $tasks['wo_status'] : (int)0;
 				$result = "";
 				if(isset($tasks['is_saved']) && $tasks['is_saved']== 1){
 					
