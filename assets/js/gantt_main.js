@@ -565,16 +565,15 @@ gantt.attachEvent("onGanttReady", function () {
 		html: function (event, node) {
 			var dataElement = node.querySelector("[data-recource-tasks]");
 			var ids = JSON.parse(dataElement.getAttribute("data-recource-tasks"));
-
+		
 			var date = gantt.templates.xml_date(dataElement.getAttribute("data-cell-date"));
 			var resourceId = dataElement.getAttribute("data-resource-id");
 
 			var relativePosition = gantt.utils.dom.getRelativeEventPosition(event, gantt.$task_scale);
 
 			var store = gantt.getDatastore("resource_load_data_store");
-
 			var html = [
-				"<b>" + store.getItem(resourceId).text + "</b>" + ", " + gantt.templates.tooltip_date_format(date),
+				"<b>" + store.getItem(resourceId).text + "</b>",
 				"",
 				ids.map(function (id, index) {
 					var task = gantt.getTask(id);
@@ -584,7 +583,9 @@ gantt.attachEvent("onGanttReady", function () {
 					if (assignenment[0]) {
 						amount = " (" + assignenment[0].value + "h) ";
 					}
-					return "Task #" + taskIndex + ": " + amount + task.text;
+					var start_date = new Date(task.start_date);
+					var sDateFormat = start_date.getDate()+'/'+(start_date.getMonth() + 1)+'/'+start_date.getFullYear();
+					return "Task #" + taskIndex + ": " + amount + task.text +', Work order : '+task.work_order +',<br/> Start date: '+sDateFormat;
 				}).join("<br>")
 			].join("<br>");
 
@@ -711,7 +712,6 @@ var resourceTemplates = {
 	},
 	task_row_class: function(start, end, resource){
 		return "";
-
 	}
 }; 
 

@@ -252,4 +252,8 @@ background: #33b73d;
 .multiselect-container>li>a>label.radio, .multiselect-container>li>a>label.checkbox {
   margin: 0px 0px 0px 8px !important;
 }
+
+.weekend{
+  background: rgb(255, 11, 44) !important;
+}
        
