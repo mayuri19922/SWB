@@ -897,7 +897,6 @@ function undo_redo_priority_change() {
       change_priority_of_target(tt_task.id, tt_task.priority);
     }
   }
-
 }
 
 function fullscreen_toggle() {
@@ -1112,6 +1111,7 @@ function detail_layout_call() {
   }
 }
 
+<<<<<<< HEAD
 function left_matrix_editor_configuration(){
   left_matrix_custom_editor();
     left_matrix_editor = {
@@ -1121,6 +1121,14 @@ function left_matrix_editor_configuration(){
     duration: {type: "duration", map_to: "duration",min:0, max: 100}
   };
 }
+=======
+// formatting the duration
+var formatter = gantt.ext.formatters.durationFormatter({
+  enter: "minute",
+  store: "minute", // duration_unit
+  format: "hour",
+});
+>>>>>>> 25ddc6ebac711670c697c52d596275f0fd39c71f
 
 function left_matrix_configuration(hide_element) {
   left_matrix_editor_configuration();
@@ -1181,9 +1189,13 @@ function left_matrix_configuration(hide_element) {
       hide: false, "resize": true, name: "duration", label: $_LANG['hours'], align: "center", width: "55",
       template: function (item) {
         if (item.type == "project") {
-          return "";
+            return "";
         } else {
-          return (item.duration !== undefined && item.duration !== 0) ? item.duration : item.min_duration;
+          var msec = Math.abs(item.start_date - item.end_date);
+          var mins = Math.floor(msec / 60000);
+          return (item.duration !== undefined && item.duration !== 0) ? formatter.format(mins) : formatter.format(mins);
+          // return (item.duration !== undefined && item.duration !== 0) ? formatter.format(item.duration * 60) : formatter.format(item.min_duration * 60);
+          // return (item.duration !== undefined && item.duration !== 0) ? item.duration : item.min_duration;
         }
       }
     },
@@ -1872,28 +1884,67 @@ function date_view_configuration() {
 }
 
 function week_view_configuration() {
-  // var $start = get_start_date('week'); // 
-  var $start = get_start_of_week(new Date());
+  /*var $start = get_start_of_week(new Date());
   var $end = get_end_of_week($start);
+
   $start.setHours(00, 00, 00, 000);
   $end.setHours(23, 59, 00, 000);
 
   gantt.config.start_date = gantt.date.day_start($start);
-  gantt.config.end_date = $end; // new Date(2017, 9, 31, 24, 00);
+  gantt.config.end_date = $end; 
 
-  // gantt.config.date_grid = "%H:%i";
   gantt.config.scale_unit = "day";
-  // gantt.config.date_scale = "%l, %F %d";
   gantt.config.date_scale = "%l";
   gantt.config.step = 1;
 
   var weekScaleTemplate = function (date) {
     var dateToStr = gantt.date.date_to_str("%d %M");
-    return dateToStr(gantt.config.start_date) + " - " + dateToStr(gantt.config.end_date);
-  };
+    return dateToStr(gantt.config.start_date) + " - " + dateToStr(gantt.config.end_date);*/
+    /*var dateToStr = gantt.date.date_to_str("%d %M");
+		var endDate = gantt.date.add(date, -6, "day");
+		var weekNum = gantt.date.date_to_str("%W")(date);
+		return "#" + weekNum + ", " + dateToStr(date) + " - " + dateToStr(endDate);*/
+  /*};
   gantt.config.duration_unit = "day";
   gantt.config.subscales = [{ unit: "week", step: 1, template: weekScaleTemplate }];
+  enable_disable_project_drag(true);*/
+  var date = new Date();
+
+  var $start = new Date(date.getFullYear(), date.getMonth(), 1);
+  var $end = new Date(date.getFullYear(), date.getMonth() + 1);
+
+  gantt.config.start_date = gantt.date.day_start($start);
+  gantt.config.end_date = $end; 
+
+  gantt.config.scale_unit = "day";
+  gantt.config.date_scale = "%d %M";
+  gantt.config.step = 1;
+
+  var monthScaleTemplate = function (date) {
+    var dateToStr = gantt.date.date_to_str("%F, %Y");
+    return dateToStr(gantt.config.start_date);
+  };
+
+  var weekScaleTemplate = function (date) {
+		var dateToStr = gantt.date.date_to_str("%d %M");
+		var endDate = gantt.date.add(gantt.date.add(date, 1, "week"), -1, "day");
+		return dateToStr(date) + " - " + dateToStr(endDate);
+  };
+  
+  var daysStyle = function(date){
+		var dateToStr = gantt.date.date_to_str("%D");
+		if (dateToStr(date) == "Sun"||dateToStr(date) == "Sat")  return "weekend";
+		return "";
+	};
+
+  gantt.config.duration_unit = "day";
+  //gantt.config.subscales = [{ unit: "month", step: 1, template: monthScaleTemplate }];
+  gantt.config.subscales = [{unit: "month", step: 1, format: "%F, %Y"},
+  {unit: "week", step: 1, format: weekScaleTemplate},
+  {unit: "day", step:1, format: "%D", css:daysStyle }];
+  
   enable_disable_project_drag(true);
+  
 }
 
 function month_view_configuration() {
