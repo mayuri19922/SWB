@@ -1,2 +1,1 @@
 {"company_name":"Optipro ERP","app_title":"Scheduling Workbench","locale":"en","system_version":"0.1.3","base_url":"http:\/\/172.16.6.139:9090\/swb\/","default_db_driver":"ms_sql_srv","connection_parameter":{"ms_sql_srv":{"server_name":"OPTI-SQLDEV","username":"sa","password":"sql2k14@opti","pointing_db":""},"sap_hana":{"driver":"HDBODBC32","server_name":"172.16.6.50","port":"30015","username":"SYSTEM","password":"Batch123","pointing_db":""}},"theme":"material","installed":1}
-
