@@ -1111,7 +1111,6 @@ function detail_layout_call() {
   }
 }
 
-<<<<<<< HEAD
 function left_matrix_editor_configuration(){
   left_matrix_custom_editor();
     left_matrix_editor = {
@@ -1121,14 +1120,12 @@ function left_matrix_editor_configuration(){
     duration: {type: "duration", map_to: "duration",min:0, max: 100}
   };
 }
-=======
 // formatting the duration
 var formatter = gantt.ext.formatters.durationFormatter({
   enter: "minute",
   store: "minute", // duration_unit
   format: "hour",
 });
->>>>>>> 25ddc6ebac711670c697c52d596275f0fd39c71f
 
 function left_matrix_configuration(hide_element) {
   left_matrix_editor_configuration();
@@ -1974,6 +1971,15 @@ function month_view_configuration() {
 }
 
 function year_view_configuration() {
+  var date = new Date();
+
+  var $start = new Date(date.getFullYear(), 0, 1);
+  var $end = new Date(date.getFullYear(), 11, 31);
+
+  
+  gantt.config.start_date = gantt.date.day_start($start);
+  gantt.config.end_date = $end; // new Date(2017, 9, 31, 24, 00);
+
   gantt.config.scale_unit = "month";
   gantt.config.date_scale = "%M";
   gantt.config.step = 1;
@@ -1983,19 +1989,13 @@ function year_view_configuration() {
     return dateToStr(gantt.config.start_date);
   };
 
+  gantt.config.duration_unit = "month";
   gantt.config.subscales = [{ unit: "year", step: 1, template: yearScaleTemplate }];
 
   /*gantt.config.min_column_width = 50;
 
   gantt.config.scale_height = 90;*/
   //   gantt.templates.date_scale = null;
-  var date = new Date();
-
-  var $start = new Date(date.getFullYear(), 0, 1);
-  var $end = new Date(date.getFullYear(), 11, 31);
-
-  gantt.config.start_date = gantt.date.day_start($start);
-  gantt.config.end_date = $end; // new Date(2017, 9, 31, 24, 00);
   enable_disable_project_drag(true);
 }
 
