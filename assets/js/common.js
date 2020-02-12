@@ -1924,8 +1924,9 @@ function week_view_configuration() {
 
   var weekScaleTemplate = function (date) {
 		var dateToStr = gantt.date.date_to_str("%d %M");
-		var endDate = gantt.date.add(gantt.date.add(date, 1, "week"), -1, "day");
-		return dateToStr(date) + " - " + dateToStr(endDate);
+    var endDate = gantt.date.add(gantt.date.add(date, 1, "week"), -1, "day");
+    var weekNum = gantt.date.date_to_str("%W")(date);
+		return "Week #" + weekNum + ", " + dateToStr(date) + " - " + dateToStr(endDate);
   };
   
   var daysStyle = function(date){
