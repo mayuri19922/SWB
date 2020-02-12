@@ -377,7 +377,7 @@ var resourceGridConfig = {
 	},
 
 	{
-		name: "capacity", label: $_LANG['capacity'],  width:'*', align:"center",template: function (resource) {
+		name: "capacity", label:default_label() /*$_LANG['capacity']*/,  width:'*', align:"center",template: function (resource) {
 			var store = gantt.getDatastore('resource_load_data_store');
 			var n = store.hasChild(resource.id) ? store.getChildren(resource.id).length : 1
 

@@ -635,3 +635,6 @@ div.gantt_grid_data{
     #b6b6b6 10px
     );
 }
+.gantt_histogram_hor_bar, .gantt_histogram_vert_bar{
+            border:solid 1px forestgreen !important;
+        }

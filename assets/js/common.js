@@ -119,7 +119,7 @@ var work_order_id;
 var wo_status;
 var is_local_tasks;
 var left_matrix_editor;
-
+var timeline_selected_value;
 
 //===============
 // Variables and Constants
@@ -296,6 +296,57 @@ function array_search(list, lookup_key, return_key, search_value) {
   }
   return value;
 }
+
+function default_label(){
+  if(timeline_selected_value!=undefined && timeline_selected_value!=''){
+    gantt.locale.labels.column_capacity="Capacity" + "("+ timeline_selected_value+ ")";
+  }
+  else{
+    timeline_selected_value='';
+    var date=new Date();
+    var starting_month=date.getMonth();
+        // timeline_selected_value=get_selected_month(starting_month);
+        timeline_selected_value=get_day_month_year(date,"","day");
+        gantt.locale.labels.column_capacity="Capacity" + "("+ timeline_selected_value+ ")";
+      }
+    }
+
+    function get_day_month_year(start_date,end_date,$flag){
+      var objStartDate = start_date,
+      weekday = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'),
+      dayOfWeek = weekday[objStartDate.getDay()],
+      domEnder = function() { var a = objStartDate; if (/1/.test(parseInt((a + "").charAt(0)))) return "th"; a = parseInt((a + "").charAt(1)); return 1 == a ? "st" : 2 == a ? "nd" : 3 == a ? "rd" : "th" }(),
+      dayOfMonth = result + ( objStartDate.getDate() < 10) ? '0' + objStartDate.getDate() + domEnder : objStartDate.getDate(),
+      months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'),
+      curMonth = months[objStartDate.getMonth()],
+      curYear = objStartDate.getFullYear(),
+      curHour = objStartDate.getHours() > 12 ? objStartDate.getHours() - 12 : (objStartDate.getHours() < 10 ? "0" + objStartDate.getHours() : objStartDate.getHours()),
+      curMinute = objStartDate.getMinutes() < 10 ? "0" + objStartDate.getMinutes() : objStartDate.getMinutes(),
+      curSeconds = objStartDate.getSeconds() < 10 ? "0" + objStartDate.getSeconds() : objStartDate.getSeconds(),
+      curMeridiem = objStartDate.getHours() > 12 ? "PM" : "AM";
+
+   //var today = curHour + ":" + curMinute + "." + curSeconds + curMeridiem + " " + dayOfWeek + " " + dayOfMonth + " of " + curMonth + ", " + curYear;
+     var result;
+     if($flag=="month"){
+      result=curMonth;
+      }
+     else if($flag=="day"){
+      result=curMonth +' '+ dayOfMonth;
+     }
+     else if($flag=="week"){
+      var objEndDate=end_date;
+      var objEndWeek=result + ( objEndDate.getDate() < 10) ? '0' + objEndDate.getDate() + domEnder : objEndDate.getDate();
+      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+];    
+      var objStartMonth=monthNames[objStartDate.getMonth()];
+      var objEndMonth=monthNames[objEndDate.getMonth()];
+      result=dayOfMonth + " "+ objStartMonth+ "-" + objEndWeek + " " +objEndMonth;
+
+     }
+     return result;
+}
+
 
 //===============
 // Interact with Cookie functions
@@ -527,7 +578,7 @@ function enable_disable_project_drag($flag) {
 }
 
 function custom_lightbox_fill_data(task, task_id) {
-  
+
   $("[name='oper_code']").val(task.text).focus();
 
   var opr_desc = (task.description !== undefined) ? task.description : "";
@@ -669,7 +720,7 @@ function complete_select_task(id) {
         hide_loading_toast();
         show_toast("error", global_error_msg);
       });
-  }, default_pause_short);
+    }, default_pause_short);
 }
 
 function delete_saved_task(id, delete_link_flag, callback) {
@@ -692,7 +743,7 @@ function delete_saved_task(id, delete_link_flag, callback) {
           callback('error');
           show_toast("error", global_error_msg);
         });
-    }, default_pause_short);
+      }, default_pause_short);
   }
 }
 
@@ -708,7 +759,7 @@ function delete_task_link(id) {
         hide_loading_toast();
         show_toast("error", global_error_msg);
       });
-  }, default_pause_short);
+    }, default_pause_short);
 }
 
 
@@ -840,37 +891,37 @@ function schedule_details_popup() {
         status_block = `<span class="text-success"><b>` + res_schedule_details.current_status + `</b></span>`
       }
       var sch_html_content = `
-    <div class="row sch_detail_block">
-    <div class="col-md-12 inner_sections">
-    <div class="col-md-7"><b>`+ $_LANG['current_company'] + `</b></div>
-    <div class="col-md-5">`+ current_company + `</div>
-    </div>
-    <div class="col-md-12 inner_sections">
-    <div class="col-md-7"><b>`+ $_LANG['current_status'] + `</b></div>
-    <div class="col-md-5">`+ status_block + `</div>
-    </div>
-    <div class="col-md-12 inner_sections">
-    <div class="col-md-7"><b>`+ $_LANG['sch_no'] + `</b></div>
-    <div class="col-md-5">`+ res_schedule_details.sch_id + `</div>
-    </div>
-    <div class="col-md-12 inner_sections">
-    <div class="col-md-7"><b>`+ $_LANG['schedule_name'] + `</b></div>
-    <div class="col-md-5">`+ res_schedule_details.sch_name + `</div>
-    </div>
-    <div class="col-md-12 inner_sections">
-    <div class="col-md-7"><b>`+ $_LANG['from_date'] + `</b></div>
-    <div class="col-md-5">`+ res_schedule_details.from_date + `</div>
-    </div>
-    <div class="col-md-12 inner_sections">
-    <div class="col-md-7"><b>` + $_LANG['to_date'] + `</b></div>
-    <div class="col-md-5">`+ res_schedule_details.to_date + `</div>
-    </div>
-    <div class="col-md-12 inner_sections">
-    <div class="col-md-7"><b>`+ $_LANG['current_wc'] + `</b></div>
-    <div class="col-md-5">`+ current_plan_details['working_wc'] + `</div>
-    </div>
-    </div>
-    `;
+      <div class="row sch_detail_block">
+      <div class="col-md-12 inner_sections">
+      <div class="col-md-7"><b>`+ $_LANG['current_company'] + `</b></div>
+      <div class="col-md-5">`+ current_company + `</div>
+      </div>
+      <div class="col-md-12 inner_sections">
+      <div class="col-md-7"><b>`+ $_LANG['current_status'] + `</b></div>
+      <div class="col-md-5">`+ status_block + `</div>
+      </div>
+      <div class="col-md-12 inner_sections">
+      <div class="col-md-7"><b>`+ $_LANG['sch_no'] + `</b></div>
+      <div class="col-md-5">`+ res_schedule_details.sch_id + `</div>
+      </div>
+      <div class="col-md-12 inner_sections">
+      <div class="col-md-7"><b>`+ $_LANG['schedule_name'] + `</b></div>
+      <div class="col-md-5">`+ res_schedule_details.sch_name + `</div>
+      </div>
+      <div class="col-md-12 inner_sections">
+      <div class="col-md-7"><b>`+ $_LANG['from_date'] + `</b></div>
+      <div class="col-md-5">`+ res_schedule_details.from_date + `</div>
+      </div>
+      <div class="col-md-12 inner_sections">
+      <div class="col-md-7"><b>` + $_LANG['to_date'] + `</b></div>
+      <div class="col-md-5">`+ res_schedule_details.to_date + `</div>
+      </div>
+      <div class="col-md-12 inner_sections">
+      <div class="col-md-7"><b>`+ $_LANG['current_wc'] + `</b></div>
+      <div class="col-md-5">`+ current_plan_details['working_wc'] + `</div>
+      </div>
+      </div>
+      `;
 
       gantt.modalbox({
         title: schedule_detail_title,
@@ -907,27 +958,27 @@ function fullscreen_toggle() {
   if (!document.fullscreenElement &&    // alternative standard method
     !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {  // current working methods
     is_full_screen_enabled = 1;
-    if (document.documentElement.requestFullscreen) {
-      document.documentElement.requestFullscreen();
-    } else if (document.documentElement.msRequestFullscreen) {
-      document.documentElement.msRequestFullscreen();
-    } else if (document.documentElement.mozRequestFullScreen) {
-      document.documentElement.mozRequestFullScreen();
-    } else if (document.documentElement.webkitRequestFullscreen) {
-      document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-    }
-  } else {
-    is_full_screen_enabled = 0;
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.msExitFullscreen) {
-      document.msExitFullscreen();
-    } else if (document.mozCancelFullScreen) {
-      document.mozCancelFullScreen();
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    }
+  if (document.documentElement.requestFullscreen) {
+    document.documentElement.requestFullscreen();
+  } else if (document.documentElement.msRequestFullscreen) {
+    document.documentElement.msRequestFullscreen();
+  } else if (document.documentElement.mozRequestFullScreen) {
+    document.documentElement.mozRequestFullScreen();
+  } else if (document.documentElement.webkitRequestFullscreen) {
+    document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
   }
+} else {
+  is_full_screen_enabled = 0;
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  }
+}
 }
 
 function presentation_mode_toggle() {
@@ -971,8 +1022,8 @@ function generate_options(data_list, key, value) {
   for (var i = 0; i < data_list.length; i++) {
     var list_values = (data_list[i]);
     html_options += "\
-   <option value='"+ list_values[key] + "'> " + list_values[value] + "</option>\
-   ";
+    <option value='"+ list_values[key] + "'> " + list_values[value] + "</option>\
+    ";
   }
   return html_options;
 }
@@ -1113,7 +1164,7 @@ function detail_layout_call() {
 
 function left_matrix_editor_configuration(){
   left_matrix_custom_editor();
-    left_matrix_editor = {
+  left_matrix_editor = {
     text: {type: "text", map_to: "text"},
     start_date: {type: "custom_editor", map_to: "start_date"},
     end_date: {type: "date", map_to: "end_date"},
@@ -1133,9 +1184,9 @@ function left_matrix_configuration(hide_element) {
   var left_matrix_config = "";
   
   left_matrix_config = [
-    {
-      hide: false, "resize": true, name: "work_center", label: $_LANG['work_center'], align: "center", width: "*",
-      template: function (item) {
+  {
+    hide: false, "resize": true, name: "work_center", label: $_LANG['work_center'], align: "center", width: "*",
+    template: function (item) {
         return get_list_value_by_id(gantt.serverList('work_center'), item.work_center).key || "";  // previously - item.work_center).code  
       }
     },
@@ -1186,7 +1237,7 @@ function left_matrix_configuration(hide_element) {
       hide: false, "resize": true, name: "duration", label: $_LANG['hours'], align: "center", width: "55",
       template: function (item) {
         if (item.type == "project") {
-            return "";
+          return "";
         } else {
           var msec = Math.abs(item.start_date - item.end_date);
           var mins = Math.floor(msec / 60000);
@@ -1199,57 +1250,57 @@ function left_matrix_configuration(hide_element) {
     {
       hide: false, "resize": true, name: "add", label: "", align: "center", width: "30"
     },
-  ];
+    ];
 
-  if (hide_element == null) {
-    hide_element = "work_order";
+    if (hide_element == null) {
+      hide_element = "work_order";
+    }
+    left_matrix_config = left_matrix_config.filter(function () { return true; });
+
+    return left_matrix_config;
   }
-  left_matrix_config = left_matrix_config.filter(function () { return true; });
 
-  return left_matrix_config;
-}
+  function left_matrix_custom_editor(){
+    gantt.config.editor_types.custom_editor = {
+      show: function (id, column, config, placeholder) {
+        var html = "<div style='width:200px;'><input type='datetime-local' name='" + column.name + "'></div>";
+        placeholder.innerHTML = html;
+      },
+      hide: function () {
+        gantt.render();
+      },
 
-function left_matrix_custom_editor(){
-  gantt.config.editor_types.custom_editor = {
-    show: function (id, column, config, placeholder) {
-      var html = "<div style='width:200px;'><input type='datetime-local' name='" + column.name + "'></div>";
-      placeholder.innerHTML = html;
-    },
-    hide: function () {
-      gantt.render();
-    },
+      set_value: function (value, id, column, node) {
+        var date_local_value = gantt.date.date_to_str("%Y-%m-%d")(value)+"T"+gantt.date.date_to_str("%H:%i")(value)
+        node.firstChild.firstChild.value = date_local_value;
+      },
 
-    set_value: function (value, id, column, node) {
-      var date_local_value = gantt.date.date_to_str("%Y-%m-%d")(value)+"T"+gantt.date.date_to_str("%H:%i")(value)
-      node.firstChild.firstChild.value = date_local_value;
-    },
+      get_value: function (id, column, node) {
+        var task = gantt.getTask(id);
+        var node_value = node.firstChild.firstChild.value;
+        node_value = node_value.replace('T', ' ')
+        var new_value = gantt.date.str_to_date("%Y-%m-%d %H:%i")(node_value)
+        task.start_date = new_value;
 
-    get_value: function (id, column, node) {
-      var task = gantt.getTask(id);
-      var node_value = node.firstChild.firstChild.value;
-      node_value = node_value.replace('T', ' ')
-      var new_value = gantt.date.str_to_date("%Y-%m-%d %H:%i")(node_value)
-      task.start_date = new_value;
+        return task.start_date
+      },
 
-      return task.start_date
-    },
+      is_changed: function (value, id, column, node) {
+        return true;
+      },
 
-    is_changed: function (value, id, column, node) {
-      return true;
-    },
+      is_valid: function (value, id, column, node) {
+        return true;
+      },
 
-    is_valid: function (value, id, column, node) {
-      return true;
-    },
-
-    save: function (id, column, node) {
-    },
-    focus: function (node) {
+      save: function (id, column, node) {
+      },
+      focus: function (node) {
+      }
     }
   }
-}
 
-function change_lock_unlock_icon() {
+  function change_lock_unlock_icon() {
   //lock_icon
   var dom_lock_element_icon = $(".lock_icon");
   var dom_lock_unlock_task = $(".lock_unlock_task");
@@ -1403,7 +1454,7 @@ function lightbox_work_center_res_list(current_lightbox_wc_select_id, value, tas
     }
   }
   child_select.html(new_res_serverlist);
- 
+
 }
 
 
@@ -1532,18 +1583,18 @@ function day_list(list_type, selected_option) {
 
 function month_list(list_type, selected_option) {
   var month_array = [
-    { "key": "0", "label": $_LANG['january'] },
-    { "key": "1", "label": $_LANG['february'] },
-    { "key": "2", "label": $_LANG['march'] },
-    { "key": "3", "label": $_LANG['april'] },
-    { "key": "4", "label": $_LANG['may'] },
-    { "key": "5", "label": $_LANG['june'] },
-    { "key": "6", "label": $_LANG['july'] },
-    { "key": "7", "label": $_LANG['august'] },
-    { "key": "8", "label": $_LANG['september'] },
-    { "key": "9", "label": $_LANG['october'] },
-    { "key": "10", "label": $_LANG['november'] },
-    { "key": "11", "label": $_LANG['december'] }
+  { "key": "0", "label": $_LANG['january'] },
+  { "key": "1", "label": $_LANG['february'] },
+  { "key": "2", "label": $_LANG['march'] },
+  { "key": "3", "label": $_LANG['april'] },
+  { "key": "4", "label": $_LANG['may'] },
+  { "key": "5", "label": $_LANG['june'] },
+  { "key": "6", "label": $_LANG['july'] },
+  { "key": "7", "label": $_LANG['august'] },
+  { "key": "8", "label": $_LANG['september'] },
+  { "key": "9", "label": $_LANG['october'] },
+  { "key": "10", "label": $_LANG['november'] },
+  { "key": "11", "label": $_LANG['december'] }
   ];
   var temp_html = '';
   var selected_value;
@@ -1718,7 +1769,8 @@ function change_date($type) {
 
   gantt.config.start_date = gantt.date.day_start(tomorrow_start);
   gantt.config.end_date = tomorrow_end; // new Date(2017, 9, 31, 24, 00);
-
+  timeline_selected_value=get_day_month_year(tomorrow_start,"","day");
+  default_label();
   gantt.render();
 }
 
@@ -1750,7 +1802,8 @@ function change_week($type) {
 
   gantt.config.start_date = gantt.date.day_start($start_week);
   gantt.config.end_date = $end_week; // new Date(2017, 9, 31, 24, 00);
-
+  timeline_selected_value=get_day_month_year($start_week,$end_week,"week");
+  default_label();
   gantt.render();
 }
 
@@ -1770,10 +1823,11 @@ function change_month($type) {
 
   var $start_month = new Date(current_month.getFullYear(), new_month_value, 1);
   var $end_month = new Date(current_month.getFullYear(), new_month_value + 1);
-
+  //timeline_selected_value=get_selected_month($start_month.getMonth());
+  timeline_selected_value=get_day_month_year($start_month,"","month");
   gantt.config.start_date = gantt.date.day_start($start_month);
   gantt.config.end_date = $end_month; // new Date(2017, 9, 31, 24, 00);
-
+  default_label();
   gantt.render();
 }
 
@@ -1847,13 +1901,14 @@ function minute_view_configuration() {
   };
 
   gantt.config.subscales = [
-    { unit: "hour", step: 1, template: hourScaleTemplate },
-    { unit: "day", step: 1, date: "%j %F, %l" }
+  { unit: "hour", step: 1, template: hourScaleTemplate },
+  { unit: "day", step: 1, date: "%j %F, %l" }
   ];
 }
 
 function date_view_configuration() {
   //var $start = get_start_date('day');
+  timeline_selected_value='';
   var $start = new Date();
   $start.setHours(00, 00, 00, 000);
 
@@ -1876,7 +1931,8 @@ function date_view_configuration() {
 
   gantt.config.duration_unit = "hour";
   gantt.config.subscales = [{ unit: "day", step: 1, template: dateScaleTemplate }];
-
+  timeline_selected_value=get_day_month_year($start,"","day");
+  default_label();
   enable_disable_project_drag(true);
 }
 
@@ -1905,6 +1961,7 @@ function week_view_configuration() {
   gantt.config.duration_unit = "day";
   gantt.config.subscales = [{ unit: "week", step: 1, template: weekScaleTemplate }];
   enable_disable_project_drag(true);*/
+  timeline_selected_value='';
   var date = new Date();
 
   var $start = new Date(date.getFullYear(), date.getMonth(), 1);
@@ -1923,23 +1980,24 @@ function week_view_configuration() {
   };
 
   var weekScaleTemplate = function (date) {
-		var dateToStr = gantt.date.date_to_str("%d %M");
-		var endDate = gantt.date.add(gantt.date.add(date, 1, "week"), -1, "day");
-		return dateToStr(date) + " - " + dateToStr(endDate);
+    var dateToStr = gantt.date.date_to_str("%d %M");
+    var endDate = gantt.date.add(gantt.date.add(date, 1, "week"), -1, "day");
+    return dateToStr(date) + " - " + dateToStr(endDate);
   };
   
   var daysStyle = function(date){
-		var dateToStr = gantt.date.date_to_str("%D");
-		if (dateToStr(date) == "Sun"||dateToStr(date) == "Sat")  return "weekend";
-		return "";
-	};
+    var dateToStr = gantt.date.date_to_str("%D");
+    if (dateToStr(date) == "Sun"||dateToStr(date) == "Sat")  return "weekend";
+    return "";
+  };
 
   gantt.config.duration_unit = "day";
   //gantt.config.subscales = [{ unit: "month", step: 1, template: monthScaleTemplate }];
   gantt.config.subscales = [{unit: "month", step: 1, format: "%F, %Y"},
   {unit: "week", step: 1, format: weekScaleTemplate},
   {unit: "day", step:1, format: "%D", css:daysStyle }];
-  
+  timeline_selected_value=get_day_month_year($start,"","month");
+  default_label();
   enable_disable_project_drag(true);
   
 }
@@ -1947,6 +2005,7 @@ function week_view_configuration() {
 function month_view_configuration() {
 
   // var date = get_start_date('month'); 
+  timeline_selected_value='';
   var date = new Date();
 
   var $start = new Date(date.getFullYear(), date.getMonth(), 1);
@@ -1963,10 +2022,11 @@ function month_view_configuration() {
     var dateToStr = gantt.date.date_to_str("%F, %Y");
     return dateToStr(gantt.config.start_date);
   };
-
+  
   gantt.config.duration_unit = "day";
   gantt.config.subscales = [{ unit: "month", step: 1, template: monthScaleTemplate }];
-
+  timeline_selected_value=get_day_month_year($start,"","month");
+  default_label();
   enable_disable_project_drag(true);
 }
 
@@ -2057,15 +2117,15 @@ function refresh_data() {
 // generate list of task type for color table
 function generate_task_type_color_table(task_type_server_list) {
   var task_type_table = '<table class="table table-bordered table-responsive">\
- <thead>\
- <tr>\
- <th>'+ $_LANG['task_type'] + '</th>\
- <th>'+ $_LANG['name'] + '</th>\
- <th >'+ $_LANG['task_color'] + '</th>\
- <th >'+ $_LANG['progress_color'] + '</th>\
- </tr>\
- </thead>\
- <tbody>';
+  <thead>\
+  <tr>\
+  <th>'+ $_LANG['task_type'] + '</th>\
+  <th>'+ $_LANG['name'] + '</th>\
+  <th >'+ $_LANG['task_color'] + '</th>\
+  <th >'+ $_LANG['progress_color'] + '</th>\
+  </tr>\
+  </thead>\
+  <tbody>';
   for (var i = 0; i < task_type_server_list.length; i++) {
     var task_type_key_value = task_type_server_list[i];
 
@@ -2076,23 +2136,23 @@ function generate_task_type_color_table(task_type_server_list) {
     var t_progress_color_value = (task_type_color_set[task_type_key_value['key']] !== undefined) ? task_type_color_set[task_type_key_value['key']]['pc'] : "#000000";
 
     task_type_table += '<tr>\
-  <td>'+ task_type_key_value['key'] + '</td>\
-  <td>'+ task_type_key_value['label'] + '</td>\
-  <td><div id="cp3" class="input-group colorpicker-component">\
-  <input type="text" readonly name="task_type_color_set['+ task_type_key_value['key'] + '][tc]" value="' + t_task_color_value + '" class="form-control"/>\
-  <span class="input-group-addon"><i></i></span>\
-  </div></td>\
-  <td><div id="cp3" class="input-group colorpicker-component">\
-  <input type="text" readonly name="task_type_color_set['+ task_type_key_value['key'] + '][pc]" value="' + t_progress_color_value + '" class="form-control"/>\
-  <span class="input-group-addon"><i></i></span>\
-  </div></td>\
-  </tr>';
+    <td>'+ task_type_key_value['key'] + '</td>\
+    <td>'+ task_type_key_value['label'] + '</td>\
+    <td><div id="cp3" class="input-group colorpicker-component">\
+    <input type="text" readonly name="task_type_color_set['+ task_type_key_value['key'] + '][tc]" value="' + t_task_color_value + '" class="form-control"/>\
+    <span class="input-group-addon"><i></i></span>\
+    </div></td>\
+    <td><div id="cp3" class="input-group colorpicker-component">\
+    <input type="text" readonly name="task_type_color_set['+ task_type_key_value['key'] + '][pc]" value="' + t_progress_color_value + '" class="form-control"/>\
+    <span class="input-group-addon"><i></i></span>\
+    </div></td>\
+    </tr>';
     /* <td></td>\*/
   }
   task_type_table += '\
-</tbody>\
-</table>\
-<hr class="small_m">';
+  </tbody>\
+  </table>\
+  <hr class="small_m">';
   $(".task_type_box").html(task_type_table);
 }
 
@@ -2101,15 +2161,15 @@ function generate_task_type_color_table(task_type_server_list) {
 function priority_color_table(priority_server_list) {
 
   var priority_table = '<table class="table table-bordered table-responsive">\
-    <thead>\
-    <tr>\
-    <th>'+ $_LANG['priority'] + '</th>\
-    <th>'+ $_LANG['name'] + '</th>\
-    <th >'+ $_LANG['task_color'] + '</th>\
-    <th >'+ $_LANG['progress_color'] + '</th>\
-    </tr>\
-    </thead>\
-    <tbody>';
+  <thead>\
+  <tr>\
+  <th>'+ $_LANG['priority'] + '</th>\
+  <th>'+ $_LANG['name'] + '</th>\
+  <th >'+ $_LANG['task_color'] + '</th>\
+  <th >'+ $_LANG['progress_color'] + '</th>\
+  </tr>\
+  </thead>\
+  <tbody>';
   for (var i = 0; i < priority_server_list.length; i++) {
     var priority_data_key_value = priority_server_list[i];
 
@@ -2118,23 +2178,23 @@ function priority_color_table(priority_server_list) {
     var p_progress_color_value = (priority_color_set[priority_data_key_value['key']] !== undefined) ? priority_color_set[priority_data_key_value['key']]['pc'] : "#000000";
 
     priority_table += '<tr>\
-      <td>'+ priority_data_key_value['key'] + '</td>\
-      <td>'+ priority_data_key_value['label'] + '</td>\
-      <td><div id="cp2" class="input-group colorpicker-component">\
-      <input type="text" readonly name="priority_color_set['+ priority_data_key_value['key'] + '][tc]" value="' + p_task_color_value + '" class="form-control"/>\
-      <span class="input-group-addon"><i></i></span>\
-      </div></td>\
-      <td><div id="cp2" class="input-group colorpicker-component">\
-      <input type="text" readonly name="priority_color_set['+ priority_data_key_value['key'] + '][pc]" value="' + p_progress_color_value + '" class="form-control"/>\
-      <span class="input-group-addon"><i></i></span>\
-      </div></td>\
-      </tr>';
+    <td>'+ priority_data_key_value['key'] + '</td>\
+    <td>'+ priority_data_key_value['label'] + '</td>\
+    <td><div id="cp2" class="input-group colorpicker-component">\
+    <input type="text" readonly name="priority_color_set['+ priority_data_key_value['key'] + '][tc]" value="' + p_task_color_value + '" class="form-control"/>\
+    <span class="input-group-addon"><i></i></span>\
+    </div></td>\
+    <td><div id="cp2" class="input-group colorpicker-component">\
+    <input type="text" readonly name="priority_color_set['+ priority_data_key_value['key'] + '][pc]" value="' + p_progress_color_value + '" class="form-control"/>\
+    <span class="input-group-addon"><i></i></span>\
+    </div></td>\
+    </tr>';
 
   }
   priority_table += '\
-    </tbody>\
-    </table>\
-    <hr class="small_m">';
+  </tbody>\
+  </table>\
+  <hr class="small_m">';
   $(".priority_box").html(priority_table);
 }
 
@@ -2251,7 +2311,7 @@ function updateSelect(options, resource_select) {
   var html = [];
   html.push("<option value=''>All</option>");
   options.forEach(function (option) {
-      html.push("<option value='" + option.id + "'>" + option.text + "</option>");
+    html.push("<option value='" + option.id + "'>" + option.text + "</option>");
   });
   select.innerHTML = html.join("");
 }
