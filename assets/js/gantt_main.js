@@ -456,7 +456,7 @@ if(system_settings['default_resource_load_layout'] == "detail"){
 		{
 			gravity: 1,
 			cols: [
-			{view: "grid", group:"grids", scrollY: "scrollVer"},
+			{view: "grid", group:"grids",scrollable: true, scrollY: "scrollVer"},
 			{resizer: true, width: 1},
 			{view: "timeline", scrollX: "scrollHor", scrollY: "scrollVer"},
 			{view: "scrollbar", id: "scrollVer", group:"vertical"}

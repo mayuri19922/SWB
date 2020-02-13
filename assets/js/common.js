@@ -2018,6 +2018,7 @@ function month_view_configuration() {
   gantt.config.scale_unit = "day";
   gantt.config.date_scale = "%d %M";
   gantt.config.step = 1;
+  /*gantt.config.min_column_width = 50;*/
 
   var monthScaleTemplate = function (date) {
     var dateToStr = gantt.date.date_to_str("%F, %Y");
