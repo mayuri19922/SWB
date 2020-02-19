@@ -1174,9 +1174,20 @@ function left_matrix_editor_configuration(){
 // formatting the duration
 var formatter = gantt.ext.formatters.durationFormatter({
   enter: "minute",
-  store: "minute", // duration_unit
+  store: "minute", 
   format: "hour",
+  short: true	
 });
+
+/*var hourFormatter = gantt.ext.formatters.durationFormatter({
+  enter: "hour", 
+  store: "minute", 
+  format: "hour",
+  short: true	
+});*/
+
+//var hourDurationEditor = {type: "duration", map_to: "duration", formatter: formatter, min:0, max:1000};
+
 
 function left_matrix_configuration(hide_element) {
   left_matrix_editor_configuration();
@@ -1241,12 +1252,19 @@ function left_matrix_configuration(hide_element) {
         } else {
           var msec = Math.abs(item.start_date - item.end_date);
           var mins = Math.floor(msec / 60000);
+         // var hour = mins / 60;
+         // return formatter.format(mins);
+         // console.log(mins);
+         // console.log(hour);
           return (item.duration !== undefined && item.duration !== 0) ? formatter.format(mins) : formatter.format(mins);
           // return (item.duration !== undefined && item.duration !== 0) ? formatter.format(item.duration * 60) : formatter.format(item.min_duration * 60);
           // return (item.duration !== undefined && item.duration !== 0) ? item.duration : item.min_duration;
         }
-      }
+      }, //editor: hourDurationEditor, width: 100
     },
+    /*{name: "hourDuration", label:"Duration (hours)", resize: true, align: "center", template: function(item) {
+			return hourFormatter.format(item.duration);
+		}, editor: hourDurationEditor, width: 100},*/
     {
       hide: false, "resize": true, name: "add", label: "", align: "center", width: "30"
     },
@@ -1993,6 +2011,9 @@ function week_view_configuration() {
   };
 
   gantt.config.duration_unit = "day";
+  gantt.config.time_step = 15;
+	gantt.config.round_dnd_dates = false;
+  //gantt.config.duration_unit = "minute";
   //gantt.config.subscales = [{ unit: "month", step: 1, template: monthScaleTemplate }];
   gantt.config.subscales = [{unit: "month", step: 1, format: "%F, %Y"},
   {unit: "week", step: 1, format: weekScaleTemplate},
