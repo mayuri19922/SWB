@@ -120,7 +120,9 @@ var wo_status;
 var is_local_tasks;
 var left_matrix_editor;
 var timeline_selected_value;
-
+var inlineEditors = gantt.ext.inlineEditors;
+var task_old_start_date;
+var task_old_end_date;
 //===============
 // Variables and Constants
 //=============== 
@@ -326,25 +328,28 @@ function default_label(){
       curMeridiem = objStartDate.getHours() > 12 ? "PM" : "AM";
 
    //var today = curHour + ":" + curMinute + "." + curSeconds + curMeridiem + " " + dayOfWeek + " " + dayOfMonth + " of " + curMonth + ", " + curYear;
-     var result;
-     if($flag=="month"){
-      result=curMonth;
-      }
-     else if($flag=="day"){
-      result=curMonth +' '+ dayOfMonth;
-     }
-     else if($flag=="week"){
-      var objEndDate=end_date;
-      var objEndWeek=result + ( objEndDate.getDate() < 10) ? '0' + objEndDate.getDate() + domEnder : objEndDate.getDate();
-      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-];    
-      var objStartMonth=monthNames[objStartDate.getMonth()];
-      var objEndMonth=monthNames[objEndDate.getMonth()];
-      result=dayOfMonth + " "+ objStartMonth+ "-" + objEndWeek + " " +objEndMonth;
+   var result;
+   if($flag=="month"){
+    result=curMonth;
+  }
+  else if($flag=="day"){
+    result=curMonth +' '+ dayOfMonth;
+  }
+  else if($flag=="week"){
+    var objEndDate=end_date;
+    var objEndWeek=result + ( objEndDate.getDate() < 10) ? '0' + objEndDate.getDate() + domEnder : objEndDate.getDate();
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];    
+    var objStartMonth=monthNames[objStartDate.getMonth()];
+    var objEndMonth=monthNames[objEndDate.getMonth()];
+    result=dayOfMonth + " "+ objStartMonth+ "-" + objEndWeek + " " +objEndMonth;
 
-     }
-     return result;
+  }
+  else if($flag=="year"){
+    result="Year"+" "+curYear;
+  }
+  return result;
 }
 
 
@@ -546,8 +551,12 @@ function save_all_tasks(task_details, particular_task, service_name) {
         }
       },
       error: function (res) {
-        hide_loading_toast();
-        show_toast("error", global_error_msg);
+        if(res.status==200){
+          hide_loading_toast();
+        }
+        else{
+          show_toast("error", global_error_msg);
+        }
       }
     });
   }, default_pause_short);
@@ -1174,20 +1183,9 @@ function left_matrix_editor_configuration(){
 // formatting the duration
 var formatter = gantt.ext.formatters.durationFormatter({
   enter: "minute",
-  store: "minute", 
+  store: "minute", // duration_unit
   format: "hour",
-  short: true	
 });
-
-/*var hourFormatter = gantt.ext.formatters.durationFormatter({
-  enter: "hour", 
-  store: "minute", 
-  format: "hour",
-  short: true	
-});*/
-
-//var hourDurationEditor = {type: "duration", map_to: "duration", formatter: formatter, min:0, max:1000};
-
 
 function left_matrix_configuration(hide_element) {
   left_matrix_editor_configuration();
@@ -1252,19 +1250,12 @@ function left_matrix_configuration(hide_element) {
         } else {
           var msec = Math.abs(item.start_date - item.end_date);
           var mins = Math.floor(msec / 60000);
-         // var hour = mins / 60;
-         // return formatter.format(mins);
-         // console.log(mins);
-         // console.log(hour);
           return (item.duration !== undefined && item.duration !== 0) ? formatter.format(mins) : formatter.format(mins);
           // return (item.duration !== undefined && item.duration !== 0) ? formatter.format(item.duration * 60) : formatter.format(item.min_duration * 60);
           // return (item.duration !== undefined && item.duration !== 0) ? item.duration : item.min_duration;
         }
-      }, //editor: hourDurationEditor, width: 100
+      }
     },
-    /*{name: "hourDuration", label:"Duration (hours)", resize: true, align: "center", template: function(item) {
-			return hourFormatter.format(item.duration);
-		}, editor: hourDurationEditor, width: 100},*/
     {
       hide: false, "resize": true, name: "add", label: "", align: "center", width: "30"
     },
@@ -1866,6 +1857,8 @@ function change_year($type) {
 
   gantt.config.start_date = gantt.date.day_start($start);
   gantt.config.end_date = $end; // new Date(2017, 9, 31, 24, 00);
+  timeline_selected_value=get_day_month_year($start,"","year");
+  default_label();
   gantt.render();
 }
 
@@ -1998,10 +1991,10 @@ function week_view_configuration() {
   };
 
   var weekScaleTemplate = function (date) {
-		var dateToStr = gantt.date.date_to_str("%d %M");
+    var dateToStr = gantt.date.date_to_str("%d %M");
     var endDate = gantt.date.add(gantt.date.add(date, 1, "week"), -1, "day");
     var weekNum = gantt.date.date_to_str("%W")(date);
-		return "Week #" + weekNum + ", " + dateToStr(date) + " - " + dateToStr(endDate);
+    return "Week #" + weekNum + ", " + dateToStr(date) + " - " + dateToStr(endDate);
   };
   
   var daysStyle = function(date){
@@ -2011,9 +2004,6 @@ function week_view_configuration() {
   };
 
   gantt.config.duration_unit = "day";
-  //gantt.config.time_step = 15;
-	//gantt.config.round_dnd_dates = false;
-  //gantt.config.duration_unit = "minute";
   //gantt.config.subscales = [{ unit: "month", step: 1, template: monthScaleTemplate }];
   gantt.config.subscales = [{unit: "month", step: 1, format: "%F, %Y"},
   {unit: "week", step: 1, format: weekScaleTemplate},
@@ -2038,7 +2028,7 @@ function month_view_configuration() {
 
   gantt.config.scale_unit = "day";
   gantt.config.date_scale = "%d %M";
-  gantt.config.step = 1;
+  gantt.config.step = 1; 
   /*gantt.config.min_column_width = 50;*/
 
   var monthScaleTemplate = function (date) {
@@ -2079,6 +2069,8 @@ function year_view_configuration() {
 
   gantt.config.scale_height = 90;*/
   //   gantt.templates.date_scale = null;
+  timeline_selected_value=get_day_month_year($start,"","year");
+  default_label();
   enable_disable_project_drag(true);
 }
 
@@ -2351,3 +2343,6 @@ function get_resource(resource_select) {
   select.onchange = selectResource;
 
 }
+
+
+
