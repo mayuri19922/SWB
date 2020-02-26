@@ -68,6 +68,7 @@ service_call("get_system_settings", "", "", function(res){
 gantt.config.sort = true; 
 // gantt.config.min_duration = 1000*60;
 //gantt.config.duration_unit = "minute";
+
 gantt.config.time_step = 1;
 gantt.config.step = 0.1;
 gantt.config.min_column_width = system_settings['task_column_width'];
@@ -94,6 +95,7 @@ gantt.config.drag_drop = true;
 gantt.config.order_branch = false;
 gantt.config.order_branch_free = false;
 gantt.config.open_tree_initially = true;
+
 
 // gantt.config.touch = "force";
 // gantt.config.readonly = true;
@@ -1042,7 +1044,7 @@ gantt.attachEvent("onTaskUnselected", function(id,item){
 });
 
 gantt.attachEvent("onBeforeTaskDrag", function(id, mode, e){
-	if(mode == "resize"){
+	if(mode == "resize" || mode=="move"){
 		resize_task_details = gantt.getTask(id);
 	}
 	return true;
@@ -1053,18 +1055,29 @@ gantt.attachEvent("onTaskDrag", function(id, mode, task, original){});
 
 
 gantt.attachEvent("onBeforeTaskChanged", function(id, mode, task){
-	if(mode == "resize"){
+	if(mode == "resize" || mode=="move"){
 		if(task.min_duration != 0 && task.min_duration != '0'){
-
 			if(resize_task_details.duration  < task.min_duration){
 				task.auto_scheduling = false;
 				return false;
 			}
+			else{
+				task.auto_scheduling = true;
+				task_old_start_time = '';
+				task_old_end_time='';
+				task_old_start_time = task.start_date.toString().substr(16, 5);
+				resize_task_details.start_date = resize_task_details.start_date.toString().replace("00:00:00",task_old_start_time);
+				resize_task_details.start_date= new Date(resize_task_details.start_date);
+				task_old_end_time=task.end_date.toString().substr(16,5);
+				resize_task_details.end_date=resize_task_details.end_date.toString().replace("00:00:00",task_old_end_time);
+				resize_task_details.end_date=new Date(resize_task_details.end_date);
+				save_all_tasks(resize_task_details,1);
+				detail_layout_call();
+				return true;
+			}
 		}
+		
 	}
-	task.auto_scheduling = true;
-	detail_layout_call();
-	return true;
 });
 
 

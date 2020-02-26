@@ -123,6 +123,8 @@ var timeline_selected_value;
 var inlineEditors = gantt.ext.inlineEditors;
 var task_old_start_date;
 var task_old_end_date;
+var task_old_start_time;
+var task_old_end_time;
 //===============
 // Variables and Constants
 //=============== 
@@ -1838,6 +1840,7 @@ function change_month($type) {
   gantt.config.end_date = $end_month; // new Date(2017, 9, 31, 24, 00);
   default_label();
   gantt.render();
+
 }
 
 function change_year($type) {
@@ -2343,6 +2346,3 @@ function get_resource(resource_select) {
   select.onchange = selectResource;
 
 }
-
-
-
