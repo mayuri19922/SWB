@@ -37,7 +37,7 @@
   <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
   <style id="color_code_block">
 
-</style> 
+  </style> 
 
 </head>
 
@@ -186,7 +186,7 @@
         <div class="clearfix"></div>  <hr class="small_m">
       </div>
 
-     <div class="row" data-section="time">
+      <div class="row" data-section="time">
         <div class="col-md-12">
          <div class="form-group" >
           <label class="control-label col-sm-3"  for="popup_start_date"  data-lang="time_period_from">Time Period From</label>
@@ -206,45 +206,46 @@
                 <span class="fa fa-clock"></span>
               </span>
             </div>
-          
+            
         <!--<select name="start_hours" class=" close_task_popup_alert form-control pull-left start_hours" style="width:35%; margin-right:10px" id="popup_start_hours"></select>
          <select name="start_minutes" class=" close_task_popup_alert form-control pull-left start_minutes" style="width:35%; margin-right:10px" id="popup_start_minutes"></select>-->
-        </div>
-
-        <div class="clearfix"></div>  <hr class="small_m">
-      </div>
-
-      <div class="form-group" >
-        <label class="control-label col-sm-3"  for="popup_end_date"  data-lang="time_period_to">Time Period To</label>
-        <div class="col-sm-4">
-          <div class='input-group date' id='popup_end_date_picker'>
-            <input type="text" name="popup_end_date" id="popup_end_date" readonly  class="close_task_popup_alert form-control popup_end_date to_date_picker"  data-lang="to_date" placeholder="To Date">
-            <span class="input-group-addon">
-             <span class="fa fa-calendar-alt"></span>
-           </span>
-         </div>
        </div>
-       <div class="col-sm-4">
-        <div id="datetimepicker4" class="input-append">
-          <div class='input-group date' id='datetimepicker2'>
-            <input type='text' class="form-control" id="popup_end_hours"/>
-            <span class="input-group-addon">
-              <span class="fa fa-clock"></span>
-            </span>
-          </div>
+     </div>
+     <div class="clearfix"></div>  <hr class="small_m">
+   </div>
+
+   <div class="form-group" >
+    <label class="control-label col-sm-3"  for="popup_end_date"  data-lang="time_period_to">Time Period To</label>
+    <div class="col-sm-4">
+      <div class='input-group date' id='popup_end_date_picker'>
+        <input type="text" name="popup_end_date" id="popup_end_date" readonly  class="close_task_popup_alert form-control popup_end_date to_date_picker"  data-lang="to_date" placeholder="To Date">
+        <span class="input-group-addon">
+         <span class="fa fa-calendar-alt"></span>
+       </span>
+     </div>
+   </div>
+   <div class="col-sm-4">
+    <div id="datetimepicker4" class="input-append">
+      <div class='input-group date' id='datetimepicker2'>
+        <input type='text' class="form-control" id="popup_end_hours"/>
+        <span class="input-group-addon">
+          <span class="fa fa-clock"></span>
+        </span>
+      </div>
         <!--
         <select name="end_hours" class=" close_task_popup_alert form-control pull-left end_hours" style="width:35%; margin-right:10px" id="popup_end_hours"></select>
         <select name="end_minutes" class=" close_task_popup_alert form-control pull-left end_minutes" style="width:35%; margin-right:10px" id="popup_end_minutes"></select>-->
-        </div>
       </div>
-      <div class="clearfix"></div>  <hr class="small_m">
     </div>
+    <div class="clearfix"></div>  <hr class="small_m">
+  </div>
 
-  </div>  
+</div>  
 </div>
 
 </div>
 </div>
+
 <div class="modal-footer">
  <div class="pull-left">
   <button type="button" class="btn btn-success" name="save_update_lightbox_task" value="save_update_lightbox_task" id="save_update_lightbox_task"><i class="fa fa-check"></i>  <span data-lang="save">Save</span> </button>
@@ -456,7 +457,7 @@
             <div class="col-sm-4">
               <select class="form-control close_setting_popup_alert" id="default_timeline_view" name="default_timeline_view" placeholder="Select Default Timeline View">
                 <option value="minute" data-lang="minute_view"> Minute View</option>
-               
+                
                 <option value="day" data-lang="day_view"> Day View</option>
                 <option value="week" data-lang="week_view"> Week View</option>
                 <option value="month" data-lang="month_view"> Month View</option>
@@ -474,9 +475,9 @@
                 <span data-lang="enable_draggable_timeline">Enable Draggable Timeline</span> 
               </label>
               <input type="hidden" id="enable_draggable_timeline" name="enable_draggable_timeline" value="1" />
-           </div>
-           <div class="clearfix"></div> <hr class="small_m">
-         </div>
+            </div>
+            <div class="clearfix"></div> <hr class="small_m">
+          </div>
 
           <div class="form-group">
            <label class="control-label col-sm-5" for="tash_popup_dragging" data-lang="left_panel_resize">Left Panel Enable Resizing</label> 
@@ -674,13 +675,13 @@
 
 <!-- Dhtmlx gantt extensions -->
 <script src="assets/gantt/ext/dhtmlxgantt_auto_scheduling.js" type="text/javascript" charset="utf-8"></script>
- <script src="assets/gantt/ext/dhtmlxgantt_grouping.js" type="text/javascript" charset="utf-8"></script>
+<script src="assets/gantt/ext/dhtmlxgantt_grouping.js" type="text/javascript" charset="utf-8"></script>
 <script src="assets/gantt/ext/dhtmlxgantt_undo.js"></script>
 <!-- <script src="assets/gantt/ext/dhtmlxgantt_tooltip.js"></script> -->
 <script src="assets/gantt/ext/dhtmlxgantt_quick_info.js" type="text/javascript" charset="utf-8"></script>
 <script src="assets/gantt/ext/dhtmlxgantt_fullscreen.js" type="text/javascript" charset="utf-8"></script>
- <script src="assets/gantt/ext/dhtmlxgantt_critical_path.js" type="text/javascript" charset="utf-8"></script>
-   
+<script src="assets/gantt/ext/dhtmlxgantt_critical_path.js" type="text/javascript" charset="utf-8"></script>
+
 
 <!-- data -->
 <script src="assets/js/common.js" type="text/javascript" charset="utf-8"></script>
