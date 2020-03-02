@@ -31,6 +31,7 @@
   <link rel="stylesheet" href="bower_components/bootstrap-colorpicker-master/css/bootstrap-colorpicker.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
   <!-- Load Bootstrap Date Picker-->
   <link rel="stylesheet" href="bower_components/bootstrap-datepicker-master/css/bootstrap-datepicker.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
 
   <!-- Load Jquery -->
   <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -184,12 +185,12 @@
         </div>
         <div class="clearfix"></div>  <hr class="small_m">
       </div>
-      <div class="row" data-section="time">
 
-       <div class="col-md-12">
+     <div class="row" data-section="time">
+        <div class="col-md-12">
          <div class="form-group" >
           <label class="control-label col-sm-3"  for="popup_start_date"  data-lang="time_period_from">Time Period From</label>
-          <div class="col-sm-3">
+          <div class="col-sm-4">
             <div class='input-group date' id='popup_start_date_picker'>
               <input type="text" name="popup_start_date" id="popup_start_date" readonly  class="close_task_popup_alert popup_start_date  form-control from_date_picker"  data-lang="from_date" placeholder="From Date">
               <span class="input-group-addon">
@@ -197,9 +198,17 @@
              </span>
            </div>
          </div>
-         <div class="col-sm-6">
-          <select name="start_hours" class=" close_task_popup_alert form-control pull-left start_hours" style="width:35%; margin-right:10px" id="popup_start_hours"></select>
-          <select name="start_minutes" class=" close_task_popup_alert form-control pull-left start_minutes" style="width:35%; margin-right:10px" id="popup_start_minutes"></select> 
+         <div class="col-sm-4">
+          <div id="datetimepicker3" class="input-append">
+            <div class='input-group date' id='datetimepicker1'>
+              <input type='text' class="form-control" id="popup_start_hours"/>
+              <span class="input-group-addon">
+                <span class="fa fa-clock"></span>
+              </span>
+            </div>
+          
+        <!--<select name="start_hours" class=" close_task_popup_alert form-control pull-left start_hours" style="width:35%; margin-right:10px" id="popup_start_hours"></select>
+         <select name="start_minutes" class=" close_task_popup_alert form-control pull-left start_minutes" style="width:35%; margin-right:10px" id="popup_start_minutes"></select>-->
         </div>
 
         <div class="clearfix"></div>  <hr class="small_m">
@@ -207,17 +216,26 @@
 
       <div class="form-group" >
         <label class="control-label col-sm-3"  for="popup_end_date"  data-lang="time_period_to">Time Period To</label>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <div class='input-group date' id='popup_end_date_picker'>
-            <input type="text" name="popup_end_date" id="popup_end_date" readonly  class="close_task_popup_alert form-control popup_end_date to_date_picker"  data-lang="to_date" placeholder="To Date" placeholder="From Date">
+            <input type="text" name="popup_end_date" id="popup_end_date" readonly  class="close_task_popup_alert form-control popup_end_date to_date_picker"  data-lang="to_date" placeholder="To Date">
             <span class="input-group-addon">
              <span class="fa fa-calendar-alt"></span>
            </span>
          </div>
        </div>
-       <div class="col-sm-6">
+       <div class="col-sm-4">
+        <div id="datetimepicker4" class="input-append">
+          <div class='input-group date' id='datetimepicker2'>
+            <input type='text' class="form-control" id="popup_end_hours"/>
+            <span class="input-group-addon">
+              <span class="fa fa-clock"></span>
+            </span>
+          </div>
+        <!--
         <select name="end_hours" class=" close_task_popup_alert form-control pull-left end_hours" style="width:35%; margin-right:10px" id="popup_end_hours"></select>
-        <select name="end_minutes" class=" close_task_popup_alert form-control pull-left end_minutes" style="width:35%; margin-right:10px" id="popup_end_minutes"></select>
+        <select name="end_minutes" class=" close_task_popup_alert form-control pull-left end_minutes" style="width:35%; margin-right:10px" id="popup_end_minutes"></select>-->
+        </div>
       </div>
       <div class="clearfix"></div>  <hr class="small_m">
     </div>
@@ -640,6 +658,7 @@
 <script src="bower_components/bootstrap-colorpicker-master/js/bootstrap-colorpicker.min.js" type="text/javascript" charset="utf-8"></script>
 <!-- Load Bootstrap Date Picker-->
 <script src="bower_components/bootstrap-datepicker-master/js/bootstrap-datepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
 
 <!-- Dhtmlx menu files -->
 <script type="text/javascript" src="assets/dhtmlx_menu/dhtmlxmenu.js"></script>

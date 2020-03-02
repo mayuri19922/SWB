@@ -1161,14 +1161,23 @@ gantt.attachEvent("onLightboxSave", function(id, task, is_new){
 	task.work_center = $("#task_wc_code").val();
 	task.resource = $("#task_assigned_res").val();
 	task.priority = $("#priority_select").val();
-	var start_hours = ($("#popup_start_hours").val()!=0) ? ($("#popup_start_hours").val()/60) : 0;
-	var end_hours = ($("#popup_end_hours").val()!=0) ? ($("#popup_end_hours").val()/60) : 0;
-	
+	//var start_hours = ($("#popup_start_hours").val()!=0) ? ($("#popup_start_hours").val()/60) : 0;
+	//var end_hours = ($("#popup_end_hours").val()!=0) ? ($("#popup_end_hours").val()/60) : 0;
+
+	var start_hours = $("#popup_start_hours").val();
+	var end_hours = $("#popup_end_hours").val();
+	arr = start_hours.split(':')
+	hour = $.trim(arr[0]);
+	min = $.trim(arr[1]);
+
+	arr2 = end_hours.split(':')
+	hour2 = $.trim(arr2[0]);
+	min2 = $.trim(arr2[1]);
+
 	var $field_sd = ($("#popup_start_date").val()).split("-");
-	task.start_date = new Date( $field_sd[2], ( $field_sd[1]-1),  $field_sd[0], start_hours, $("#popup_start_minutes").val(), 00, 00);
-	
+	task.start_date = new Date( $field_sd[2], ( $field_sd[1]-1),  $field_sd[0], hour, min, 00, 00);
 	var $field_ed = ($("#popup_end_date").val()).split('-');
-	task.end_date = new Date($field_ed[2], ($field_ed[1]-1), $field_ed[0], end_hours, $("#popup_end_minutes").val(), 00, 00);
+	task.end_date = new Date($field_ed[2], ($field_ed[1]-1), $field_ed[0], hour2, min2, 00, 00);
 	//add additional parameters
 	task.head_doc_entry=head_doc_entry_task;
 	task.oper_doc_entry=oper_doc_entry_task;
@@ -1962,14 +1971,60 @@ $('a.auto_resyn_desc').tooltip({
 	placement: "right"
 }); 
 
-var plan_from = "";
-if(current_plan_details!=undefined){
-	var temp_plan_from = (current_plan_details['from_date']).replace(" 00:00", '').split('-');
+/*var plan_from = "";
+if(current_plan_details!=undefined){*/
+	/*var plan_from = new Date();
+	plan_from.setDate(plan_from.getDate());*/
+	/*var temp_plan_from = (current_plan_details['from_date']).replace(" 00:00", '').split('-');
 	plan_from = new Date(parseInt( temp_plan_from[0]), (parseInt(temp_plan_from[1])-1),temp_plan_from[2]);
+	plan_from.setDate(plan_from.getDate());
 
 } else {
-	plan_from =  new Date();
-}
+	plan_from =  new Date();*/
+	//plan_from.setDate(plan_from.getDate());
+
+	//plan_from.setDate(plan_from.getDate());
+//}
+
+/*var plan_to = "";
+if(current_plan_details!=undefined){
+	var temp_plan_to = (current_plan_details['to_date']).replace(" 00:00", '').split('-');
+	plan_to = new Date(parseInt( temp_plan_to[0]), (parseInt(temp_plan_to[1])-1),temp_plan_to[2]);
+
+} else {
+	plan_to =  new Date();
+}*/
+
+/*var checkin =  $('#popup_start_date_picker').datepicker({
+	autoclose : true,
+	format : "dd-mm-yyyy",
+	keyboardNavigation : true,
+	todayHighlight : true,
+	startDate: plan_from
+}).on('changeDate', function(ev) {
+	var newDate = new Date(ev.date);
+	newDate.setDate(newDate.getDate());
+	$('#popup_end_date_picker').datepicker('update', newDate);
+	$('#popup_end_date_picker').datepicker('setStartDate', newDate);
+
+	checkin.hide();
+	$("#popup_start_date").removeAttr('style');
+	$('.to_date_picker')[0].focus();
+}).data('datepicker');
+
+var checkout =  $('#popup_end_date_picker').datepicker({
+	autoclose : true,
+	format : "dd-mm-yyyy",
+	keyboardNavigation : true,
+	todayHighlight : true,
+	startDate: plan_from
+}).on('changeDate', function(ev) {
+	checkout.hide();
+	$("#popup_start_date").removeAttr('style');
+}).data('datepicker');*/
+
+var plan_from = new Date();
+plan_from.setDate(plan_from.getDate());
 
 var checkin =  $('#popup_start_date_picker').datepicker({
 	autoclose : true,
@@ -1978,26 +2033,32 @@ var checkin =  $('#popup_start_date_picker').datepicker({
 	todayHighlight : true,
 	startDate: plan_from
 }).on('changeDate', function(ev) {
-
-	var newDate = new Date(ev.date);
-	newDate.setDate(newDate.getDate());
-	$('#popup_end_date_picker').datepicker('update', newDate);
-	$('#popup_end_date_picker').datepicker('setStartDate', newDate);
-
 	checkin.hide();
 	$("#popup_start_date").removeAttr('style');
-//	$('.to_date_picker')[0].focus();
-}).data('datepicker')
+}).data('datepicker');
+
+var plan_to = new Date();
+plan_to.setDate(plan_to.getDate());
 
 var checkout =  $('#popup_end_date_picker').datepicker({
 	autoclose : true,
 	format : "dd-mm-yyyy",
 	keyboardNavigation : true,
-	todayHighlight : true
+	todayHighlight : true,
+	startDate: plan_to
 }).on('changeDate', function(ev) {
 	checkout.hide();
 	$("#popup_start_date").removeAttr('style');
 }).data('datepicker');
 
+
+$('#datetimepicker1').datetimepicker({
+	format: 'HH:mm'
+});
+
+$('#datetimepicker2').datetimepicker({
+	format: 'HH:mm'
+});
+  
 }); // document ready
 

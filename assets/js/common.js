@@ -589,7 +589,6 @@ function enable_disable_project_drag($flag) {
 }
 
 function custom_lightbox_fill_data(task, task_id) {
-
   $("[name='oper_code']").val(task.text).focus();
 
   var opr_desc = (task.description !== undefined) ? task.description : "";
@@ -608,14 +607,16 @@ function custom_lightbox_fill_data(task, task_id) {
   $("#priority_select").html(priority_option_list).val(get_priority_from_range(task.priority).key);
 
   var start_date_popup = new Date(gantt.getTask(task_id).start_date);
+  $("#popup_start_hours").val(start_date_popup.toLocaleTimeString('it-IT'));
   $("#popup_start_date").val(start_date_popup.getDate() + '-' + (start_date_popup.getMonth() + 1) + '-' + start_date_popup.getFullYear())
-  $("#popup_start_hours").html(hour_list('html', start_date_popup.getHours() * 60));
-  $("#popup_start_minutes").html(minute_list('html', start_date_popup.getMinutes()));
+  //$("#popup_start_hours").html(hour_list('html', start_date_popup.getHours() * 60));
+  //$("#popup_start_minutes").html(minute_list('html', start_date_popup.getMinutes()));
 
   var end_date_popup = new Date(gantt.getTask(task_id).end_date);
+  $("#popup_end_hours").val(end_date_popup.toLocaleTimeString('it-IT'));
   $("#popup_end_date").val(end_date_popup.getDate() + '-' + (end_date_popup.getMonth() + 1) + '-' + end_date_popup.getFullYear())
-  $("#popup_end_hours").html(hour_list('html', end_date_popup.getHours() * 60))
-  $("#popup_end_minutes").html(minute_list('html', end_date_popup.getMinutes()));
+ // $("#popup_end_hours").html(hour_list('html', end_date_popup.getHours() * 60))
+ // $("#popup_end_minutes").html(minute_list('html', end_date_popup.getMinutes()));
 }
 
 function duplicate_selected_task() {
