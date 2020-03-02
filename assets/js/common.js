@@ -1834,13 +1834,27 @@ function change_month($type) {
 
   var $start_month = new Date(current_month.getFullYear(), new_month_value, 1);
   var $end_month = new Date(current_month.getFullYear(), new_month_value + 1);
-  //timeline_selected_value=get_selected_month($start_month.getMonth());
   timeline_selected_value=get_day_month_year($start_month,"","month");
+  //task_old_start_date=$start_month.getMonth();
   gantt.config.start_date = gantt.date.day_start($start_month);
   gantt.config.end_date = $end_month; // new Date(2017, 9, 31, 24, 00);
   default_label();
   gantt.render();
 
+}
+
+function calculate_resource_duration(array){
+  var result=[];
+  for (var i = 0; i < array.length; i++) {
+    if(array[i].start_date.getMonth()==task_old_start_date){
+     gantt.eachTask(function(task){
+       if( (task.resource == array[i].resource) && (task.work_center == array[i].work_center) && (task.start_date == array[i].start_date) && (task.end_date == array[i].end_date) &&  (task.type != gantt.config.types.project) ) {
+        result.push(task);
+      }
+    });  
+   }
+ }
+ return result;
 }
 
 function change_year($type) {

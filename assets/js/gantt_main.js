@@ -370,10 +370,11 @@ var resourceGridConfig = {
 		name: "workload", label: $_LANG['workload'],  width:'*', align:"center", template: function (resource) {
 			var tasks = getResourceTasks(resource.key, resource.work_center_id);
 			var totalDuration = 0;
+			if(tasks!=undefined){
 			tasks.forEach(function(task){
 				totalDuration += task.duration;
 			});
-
+            }
 			return (totalDuration || 0) * 8 + "h";
 		}, resize: true
 	},
@@ -1056,9 +1057,15 @@ gantt.attachEvent("onTaskDrag", function(id, mode, task, original){});
 
 gantt.attachEvent("onBeforeTaskChanged", function(id, mode, task){
 	if(mode == "resize" || mode=="move"){
+		var modified_task = gantt.copy(task);
 		if(task.min_duration != 0 && task.min_duration != '0'){
 			if(resize_task_details.duration  < task.min_duration){
 				task.auto_scheduling = false;
+				task.start_date = modified_task.start_date;
+				task.end_date = modified_task.end_date;
+				gantt.updateTask(id);
+				gantt.alert("You cannot schedule this task!!");
+				window.location.reload();
 				return false;
 			}
 			else{
@@ -1071,7 +1078,7 @@ gantt.attachEvent("onBeforeTaskChanged", function(id, mode, task){
 				task_old_end_time=task.end_date.toString().substr(16,5);
 				resize_task_details.end_date=resize_task_details.end_date.toString().replace("00:00:00",task_old_end_time);
 				resize_task_details.end_date=new Date(resize_task_details.end_date);
-				save_all_tasks(resize_task_details,1);
+				//save_all_tasks(resize_task_details,1);
 				detail_layout_call();
 				return true;
 			}
@@ -1079,6 +1086,58 @@ gantt.attachEvent("onBeforeTaskChanged", function(id, mode, task){
 		
 	}
 });
+
+// gantt.attachEvent("onBeforeTaskChanged", function(id, mode, task){
+//   var modified_task = gantt.copy(task);
+//   var current_task = gantt.getTask(id);
+//   if(mode == "resize" || mode=="move"){
+//     gantt.confirm({
+//     text:"Do you want to update this task?",
+//     ok:"Yes",
+//     cancel:"No",
+//     callback:function(result){
+//       if(!result){
+//         task.start_date = modified_task.start_date;
+//         task.end_date = modified_task.end_date;
+//         gantt.updateTask(id);
+//       }
+//       else
+//       {
+//         if(task.min_duration != 0 && task.min_duration != '0'){
+//             if(resize_task_details.duration  < task.min_duration){
+//                 task.auto_scheduling = false;
+//                 task.start_date = modified_task.start_date;
+//                 task.end_date = modified_task.end_date;
+//                 gantt.updateTask(id);
+//                 gantt.alert("You cannot schedule this task!!");
+//                 return false;
+//             }
+//             else{
+//                 task.auto_scheduling = true;
+//                 task_old_start_time = '';
+//                 task_old_end_time='';
+//                 task_old_start_time = task.start_date.toString().substr(16, 5);
+//                 resize_task_details.start_date = resize_task_details.start_date.toString().replace("00:00:00",task_old_start_time);
+//                 resize_task_details.start_date= new Date(resize_task_details.start_date);
+//                 task_old_end_time=task.end_date.toString().substr(16,5);
+//                 resize_task_details.end_date=resize_task_details.end_date.toString().replace("00:00:00",task_old_end_time);
+//                 resize_task_details.end_date=new Date(resize_task_details.end_date);
+//                 save_all_tasks(resize_task_details,1);
+//                 return true;
+//           }
+//         }
+//         else{
+//            task.start_date = modified_task.start_date;
+//            task.end_date = modified_task.end_date;
+//            gantt.updateTask(id);
+//            gantt.alert("You cannot schedule this task!!");
+//         }
+//       }
+//     }
+//   }); 
+// }
+// return true;
+// });
 
 
 /*gantt.attachEvent("onGanttScroll", function (left, top){

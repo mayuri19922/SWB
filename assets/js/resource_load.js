@@ -64,7 +64,6 @@ function getAllocatedValue(tasks,resource){
 
 
 function getResourceTasks(resource_id, resource_wc){
-	//debugger;
 	var res = [];
 	gantt.eachTask(function(task){
 		if( (task.resource == resource_id) && (task.work_center == resource_wc) &&  (task.type != gantt.config.types.project) ) {
@@ -72,6 +71,23 @@ function getResourceTasks(resource_id, resource_wc){
 		}
 	});
 	return res;
+}
+
+function getResourceByDayMonthYear(resource_id, resource_wc){
+	var res = [];
+    var duration_result;
+	gantt.eachTask(function(task){
+		if( (task.resource == resource_id) && (task.work_center == resource_wc) &&  (task.type != gantt.config.types.project) ) {
+			res.push(task);
+		}
+	});
+	if(res.length!=0){
+		var result=calculate_resource_duration(res);
+		if(result.length!=0){
+			duration_result=result;
+		}
+	  }
+	return duration_result;
 }
 
 
