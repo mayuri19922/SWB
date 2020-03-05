@@ -1087,69 +1087,6 @@ gantt.attachEvent("onBeforeTaskChanged", function(id, mode, task){
 	}
 });
 
-// gantt.attachEvent("onBeforeTaskChanged", function(id, mode, task){
-//   var modified_task = gantt.copy(task);
-//   var current_task = gantt.getTask(id);
-//   if(mode == "resize" || mode=="move"){
-//     gantt.confirm({
-//     text:"Do you want to update this task?",
-//     ok:"Yes",
-//     cancel:"No",
-//     callback:function(result){
-//       if(!result){
-//         task.start_date = modified_task.start_date;
-//         task.end_date = modified_task.end_date;
-//         gantt.updateTask(id);
-//       }
-//       else
-//       {
-//         if(task.min_duration != 0 && task.min_duration != '0'){
-//             if(resize_task_details.duration  < task.min_duration){
-//                 task.auto_scheduling = false;
-//                 task.start_date = modified_task.start_date;
-//                 task.end_date = modified_task.end_date;
-//                 gantt.updateTask(id);
-//                 gantt.alert("You cannot schedule this task!!");
-//                 return false;
-//             }
-//             else{
-//                 task.auto_scheduling = true;
-//                 task_old_start_time = '';
-//                 task_old_end_time='';
-//                 task_old_start_time = task.start_date.toString().substr(16, 5);
-//                 resize_task_details.start_date = resize_task_details.start_date.toString().replace("00:00:00",task_old_start_time);
-//                 resize_task_details.start_date= new Date(resize_task_details.start_date);
-//                 task_old_end_time=task.end_date.toString().substr(16,5);
-//                 resize_task_details.end_date=resize_task_details.end_date.toString().replace("00:00:00",task_old_end_time);
-//                 resize_task_details.end_date=new Date(resize_task_details.end_date);
-//                 save_all_tasks(resize_task_details,1);
-//                 return true;
-//           }
-//         }
-//         else{
-//            task.start_date = modified_task.start_date;
-//            task.end_date = modified_task.end_date;
-//            gantt.updateTask(id);
-//            gantt.alert("You cannot schedule this task!!");
-//         }
-//       }
-//     }
-//   }); 
-// }
-// return true;
-// });
-
-
-/*gantt.attachEvent("onGanttScroll", function (left, top){
-	//setTimeout(function(){
-	  log_data("onGanttScroll + ");
-		$(document).find(".custom_load_res_table_scale").html($(document).find(".gantt_task_scale:first").html());
-		$(document).find(".custom_load_res_table_scale").css("left", '-'+left+'px');
-		$(document).find(".custm_load_table_area").css("left", '-'+left+'px');
-		$(".bottom_custom_horizontal_scroll").scrollLeft( left );
-//	}, 10);
-});*/
-
 //===============
 // Light Box events
 //===============
@@ -1994,34 +1931,6 @@ if(current_plan_details!=undefined){
 } else {
 	plan_to =  new Date();
 }*/
-
-/*var checkin =  $('#popup_start_date_picker').datepicker({
-	autoclose : true,
-	format : "dd-mm-yyyy",
-	keyboardNavigation : true,
-	todayHighlight : true,
-	startDate: plan_from
-}).on('changeDate', function(ev) {
-	var newDate = new Date(ev.date);
-	newDate.setDate(newDate.getDate());
-	$('#popup_end_date_picker').datepicker('update', newDate);
-	$('#popup_end_date_picker').datepicker('setStartDate', newDate);
-
-	checkin.hide();
-	$("#popup_start_date").removeAttr('style');
-	$('.to_date_picker')[0].focus();
-}).data('datepicker');
-
-var checkout =  $('#popup_end_date_picker').datepicker({
-	autoclose : true,
-	format : "dd-mm-yyyy",
-	keyboardNavigation : true,
-	todayHighlight : true,
-	startDate: plan_from
-}).on('changeDate', function(ev) {
-	checkout.hide();
-	$("#popup_start_date").removeAttr('style');
-}).data('datepicker');*/
 
 var plan_from = new Date();
 plan_from.setDate(plan_from.getDate());
