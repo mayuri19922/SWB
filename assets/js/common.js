@@ -774,6 +774,38 @@ function delete_task_link(id) {
     }, default_pause_short);
 }
 
+function set_selected_task(task,modified_task){
+  if(task.min_duration != 0 && task.min_duration != '0'){
+    if(resize_task_details.duration  < task.min_duration){
+      task.auto_scheduling = false;
+      task.start_date = modified_task.start_date;
+      task.end_date = modified_task.end_date;
+      gantt.updateTask(id);
+      gantt.alert("You cannot schedule this task!!");
+      //window.location.reload();
+      return false;
+    }
+    else{
+      task.auto_scheduling = true;
+      task_old_start_time = '';
+      task_old_end_time='';
+      task_old_start_time = task.start_date.toString().substr(16, 5);
+      resize_task_details.start_date = resize_task_details.start_date.toString().replace("00:00:00",task_old_start_time);
+      resize_task_details.start_date= new Date(resize_task_details.start_date);
+      task_old_end_time=task.end_date.toString().substr(16,5);
+      resize_task_details.end_date=resize_task_details.end_date.toString().replace("00:00:00",task_old_end_time);
+      resize_task_details.end_date=new Date(resize_task_details.end_date);
+      //save_all_tasks(resize_task_details,1);
+      detail_layout_call();
+      return true;
+      }
+    }
+    else{
+     task.auto_scheduling = false;
+     return false;
+   }
+ }
+
 
 //===============
 // Menu Functions
@@ -1836,7 +1868,7 @@ function change_month($type) {
   var $start_month = new Date(current_month.getFullYear(), new_month_value, 1);
   var $end_month = new Date(current_month.getFullYear(), new_month_value + 1);
   timeline_selected_value=get_day_month_year($start_month,"","month");
-  //task_old_start_date=$start_month.getMonth();
+  task_old_start_date=$start_month.getMonth();
   gantt.config.start_date = gantt.date.day_start($start_month);
   gantt.config.end_date = $end_month; // new Date(2017, 9, 31, 24, 00);
   default_label();
@@ -1995,6 +2027,10 @@ function week_view_configuration() {
 
   var $start = new Date(date.getFullYear(), date.getMonth(), 1);
   var $end = new Date(date.getFullYear(), date.getMonth() + 1);
+  var $start_week = get_start_of_week(date);
+  var $end_week = get_end_of_week($start_week);
+      $start_week.setHours(00, 00, 00, 000);
+      $end_week.setHours(23, 59, 00, 000);
 
   gantt.config.start_date = gantt.date.day_start($start);
   gantt.config.end_date = $end; 
@@ -2026,7 +2062,9 @@ function week_view_configuration() {
   gantt.config.subscales = [{unit: "month", step: 1, format: "%F, %Y"},
   {unit: "week", step: 1, format: weekScaleTemplate},
   {unit: "day", step:1, format: "%D", css:daysStyle }];
-  timeline_selected_value=get_day_month_year($start,"","month");
+
+   //timeline_selected_value=get_day_month_year($start,"","month");
+   timeline_selected_value=get_day_month_year($start_week,$end_week,"week");
   default_label();
   enable_disable_project_drag(true);
   

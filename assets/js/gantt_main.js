@@ -97,6 +97,7 @@ gantt.config.order_branch_free = false;
 gantt.config.open_tree_initially = true;
 
 
+
 // gantt.config.touch = "force";
 // gantt.config.readonly = true;
 //gantt.config.work_time = true;
@@ -353,10 +354,12 @@ var resourceGridConfig = {
 			var tasks = getResourceTasks(resource.key, resource.work_center_id);
 			var totalToDo = 0,
 			totalDone = 0;
-			tasks.forEach(function(task){
-				totalToDo += task.duration;
-				totalDone += task.duration * (task.progress || 0);
-			});
+			if(tasks!=undefined){
+				tasks.forEach(function(task){
+					totalToDo += task.duration;
+					totalDone += task.duration * (task.progress || 0);
+				});
+			}
 
 			var completion = 0;
 			if(totalToDo){
@@ -378,7 +381,6 @@ var resourceGridConfig = {
 			return (totalDuration || 0) * 8 + "h";
 		}, resize: true
 	},
-
 	{
 		name: "capacity", label:default_label() /*$_LANG['capacity']*/,  width:'*', align:"center",template: function (resource) {
 			var store = gantt.getDatastore('resource_load_data_store');
@@ -389,7 +391,6 @@ var resourceGridConfig = {
 			return gantt.calculateDuration(state.min_date, state.max_date) * n * 8 + "h";
 		}
 	} 
-
 	]
 };
 
@@ -1051,93 +1052,30 @@ gantt.attachEvent("onBeforeTaskDrag", function(id, mode, e){
 	return true;
 });
 
-gantt.attachEvent("onTaskDrag", function(id, mode, task, original){});
-
-
+gantt.attachEvent("onTaskDrag", function(id, mode, task, original){
+});
 
 gantt.attachEvent("onBeforeTaskChanged", function(id, mode, task){
 	if(mode == "resize" || mode=="move"){
 		var modified_task = gantt.copy(task);
-		if(task.min_duration != 0 && task.min_duration != '0'){
-			if(resize_task_details.duration  < task.min_duration){
-				task.auto_scheduling = false;
-				task.start_date = modified_task.start_date;
-				task.end_date = modified_task.end_date;
-				gantt.updateTask(id);
-				gantt.alert("You cannot schedule this task!!");
-				window.location.reload();
-				return false;
-			}
-			else{
-				task.auto_scheduling = true;
-				task_old_start_time = '';
-				task_old_end_time='';
-				task_old_start_time = task.start_date.toString().substr(16, 5);
-				resize_task_details.start_date = resize_task_details.start_date.toString().replace("00:00:00",task_old_start_time);
-				resize_task_details.start_date= new Date(resize_task_details.start_date);
-				task_old_end_time=task.end_date.toString().substr(16,5);
-				resize_task_details.end_date=resize_task_details.end_date.toString().replace("00:00:00",task_old_end_time);
-				resize_task_details.end_date=new Date(resize_task_details.end_date);
-				//save_all_tasks(resize_task_details,1);
-				detail_layout_call();
-				return true;
-			}
-		}
+		var modified_task_start_date= modified_task.start_date.toString().substr(0, 15);
+		var resize_task_start_date=resize_task_details.start_date.toString().substr(0,15);
+		var modified_task_end_date= modified_task.end_date.toString().substr(0, 15);
+		var resize_task_end_date=resize_task_details.end_date.toString().substr(0,15);
 		
+		if(modified_task_start_date!=resize_task_start_date && modified_task_end_date!=resize_task_end_date){
+			task.auto_scheduling=false;
+			return false;
+		}
+		else if(modified_task_start_date==resize_task_start_date && modified_task_end_date!=resize_task_end_date ){
+			set_selected_task(task,modified_task);
+		}
+		else if(modified_task_start_date!=resize_task_start_date && modified_task_end_date==resize_task_end_date){
+            set_selected_task(task,modified_task);
+		}
 	}
 });
 
-// gantt.attachEvent("onBeforeTaskChanged", function(id, mode, task){
-//   var modified_task = gantt.copy(task);
-//   var current_task = gantt.getTask(id);
-//   if(mode == "resize" || mode=="move"){
-//     gantt.confirm({
-//     text:"Do you want to update this task?",
-//     ok:"Yes",
-//     cancel:"No",
-//     callback:function(result){
-//       if(!result){
-//         task.start_date = modified_task.start_date;
-//         task.end_date = modified_task.end_date;
-//         gantt.updateTask(id);
-//       }
-//       else
-//       {
-//         if(task.min_duration != 0 && task.min_duration != '0'){
-//             if(resize_task_details.duration  < task.min_duration){
-//                 task.auto_scheduling = false;
-//                 task.start_date = modified_task.start_date;
-//                 task.end_date = modified_task.end_date;
-//                 gantt.updateTask(id);
-//                 gantt.alert("You cannot schedule this task!!");
-//                 return false;
-//             }
-//             else{
-//                 task.auto_scheduling = true;
-//                 task_old_start_time = '';
-//                 task_old_end_time='';
-//                 task_old_start_time = task.start_date.toString().substr(16, 5);
-//                 resize_task_details.start_date = resize_task_details.start_date.toString().replace("00:00:00",task_old_start_time);
-//                 resize_task_details.start_date= new Date(resize_task_details.start_date);
-//                 task_old_end_time=task.end_date.toString().substr(16,5);
-//                 resize_task_details.end_date=resize_task_details.end_date.toString().replace("00:00:00",task_old_end_time);
-//                 resize_task_details.end_date=new Date(resize_task_details.end_date);
-//                 save_all_tasks(resize_task_details,1);
-//                 return true;
-//           }
-//         }
-//         else{
-//            task.start_date = modified_task.start_date;
-//            task.end_date = modified_task.end_date;
-//            gantt.updateTask(id);
-//            gantt.alert("You cannot schedule this task!!");
-//         }
-//       }
-//     }
-//   }); 
-// }
-// return true;
-// });
 
 
 /*gantt.attachEvent("onGanttScroll", function (left, top){
@@ -1216,8 +1154,6 @@ gantt.attachEvent("onLightboxSave", function(id, task, is_new){
 		gantt.render();
 		gantt.hideLightbox();
 	}, default_pause);
-
-	
 	return true;
 });
 
