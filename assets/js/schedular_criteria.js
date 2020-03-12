@@ -25,8 +25,6 @@ function start_schedule(form_obj){
         window.location = gant_chart_page_link;
       }, default_pause);
     }
-
-
   });
 }
 
