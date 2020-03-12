@@ -2399,3 +2399,12 @@ function get_resource(resource_select) {
   select.onchange = selectResource;
 
 }
+
+function resource_filter(resource_select){
+    $(".resource-select").select2({
+                  data: resource_select, 
+                  width: '190px'
+    }).on("click", function () {
+        $( ".select2-search__field").focus();
+    });
+}

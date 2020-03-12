@@ -594,7 +594,8 @@ gantt.attachEvent("onGanttReady", function () {
 	var resource_select = gantt.$container.querySelector(".resource-select");
 	updateSelect(resourcesStore.getItems(), resource_select);
 	get_resource(resource_select);
-
+     resource_filter(resource_select);
+    $("select.resource-select option[value='[object HTMLOptionElement]']").remove();
 	var tooltips = gantt.ext.tooltips;
 	tooltips.tooltipFor({
 		selector: ".gantt_resource_marker",
